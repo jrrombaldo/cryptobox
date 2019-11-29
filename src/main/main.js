@@ -20,9 +20,9 @@ require('update-electron-app')({ logger: log })
 
 let mainWindow
 let appIcon = null
-const icoPath = './resources/elec.icns'
-const icoPathPNG = './resources/cloud-enc.png'
-
+const icoPath = './static/resources/elec.icns'
+const icoPathPNG = './static/resources/cloud-enc.png'
+const trayIcon = '../../static/resources/example.png'
 
 function createWindow() {
 
@@ -39,7 +39,7 @@ function createWindow() {
     })
 
     mainWindow.setVisibleOnAllWorkspaces(true);
-    mainWindow.loadFile('index.html')
+    mainWindow.loadFile('./static/ui/index.html')
 
     // Open the DevTools.
     // mainWindow.webContents.openDevTools()
@@ -55,7 +55,7 @@ function createWindow() {
 
 function createTray() {
     // const { Tray } = require('electron')
-    appIcon = new Tray(path.join(__dirname,'resources/example.png'))
+    appIcon = new Tray(path.join(__dirname,trayIcon))
     // appIcon = new Tray(path.join(__dirname, 'resources/cloud-enc.png'))
 
 
@@ -110,11 +110,9 @@ process.on('uncaughtException', function (error) {
 
 
 
-
-
 function loadScripts() {
-    const scripts = fs.readdirSync("./main-scripts")
+    const scripts = fs.readdirSync("./src/scripts")
     scripts.forEach(script => {
-        script.endsWith(".js") && require("./main-scripts/" + script)
+        script.endsWith(".js") && require("../scripts/" + script)
     });
 }

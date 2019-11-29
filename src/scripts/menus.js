@@ -5,7 +5,7 @@ let appIcon = null
 
 ipcMain.on('put-in-tray', (event) => {
   log.info("start")
-  let iconPath = path.join(__dirname, '../resources/example.png')
+  let iconPath = path.join(__dirname, '../../static/resources/example.png')
   appIcon = new Tray(iconPath)
 
 
@@ -20,7 +20,7 @@ ipcMain.on('put-in-tray', (event) => {
   appIcon.setToolTip('Electron Demo in the tray.')
   appIcon.setContextMenu(contextMenu)
 
-  appIcon.setHighlightMode('always');
+  // appIcon.setHighlightMode('always');
 
   log.info(appIcon)
   log.info("done")

@@ -250,11 +250,15 @@ ipcMain.on("account_exists_reuse", (event, arg) => {
 const { dialog } = require('electron')
 
 ipcMain.on("get_direcotry_natively", (event, arg) => {
-    var directory = dialog.showOpenDialog({ properties: ['openDirectory'] })
+    log.info("> get_direcotry_natively")
+    var directory = dialog.showOpenDialogSync({ properties: ['openDirectory'] })
+    
     if (directory)
         event.returnValue = directory[0]
     else
         event.returnValue = null
+
+    log.info(`< get_direcotry_natively = ${directory}`)
 })
 
 

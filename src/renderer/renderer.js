@@ -27,25 +27,27 @@ function updateBtn() {
 
 // ======  reading directories with native dialog, to avoid security issues with browsers
 source.onclick = () => {
-    ipcRenderer.send('put-in-tray')
+    // ipcRenderer.send('put-in-tray')
 
-    // var dir = ipcRenderer.sendSync("get_direcotry_natively", {})
-    // if (dir) {
-    //     source.value = dir
-    //     var reuse = ipcRenderer.sendSync("account_exists_reuse", { source: dir, destination: dir })
-    //     if (reuse) {
-    //         passwordDiv.disabled = true
-    //         password.value = ""
-    //     }
-    //     else {
-    //         passwordDiv.disabled = false
-    //     }
-    // }
+    var dir = ipcRenderer.sendSync("get_direcotry_natively", {})
+    if (dir) {
+        source.value = dir
+        var reuse = ipcRenderer.sendSync("account_exists_reuse", { source: dir, destination: dir })
+        log.debug(`account exists:${reuse}`)
+        if (reuse) {
+            passwordDiv.disabled = true
+            password.value = ""
+        }
+        else {
+            passwordDiv.disabled = false
+        }
+    }
 }
 
 // ======  reading directories with native dialog, to avoid security issues with browsers
 destination.onclick = () => {
     var dir = ipcRenderer.sendSync("get_direcotry_natively", {})
+    log.debug(`destination=${dir}`)
     if (dir) {
         destination.value = dir
         updateBtn()
@@ -54,6 +56,7 @@ destination.onclick = () => {
 
 
 cloudEncForm.onsubmit = ()=>{
+    log.debug(`source:${source.value}  destination:${destination.valu}  volume:${volumeName.value}`)
     var args = {
         source: source.value,
         destination: destination.value,
