@@ -1,6 +1,19 @@
 module.exports = Object.freeze({
     ENCFS: 'encfs',
-    SUPPORTED_PLATFORM: ["darwin", "freebsd", "linux"],
+
     VOLUME_NAME_SUFIX: "_secure",
-    KEYCHAIN_ACCOUNT: "cloud-enc"
+
+
+    IPC_GET_DIRECTORY: "zNhyGnWiqabsyPuOKOCc",
+    IPC_ACCT_EXISTS: "fSEvzUveABIZCypkXPGE",
+    IPC_IS_MOUNTED: "qdNhgTGYmniSwJKTijFx",
+    IPC_MOUNT_UNMOUNT: "agjHVeGQNYADkZSXFtDf",
+
+
+    SUPPORTED_PLATFORM: Object.freeze({
+        darwin: "darwin",
+        freebsgd: "freebsd",
+        linux: "linux"
+    }),
+
 });

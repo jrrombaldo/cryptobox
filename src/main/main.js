@@ -6,13 +6,7 @@ const fs = require("fs");
 const path = require('path')
 
 
-const log = require('electron-log');
-// disable logging on file
-log.transports.file.level = false;
-log.transports.console.format = '[{y}-{m}-{d} {h}:{i}:{s}.{ms}] [{level}] {text}';
-//  making log variable global
-global.log = log
-
+log = require('../scripts/LogHelper.js').log
 
 // auto update
 require('update-electron-app')({ logger: log })
@@ -113,6 +107,7 @@ process.on('uncaughtException', function (error) {
 function loadScripts() {
     const scripts = fs.readdirSync("./src/scripts")
     scripts.forEach(script => {
-        script.endsWith(".js") && require("../scripts/" + script)
+        script.endsWith(".js") && require("../scripts/" + script) 
+        && log.debug(`imported: ${script} `)
     });
 }

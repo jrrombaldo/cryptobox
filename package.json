@@ -27,8 +27,7 @@
     "pack": "sh darwin-pack.sh",
     "build": " ./node_modules/.bin/electron-builder --publish never --config electron-builder.yaml",
     "app": "sh darwin-pack.sh && open release-builds/cloud-enc-darwin-x64/cloud-enc.app",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "devtest": "node test.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
