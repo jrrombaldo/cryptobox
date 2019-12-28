@@ -52,13 +52,11 @@ function createTray() {
     appIcon = new Tray(path.join(__dirname,trayIcon))
     // appIcon = new Tray(path.join(__dirname, 'resources/cloud-enc.png'))
 
-
-
     const trayMenu = Menu.buildFromTemplate([{
-        label: "testing...",
+        label: "Cryptobox",
         click: () => { console.log("tray menu clicked") }
     }])
-    appIcon.setTitle("Testing...")
+    appIcon.setTitle("Cryptobox")
     appIcon.setContextMenu(trayMenu)
 
 

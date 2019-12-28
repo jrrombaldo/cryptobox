@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Hello World!</title>
+  <title>Cryptobox - Preserve your privacy</title>
   <!-- <meta http-equiv="Content-Security-Policy" content="default-src '*'"> -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../../node_modules/bootswatch/dist/darkly/bootstrap.min.css">
@@ -13,7 +13,7 @@
 <body>
 
   <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-    <h2>Cloud-Enc</h2>
+    <h2>CRYPTOBOX</h2>
   </nav>
 
 
@@ -24,27 +24,27 @@
     <form id="cloudEncForm">
     <div class="form-row">
       <div class="form-group col-md-4">
-        <label for="source">Unencrypted</label>
-        <input type="text" class="form-control" id="source" placeholder="Unencrypted" required>
+        <label for="source">Secured Folder</label>
+        <input type="text" class="form-control" id="source" placeholder="" required>
         <div class="invalid-feedback">
           Please provide an folder to be encrypted.
         </div>
       </div>
       <div class="form-group col-md-4">
-        <label for="destination">Encrypted</label>
-        <input type="text" class="form-control" id="destination" placeholder="Encrypted" required>
+        <label for="destination">Working Folder</label>
+        <input type="text" class="form-control" id="destination" placeholder="" required>
       </div>
     </div>
-    <div class="form-row">
+    <!--<div class="form-row">
       <div class="form-group col-md-3">
-        <label for="volumeName">Volume Name</label>
-        <input type="text" class="form-control" id="volumeName" placeholder="VolumeName" required>
-      </div>
+        <label for="volumeName">Volume Name</label>-->
+        <input type="hidden" class="form-control" id="volumeName" placeholder="VolumeName" required value="Cryptobox">
+    <!-- </div> -->
 
       <div  class="form-group col-md-3">
         <fieldset id="passwordDiv" disabled>
           <label for="password" id="passwordLabel">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="Password">
+          <input type="password" class="form-control" id="password" placeholder="">
         </fieldset>
       </div>
 
