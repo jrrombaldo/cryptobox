@@ -27,19 +27,20 @@ module.exports = EncryptionManageer
 
 class EncryptionManagerOSX {
 
-    static MOUNT_CMD = "{encfs}  {container} {mount_point} --extpass='{passwd_prg}'  --standard --require-macs -ovolname={name} -oallow_root -olocal -ohard_remove -oauto_xattr -onolocalcaches"
-    static UNMOUNT_CMD = "umount {0}"
-    static IS_MOUNTED_CMD = ""
+     MOUNT_CMD = "{encfs}  {container} {mount_point} --extpass='{passwd_prg}'  --standard --require-macs -ovolname={name} -oallow_root -olocal -ohard_remove -oauto_xattr -onolocalcaches"
+     UNMOUNT_CMD = "umount {0}"
+     IS_MOUNTED_CMD = ""
+
 
 
     mount(source, destination, volumeName) {
         // destination = checkDir(destination)
         // source = checkDir(source)
         log.debug(`about to mount directory [${source}] into [${destination}] with volumeName [${volumeName}]`)
-        var passwordManager = PasswordManager.PasswordManagerOSX(source)
+        var passwordManager = new PasswordManager(source)
 
 
-        var mountCMD = format(MOUNT_CMD, {
+        var mountCMD = format(this.MOUNT_CMD, {
             encfs: "encfs",
             idle: 25,
             container: source,
@@ -53,7 +54,7 @@ class EncryptionManagerOSX {
         if (!volumeName)
             volumeName = path.basename(source).concat(constants.VOLUME_NAME_SUFIX)
 
-        if (isMounted(destination)) {
+        if (this.isMounted(destination)) {
             log.info(`${detination} already mounted`.red)
         } else {
             log.debug(`mounting directory [${source}] into [${destination}] with volumeName [${volumeName}]`)
@@ -63,14 +64,13 @@ class EncryptionManagerOSX {
         }
     }
 
-    unmont(destination) {
+    unmount(destination) {
         // destination = checkDir(destination)
         log.debug(`unmounting ${destination}`)
 
-        var unmountCMD = format(UNMOUNT_CMD, destination)
-        break;
+        var unmountCMD = format(this.UNMOUNT_CMD, destination)
 
-        if (isMounted(destination)) {
+        if (this.isMounted(destination)) {
             log.debug(format("unmounting {0} ({1})", destination).grey)
             console.time()
             ShellHelper.execute(unmountCMD)

@@ -1,5 +1,5 @@
 
-const { ipcRenderer, dialog } = require('electron')
+const { ipcRenderer, dialog, window } = require('electron')
 
 log = require('../scripts/LogHelper.js').log
 // no longer required "export ELECTRON_ENABLE_LOGGING=1"
@@ -18,6 +18,15 @@ var cloudEncForm = document.getElementById('cloudEncForm')
 var mounted = false;
 var mountBtn = document.getElementById('mountBtn')
 
+
+
+function updateMountBtn(){
+    var mounted = ipcRenderer.sendSync(constants.IPC_IS_MOUNTED, { destination: destination.value })
+    if (mounted)
+        mountBtn.innerText = "UnMount"
+    else
+        mountBtn.innerText = "Mount"
+}
 
 
 // ======  reading directories with native dialog, to avoid security issues with browsers
@@ -41,14 +50,45 @@ destination.onclick = () => {
     var directory = ipcRenderer.sendSync(constants.IPC_GET_DIRECTORY, {})
     if (directory) {
         destination.value = directory
-
-        var mounted = ipcRenderer.sendSync(constants.IPC_IS_MOUNTED, { destination: destination.value })
-        if (mounted)
-            mountBtn.innerText = "UnMount"
-        else
-            mountBtn.innerText = "Mount"
+        updateMountBtn()
     }
 }
+
+
+
+cloudEncForm.onsubmit = ()=>{
+    log.debug(`source:${source.value}  destination:${destination.value}  volume:${volumeName.value}`)
+    var args = {
+        source: source.value,
+        destination: destination.value,
+        volumeName: volumeName.value,
+    }
+    var result = ipcRenderer.sendSync(constants.IPC_MOUNT_UNMOUNT, args);
+    log.info(`here is the ${result}`)
+    updateMountBtn();
+    // notify(result+" with success")
+
+    // avoid the form to reload
+    return false
+}
+
+
+function notify(title = "CloudEnc", message) {
+    const notification = {
+        title: title,
+        body: message,
+        silent: true,
+        icon: './resources/cloud-enc2.ico'
+    }
+    const myNotification = new window.Notification(notification.title, notification)
+
+    myNotification.onclick = () => {
+        console.log('Notification clicked')
+    }
+}
+
+
+
 
 // // ======  reading directories with native dialog, to avoid security issues with browsers
 // destination.onclick = () => {

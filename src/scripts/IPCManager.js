@@ -30,19 +30,7 @@ ipcMain.on(constants.IPC_ACCT_EXISTS, (event, arg) => {
     var password = pm.searchForPassword()
 
     if (password) {
-        const options = {
-            type: 'info',
-            title: 'password confirmation',
-            message: 'There is a pasword recorded on keychain for this folder, would you like reuse or replace? note that the previous password will be lost',
-            buttons: ['Reuse existing password', 'Replace with a new password']
-        }
-        dialog.showMessageBox(options, (index) => {
-            if (index === 0)
-                event.returnValue = true
-            if (index === 1)
-                event.returnValue = false
-
-        })
+        event.returnValue = !!UIHelper.confirmPasswordUse();
     }
     else {
         log.info(`password not found for ${source}`)
@@ -74,15 +62,18 @@ ipcMain.on(constants.IPC_MOUNT_UNMOUNT, (event, arg) => {
 
     log.info(`mount/unmount on source: [${source}], destination: [${destination}], volumenName: [${volumeName}]`)
 
-    // if (!isMounted(destination)) {
-    //     log.log(format("{0} is not mounted, mounting", destination))
-    //     mount(source, destination, volumeName)
-    //     event.returnValue = "Mounted"
-    //     log.log(format("{0} -> {1} mounted with success", source, destination))
-    // } else {
-    //     log.log(format("{0} is  mounted, unmounting", destination))
-    //     unmont(destination)
-    //     event.returnValue = "Unmounted"
-    //     log.log(format("{0} unounted with success", destination))
-    // }
+    var encMngr = new EncryptionManager()
+
+
+    if (!encMngr.isMounted(destination)) {
+        log.log(`{destination} is not mounted, mounting`);
+        encMngr.mount(source, destination, volumeName)
+        log.log(`${source} -> ${destination} mounted with success`)
+        event.returnValue = "Mounted"
+    } else {
+        log.log(`${destination} is  mounted, umounting`)
+        encMngr.unmount(destination)
+        log.log(`${destination} unounted with success`)
+        event.returnValue = "Unmounted"
+    }
 })
