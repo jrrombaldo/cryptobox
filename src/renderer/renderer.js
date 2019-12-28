@@ -1,11 +1,6 @@
-
 const { ipcRenderer, dialog, window } = require('electron')
-
 log = require('../scripts/LogHelper.js').log
-// no longer required "export ELECTRON_ENABLE_LOGGING=1"
-
 const constants = require('../constants.js')
-
 
 var source = document.getElementById('source')
 var destination = document.getElementById('destination')
@@ -14,33 +9,29 @@ var password = document.getElementById('password')
 var volumeName = document.getElementById('volumeName')
 var status = document.getElementById('statusLbl')
 var cloudEncForm = document.getElementById('cloudEncForm')
-
-var mounted = false;
 var mountBtn = document.getElementById('mountBtn')
 
-
+var mounted = false;
 
 function updateMountBtn(){
     var mounted = ipcRenderer.sendSync(constants.IPC_IS_MOUNTED, { destination: destination.value })
     if (mounted)
-        mountBtn.innerText = "UnMount"
+        mountBtn.innerText = "Dismount"
     else
         mountBtn.innerText = "Mount"
 }
 
-
-// ======  reading directories with native dialog, to avoid security issues with browsers
 source.onclick = () => {
     var directory = ipcRenderer.sendSync(constants.IPC_GET_DIRECTORY, {})
     if (directory) {
         source.value = directory
 
-        var passwodExists = ipcRenderer.sendSync(constants.IPC_ACCT_EXISTS, { source: directory })
+        //var passwodExists = ipcRenderer.sendSync(constants.IPC_ACCT_EXISTS, { source: directory })
 
-        if (passwodExists) {
-            passwordDiv.disabled = true
-            password.value = ""
-        }
+        //if (passwodExists) {
+        //    passwordDiv.disabled = true
+        //    password.value = ""
+        //}
 
 
     }
@@ -50,11 +41,9 @@ destination.onclick = () => {
     var directory = ipcRenderer.sendSync(constants.IPC_GET_DIRECTORY, {})
     if (directory) {
         destination.value = directory
-        updateMountBtn()
+    //    updateMountBtn()
     }
 }
-
-
 
 cloudEncForm.onsubmit = ()=>{
     log.debug(`source:${source.value}  destination:${destination.value}  volume:${volumeName.value}`)
@@ -71,7 +60,6 @@ cloudEncForm.onsubmit = ()=>{
     // avoid the form to reload
     return false
 }
-
 
 function notify(title = "CloudEnc", message) {
     const notification = {

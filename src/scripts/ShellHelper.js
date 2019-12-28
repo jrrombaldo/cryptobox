@@ -5,15 +5,10 @@ const fs = require("fs");
 const path = require('path')
 var os = require('os');
 
+// TODO: replace with https://www.npmjs.com/package/shelljs.exec
 
-// TODO, replace with https://www.npmjs.com/package/shelljs.exec
-
-
-// // https://github.com/shelljs/shelljs/wiki/Electron-compatibility
+// INFO: https://github.com/shelljs/shelljs/wiki/Electron-compatibility
 shell.config.execPath = shell.which("node").stdout;
-
-
-
 
 function execute(cmd, silent=false) {
     log.debug(`executing command ${cmd}`)

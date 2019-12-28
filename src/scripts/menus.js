@@ -20,8 +20,6 @@ ipcMain.on('put-in-tray', (event) => {
   appIcon.setToolTip('Electron Demo in the tray.')
   appIcon.setContextMenu(contextMenu)
 
-  // appIcon.setHighlightMode('always');
-
   log.info(appIcon)
   log.info("done")
 })

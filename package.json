@@ -1,5 +1,5 @@
 {
-  "name": "cloud-enc",
+  "name": "cryptobox",
   "version": "0.0.1",
   "description": "encrypt file systems",
   "main": "src/main/main.js",

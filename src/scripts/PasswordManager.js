@@ -5,9 +5,6 @@ var log = require('./LogHelper.js').log
 var ShellHelper = require('./ShellHelper.js')
 var constants = require('../constants.js')
 
-
-
-
 const OSX_KEYCHAIN_ACCOUNT = "cryptobox"
 const OSX_KEYCHAIN_SEARCH_CMD = 'security find-generic-password  -a "{account}" -s "{service}" -w '
 const OSX_KEYCHAIN_SAVE_CMD = "security add-generic-password -a '{account}' -s '{service}' -D 'application password' -j \"{comment}\" -w'{password}' -U"

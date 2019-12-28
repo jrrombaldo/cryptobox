@@ -4,24 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <title>Cryptobox - Preserve your privacy</title>
-  <!-- <meta http-equiv="Content-Security-Policy" content="default-src '*'"> -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../../node_modules/bootswatch/dist/darkly/bootstrap.min.css">
 
 </head>
 
 <body>
-
   <nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <h2>CRYPTOBOX</h2>
   </nav>
-
-
-  <!-- https://getbootstrap.com/docs/4.1/components/forms/ -->
-
-<!-- return false to keep the data on the form after submit -->
-  <!-- <form onsubmit ="return false"> -->
-    <form id="cloudEncForm">
+  <form id="cloudEncForm">
     <div class="form-row">
       <div class="form-group col-md-4">
         <label for="source">Secured Folder</label>
@@ -40,16 +32,13 @@
         <label for="volumeName">Volume Name</label>-->
         <input type="hidden" class="form-control" id="volumeName" placeholder="VolumeName" required value="Cryptobox">
     <!-- </div> -->
-
-      <div  class="form-group col-md-3">
-        <fieldset id="passwordDiv" disabled>
-          <label for="password" id="passwordLabel">Password</label>
-          <input type="password" class="form-control" id="password" placeholder="">
-        </fieldset>
-      </div>
-
+    <div  class="form-group col-md-3">
+      <fieldset id="passwordDiv" disabled>
+        <label for="password" id="passwordLabel">Password</label>
+        <input type="password" class="form-control" id="password" placeholder="">
+      </fieldset>
     </div>
-
+    </div>
     <div class="form-group">
       <div class="form-group col-md-2">
         <span id="statusLbl"></span> <br>
@@ -57,34 +46,8 @@
       </div>
     </div>
   </form>
-
-
-
-
-
-
-
-
-
-
-
-  <!-- We are using node
-  <script>document.write(process.versions.node)</script>,
-  Chrome
-  <script>document.write(process.versions.chrome)</script>,
-  and Electron
-  <script>document.write(process.versions.electron)</script>.
- -->
-
   <script>
     require('../../src/renderer/renderer.js')
-    // require('popper.js')
-    // window.jQuery = window.$ = require('jquery');
-    // require('bootstrap')
-
-    // update button label
-
   </script>
 </body>
-
 </html>

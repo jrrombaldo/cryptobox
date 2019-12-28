@@ -7,8 +7,6 @@ var PasswordManager = require('./PasswordManager.js')
 var UIHelper = require('./UIHelper.js')
 var EncryptionManager = require('./EncryptionManager.js')
 
-
-
 ipcMain.on(constants.IPC_GET_DIRECTORY, (event, arg) => {  
    var directory = UIHelper.getDirectoryNatively()
     if (directory)
@@ -16,7 +14,6 @@ ipcMain.on(constants.IPC_GET_DIRECTORY, (event, arg) => {
     else
         event.returnValue = null
 })
-
 
 ipcMain.on(constants.IPC_ACCT_EXISTS, (event, arg) => {
     var source = arg['source'];
@@ -42,7 +39,6 @@ ipcMain.on(constants.IPC_ACCT_EXISTS, (event, arg) => {
 
 })
 
-
 ipcMain.on(constants.IPC_IS_MOUNTED, (event, arg) => {
     var destination = arg['destination'];
     log.info(`check if ${destination} is mounted`)
@@ -63,7 +59,6 @@ ipcMain.on(constants.IPC_MOUNT_UNMOUNT, (event, arg) => {
     log.info(`mount/unmount on source: [${source}], destination: [${destination}], volumenName: [${volumeName}]`)
 
     var encMngr = new EncryptionManager()
-
 
     if (!encMngr.isMounted(destination)) {
         log.log(`{destination} is not mounted, mounting`);
