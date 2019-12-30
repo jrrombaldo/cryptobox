@@ -1,25 +1,25 @@
-const path = require('path')
-const {ipcMain, app, Menu, Tray} = require('electron')
+const path = require('path');
+const {ipcMain, app, Menu, Tray} = require('electron');
 
-let appIcon = null
+let appIcon = null;
 
 ipcMain.on('put-in-tray', (event) => {
-  log.info("start")
-  let iconPath = path.join(__dirname, '../../static/resources/example.png')
-  appIcon = new Tray(iconPath)
+    log.info("start");
+    let iconPath = path.join(__dirname, '../../static/resources/example.png');
+    appIcon = new Tray(iconPath);
 
 
-  log.info(appIcon)
-  const contextMenu = Menu.buildFromTemplate([{
-    label: 'Remove',
-    click: () => {
-      appIcon.destroy()
-    }
-  }])
+    log.info(appIcon);
+    const contextMenu = Menu.buildFromTemplate([{
+        label: 'Remove',
+        click: () => {
+            appIcon.destroy()
+        }
+    }]);
 
-  appIcon.setToolTip('Electron Demo in the tray.')
-  appIcon.setContextMenu(contextMenu)
+    appIcon.setToolTip('Electron Demo in the tray.');
+    appIcon.setContextMenu(contextMenu);
 
-  log.info(appIcon)
-  log.info("done")
-})
+    log.info(appIcon);
+    log.info("done")
+});

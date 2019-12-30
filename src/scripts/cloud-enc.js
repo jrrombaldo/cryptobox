@@ -7,8 +7,6 @@
 // const colors = require('colors');
 
 
-
-
 // // https://github.com/shelljs/shelljs/wiki/Electron-compatibility
 // shell.config.execPath = shell.which("node").stdout;
 
@@ -198,7 +196,6 @@
 // }
 
 
-
 // const { ipcMain } = require('electron')
 
 // log.debug("registering account_exists")
@@ -245,7 +242,7 @@
 // ipcMain.on("get_direcotry_natively", (event, arg) => {
 //     log.info("> get_direcotry_natively")
 //     var directory = dialog.showOpenDialogSync({ properties: ['openDirectory'] })
-    
+
 //     if (directory)
 //         event.returnValue = directory[0]
 //     else

@@ -1,28 +1,28 @@
-const { ipcRenderer, dialog, window } = require('electron')
-log = require('../scripts/LogHelper.js').log
-const constants = require('../constants.js')
+const {ipcRenderer, dialog, window} = require('electron');
+log = require('../scripts/LogHelper.js').log;
+const constants = require('../constants.js');
 
-var source = document.getElementById('source')
-var destination = document.getElementById('destination')
-var passwordDiv = document.getElementById('passwordDiv')
-var password = document.getElementById('password')
-var volumeName = document.getElementById('volumeName')
-var status = document.getElementById('statusLbl')
-var cloudEncForm = document.getElementById('cloudEncForm')
-var mountBtn = document.getElementById('mountBtn')
+var source = document.getElementById('source');
+var destination = document.getElementById('destination');
+var passwordDiv = document.getElementById('passwordDiv');
+var password = document.getElementById('password');
+var volumeName = document.getElementById('volumeName');
+var status = document.getElementById('statusLbl');
+var cloudEncForm = document.getElementById('cloudEncForm');
+var mountBtn = document.getElementById('mountBtn');
 
 var mounted = false;
 
-function updateMountBtn(){
-    var mounted = ipcRenderer.sendSync(constants.IPC_IS_MOUNTED, { destination: destination.value })
+function updateMountBtn() {
+    var mounted = ipcRenderer.sendSync(constants.IPC_IS_MOUNTED, {destination: destination.value});
     if (mounted)
-        mountBtn.innerText = "Dismount"
+        mountBtn.innerText = "Dismount";
     else
         mountBtn.innerText = "Mount"
 }
 
 source.onclick = () => {
-    var directory = ipcRenderer.sendSync(constants.IPC_GET_DIRECTORY, {})
+    var directory = ipcRenderer.sendSync(constants.IPC_GET_DIRECTORY, {});
     if (directory) {
         source.value = directory
 
@@ -35,31 +35,31 @@ source.onclick = () => {
 
 
     }
-}
+};
 
 destination.onclick = () => {
-    var directory = ipcRenderer.sendSync(constants.IPC_GET_DIRECTORY, {})
+    var directory = ipcRenderer.sendSync(constants.IPC_GET_DIRECTORY, {});
     if (directory) {
         destination.value = directory
-    //    updateMountBtn()
+        //    updateMountBtn()
     }
-}
+};
 
-cloudEncForm.onsubmit = ()=>{
-    log.debug(`source:${source.value}  destination:${destination.value}  volume:${volumeName.value}`)
+cloudEncForm.onsubmit = () => {
+    log.debug(`source:${source.value}  destination:${destination.value}  volume:${volumeName.value}`);
     var args = {
         source: source.value,
         destination: destination.value,
         volumeName: volumeName.value,
-    }
+    };
     var result = ipcRenderer.sendSync(constants.IPC_MOUNT_UNMOUNT, args);
-    log.info(`here is the ${result}`)
+    log.info(`here is the ${result}`);
     updateMountBtn();
     // notify(result+" with success")
 
     // avoid the form to reload
     return false
-}
+};
 
 function notify(title = "CloudEnc", message) {
     const notification = {
@@ -67,15 +67,13 @@ function notify(title = "CloudEnc", message) {
         body: message,
         silent: true,
         icon: './resources/cloud-enc2.ico'
-    }
-    const myNotification = new window.Notification(notification.title, notification)
+    };
+    const myNotification = new window.Notification(notification.title, notification);
 
     myNotification.onclick = () => {
         console.log('Notification clicked')
     }
 }
-
-
 
 
 // // ======  reading directories with native dialog, to avoid security issues with browsers
@@ -89,8 +87,6 @@ function notify(title = "CloudEnc", message) {
 // }
 
 
-
-
 // function updateBtn() {
 //     console.log("updating mount/unmont button")
 //     var mounted = ipcRenderer.sendSync("is_mounted", { destination: destination.value })
@@ -99,7 +95,6 @@ function notify(title = "CloudEnc", message) {
 //     else
 //         mountBtn.innerText = "Mount"
 // }
-
 
 
 // // ======  reading directories with native dialog, to avoid security issues with browsers
@@ -175,8 +170,6 @@ function notify(title = "CloudEnc", message) {
 // // }
 
 // // console.log
-
-
 
 
 // function notify(title = "CloudEnc", message) {

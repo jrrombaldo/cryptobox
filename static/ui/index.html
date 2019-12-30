@@ -2,52 +2,52 @@
 <html>
 
 <head>
-  <meta charset="UTF-8">
-  <title>Cryptobox - Preserve your privacy</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="../../node_modules/bootswatch/dist/darkly/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Cryptobox - Preserve your privacy</title>
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="../../node_modules/bootswatch/dist/darkly/bootstrap.min.css" rel="stylesheet">
 
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <h2>CRYPTOBOX</h2>
-  </nav>
-  <form id="cloudEncForm">
+</nav>
+<form id="cloudEncForm">
     <div class="form-row">
-      <div class="form-group col-md-4">
-        <label for="source">Secured Folder</label>
-        <input type="text" class="form-control" id="source" placeholder="" required>
-        <div class="invalid-feedback">
-          Please provide an folder to be encrypted.
+        <div class="form-group col-md-4">
+            <label for="source">Secured Folder</label>
+            <input class="form-control" id="source" placeholder="" required type="text">
+            <div class="invalid-feedback">
+                Please provide an folder to be encrypted.
+            </div>
         </div>
-      </div>
-      <div class="form-group col-md-4">
-        <label for="destination">Working Folder</label>
-        <input type="text" class="form-control" id="destination" placeholder="" required>
-      </div>
+        <div class="form-group col-md-4">
+            <label for="destination">Working Folder</label>
+            <input class="form-control" id="destination" placeholder="" required type="text">
+        </div>
     </div>
     <!--<div class="form-row">
       <div class="form-group col-md-3">
         <label for="volumeName">Volume Name</label>-->
-        <input type="hidden" class="form-control" id="volumeName" placeholder="VolumeName" required value="Cryptobox">
+    <input class="form-control" id="volumeName" placeholder="VolumeName" required type="hidden" value="Cryptobox">
     <!-- </div> -->
-    <div  class="form-group col-md-3">
-      <fieldset id="passwordDiv" disabled>
-        <label for="password" id="passwordLabel">Password</label>
-        <input type="password" class="form-control" id="password" placeholder="">
-      </fieldset>
+    <div class="form-group col-md-3">
+        <fieldset disabled id="passwordDiv">
+            <label for="password" id="passwordLabel">Password</label>
+            <input class="form-control" id="password" placeholder="" type="password">
+        </fieldset>
     </div>
     </div>
     <div class="form-group">
-      <div class="form-group col-md-2">
-        <span id="statusLbl"></span> <br>
-        <button type="submit" class="btn btn-primary" id="mountBtn">Mount</button>
-      </div>
+        <div class="form-group col-md-2">
+            <span id="statusLbl"></span> <br>
+            <button class="btn btn-primary" id="mountBtn" type="submit">Mount</button>
+        </div>
     </div>
-  </form>
-  <script>
+</form>
+<script>
     require('../../src/renderer/renderer.js')
-  </script>
+</script>
 </body>
 </html>

@@ -1,12 +1,12 @@
-const { dialog } = require('electron')
+const {dialog} = require('electron');
 
 function getDirectoryNatively() {
-    var directory = dialog.showOpenDialogSync({ properties: ['openDirectory'] })
-    log.info(`getDirectoryNatively result: [${directory}]`)
+    var directory = dialog.showOpenDialogSync({properties: ['openDirectory']});
+    log.info(`getDirectoryNatively result: [${directory}]`);
     return directory
 }
 
-function confirmPasswordUse(){
+function confirmPasswordUse() {
     const options = {
         type: 'info',
         title: 'password confirmation',
@@ -15,11 +15,11 @@ function confirmPasswordUse(){
     };
     dialog.showMessageBox(options, (index) => {
         if (index === 0)
-            return true
+            return true;
         if (index === 1)
             return false
 
     })
 }
 
-module.exports = {getDirectoryNatively, confirmPasswordUse}
+module.exports = {getDirectoryNatively, confirmPasswordUse};
