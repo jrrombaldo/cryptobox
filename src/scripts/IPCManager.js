@@ -1,11 +1,9 @@
 const { ipcMain } = require("electron");
-const os = require("os");
 const colors = require("colors");
 const constants = require("../constants");
 var log = require("./LogHelper.js").log;
 var PasswordManager = require("./PasswordManager.js");
 var UIHelper = require("./UIHelper.js");
-// var EncryptionManager = require('./EncryptionManager.js');
 const encryptionManagerFactory = require("./EncryptionManagers/EncryptionManagerFactory");
 
 ipcMain.on(constants.IPC_GET_DIRECTORY, (event, arg) => {
@@ -38,8 +36,7 @@ ipcMain.on(constants.IPC_IS_MOUNTED, (event, arg) => {
   var destination = arg["destination"];
   log.info(`check if ${destination} is mounted`);
 
-  //   var encMngr = new EncryptionManager();
-  const encryptionManager = encryptionManagerFactory.create(os.platform());
+  const encryptionManager = encryptionManagerFactory.create();
   var mounted = encryptionManager.isMounted(destination);
   if (mounted) event.returnValue = true;
   else event.returnValue = false;
@@ -55,7 +52,7 @@ ipcMain.on(constants.IPC_MOUNT_UNMOUNT, (event, arg) => {
   );
 
   //   var encMngr = new EncryptionManager();
-  const encMngr = encryptionManagerFactory.create(os.platform());
+  const encMngr = encryptionManagerFactory.create();
 
   if (!encMngr.isMounted(destination)) {
     log.log(`{destination} is not mounted, mounting`);
