@@ -14,14 +14,20 @@ ipcMain.on(constants.IPC_GET_DIRECTORY, (event, arg) => {
 
 ipcMain.on(constants.IPC_ACCT_EXISTS, (event, arg) => {
   var source = arg["source"];
-  log.info(`cheking if password exists for source folder: [${source}]`);
+  log.info(`checking if password exists for source folder: [${source}]`);
 
   if (!source || source === "") {
     log.error(`missing source folder [${source}]`.red);
   }
 
-  var pm = new PasswordManager(source);
-  var password = pm.searchForPassword();
+  let password = null;
+
+  if (os.platform() === "darwin") {
+    var pm = new PasswordManager(source);
+    password = pm.searchForPassword();
+  } else if (os.platform() === "linux") {
+    password = "12345";
+  }
 
   if (password) {
     event.returnValue = !!UIHelper.confirmPasswordUse();
