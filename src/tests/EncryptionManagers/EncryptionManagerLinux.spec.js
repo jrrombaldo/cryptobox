@@ -5,7 +5,7 @@ const EncryptionManagerLinux = require("../../scripts/EncryptionManagers/Encrypt
 function test_setup() {}
 
 describe("scripts/EncryptionManagers/EncryptionManagerLinux", () => {
-  describe("mount(source, destination)", () => {
+  describe("mount(source, destination, passwordManager)", () => {
     it("Given source and destination folder should mount the volume from the correct source", () => {
       const rootFolder = "~/cryptobox_temp_test";
       const sourceFolder = `${rootFolder}/encrypted`;
@@ -13,13 +13,14 @@ describe("scripts/EncryptionManagers/EncryptionManagerLinux", () => {
       shell.mkdir(rootFolder);
       shell.mkdir(sourceFolder);
       shell.mkdir(destinationFolder);
+      shell.exec(`echo '12345' >> ${rootFolder}/pass.txt`);
       const encryptionManager = new EncryptionManagerLinux();
-      encryptionManager.mount(sourceFolder, destinationFolder);
+      const passwordManager = `cat ${rootFolder}/pass.txt`;
+      encryptionManager.mount(sourceFolder, destinationFolder, passwordManager);
       shell.touch(`${destinationFolder}/test.txt`);
       const results = shell.exec(`mount | grep 'decrypted'`);
       shell.exec(`umount ${destinationFolder}`);
       shell.rm("-R", rootFolder);
-      console.log("grep >>", results);
       expect(results.code).to.eql(0);
     });
   });

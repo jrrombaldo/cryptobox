@@ -5,22 +5,21 @@ const ShellHelper = require("./../ShellHelper");
 // TODO: implement class correctly (currently it is a copy of EncryptionManagerOSX)
 class EncryptionManagerLinux {
   MOUNT_CMD =
-    "{encfs} {container} {mountPoint} --standard --require-macs -ohard_remove --idle={idleMinutesToUnmount}";
+    "{encfs} {container} {mountPoint} --standard --extpass='{passwordManager}' --require-macs -ohard_remove --idle={idleMinutesToUnmount}";
   UNMOUNT_CMD = "umount {0}";
   IS_MOUNTED_CMD = "";
 
-  mount(source, destination) {
+  mount(source, destination, passwordManager) {
     // destination = checkDir(destination)
     // source = checkDir(source)
     log.debug(`about to mount directory [${source}] into [${destination}]`);
-    // var passwordManager = new PasswordManager(source);
 
-    var mountCMD = format(this.MOUNT_CMD, {
+    const mountCMD = format(this.MOUNT_CMD, {
       encfs: "encfs",
       mountPoint: destination,
       container: source,
-      idleMinutesToUnmount: 25
-      // passwd_prg: passwordManager.getPasswordApp(),
+      idleMinutesToUnmount: 25,
+      passwordManager: passwordManager
       // name: volumeName
     });
 
