@@ -9,7 +9,7 @@ class EncryptionManagerLinux {
   UNMOUNT_CMD = "umount {0}";
   IS_MOUNTED_CMD = "";
 
-  mount(source, destination, passwordManager) {
+  mount(source, destination, volumeName) {
     // destination = checkDir(destination)
     // source = checkDir(source)
     log.debug(`about to mount directory [${source}] into [${destination}]`);
@@ -19,7 +19,7 @@ class EncryptionManagerLinux {
       mountPoint: destination,
       container: source,
       idleMinutesToUnmount: 25,
-      passwordManager: passwordManager
+      passwordManager: "cat ~/cryptobox/pass.txt" //TODO: Replace by a password manager
       // name: volumeName
     });
 

@@ -26,7 +26,7 @@ ipcMain.on(constants.IPC_ACCT_EXISTS, (event, arg) => {
     var pm = new PasswordManager(source);
     password = pm.searchForPassword();
   } else if (os.platform() === "linux") {
-    password = "12345";
+    password = "12345"; // forced password while Linux password manager is not defined
   }
 
   if (password) {
