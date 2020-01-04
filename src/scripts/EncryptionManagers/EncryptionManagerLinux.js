@@ -5,38 +5,33 @@ const ShellHelper = require("./../ShellHelper");
 // TODO: implement class correctly (currently it is a copy of EncryptionManagerOSX)
 class EncryptionManagerLinux {
   MOUNT_CMD =
-    "{encfs}  {container} {mount_point} --extpass='{passwd_prg}'  --standard --require-macs -ovolname={name} -oallow_root -olocal -ohard_remove -oauto_xattr -onolocalcaches";
+    "{encfs} {container} {mountPoint} --standard --extpass='{passwordManager}' --require-macs -ohard_remove --idle={idleMinutesToUnmount}";
   UNMOUNT_CMD = "umount {0}";
   IS_MOUNTED_CMD = "";
 
   mount(source, destination, volumeName) {
     // destination = checkDir(destination)
     // source = checkDir(source)
-    log.debug(
-      `about to mount directory [${source}] into [${destination}] with volumeName [${volumeName}]`
-    );
-    var passwordManager = new PasswordManager(source);
+    log.debug(`about to mount directory [${source}] into [${destination}]`);
 
-    var mountCMD = format(this.MOUNT_CMD, {
+    const mountCMD = format(this.MOUNT_CMD, {
       encfs: "encfs",
-      idle: 25,
+      mountPoint: destination,
       container: source,
-      mount_point: destination,
-      passwd_prg: passwordManager.getPasswordApp(),
-      name: volumeName
+      idleMinutesToUnmount: 25,
+      passwordManager: "cat ~/cryptobox/pass.txt" //TODO: Replace by a password manager
+      // name: volumeName
     });
 
     log.debug(`mounting command [${mountCMD}]`);
 
-    if (!volumeName)
-      volumeName = path.basename(source).concat(constants.VOLUME_NAME_SUFIX);
+    // if (!volumeName)
+    //   volumeName = path.basename(source).concat(constants.VOLUME_NAME_SUFIX);
 
     if (this.isMounted(destination)) {
       log.info(`${detination} already mounted`.red);
     } else {
-      log.debug(
-        `mounting directory [${source}] into [${destination}] with volumeName [${volumeName}]`
-      );
+      log.debug(`mounting directory [${source}] into [${destination}]`);
       console.time();
       ShellHelper.execute(mountCMD);
       console.timeEnd();
