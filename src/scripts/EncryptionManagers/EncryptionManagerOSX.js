@@ -1,10 +1,10 @@
-const PasswordManager = require("../../scripts/PasswordManager");
+const PasswordManager = require("../../scripts/PasswordManagers/PasswordManagerOSX.js");
 const format = require("string-format");
 const ShellHelper = require("./../ShellHelper");
 
 class EncryptionManagerOSX {
-  MOUNT_CMD =
-    "{encfs}  {container} {mount_point} --extpass='{passwd_prg}'  --standard --require-macs -ovolname={name} -oallow_root -olocal -ohard_remove -oauto_xattr -onolocalcaches";
+
+  MOUNT_CMD = "{encfs}  {container} {mount_point} --extpass='{password_manager}' --standard --require-macs -ovolname={name} -oallow_root -olocal -ohard_remove -oauto_xattr -onolocalcaches";
   UNMOUNT_CMD = "umount {0}";
   IS_MOUNTED_CMD = "";
 
@@ -14,6 +14,7 @@ class EncryptionManagerOSX {
     log.debug(
       `about to mount directory [${source}] into [${destination}] with volumeName [${volumeName}]`
     );
+    
     var passwordManager = new PasswordManager(source);
 
     var mountCMD = format(this.MOUNT_CMD, {
@@ -21,14 +22,15 @@ class EncryptionManagerOSX {
       idle: 25,
       container: source,
       mount_point: destination,
-      passwd_prg: passwordManager.getPasswordApp(),
+      password_manager: passwordManager.getPasswordApp(),
       name: volumeName
     });
 
     log.debug(`mounting command [${mountCMD}]`);
 
     if (!volumeName)
-      volumeName = path.basename(source).concat(constants.VOLUME_NAME_SUFIX);
+      volumeName = 'Cryptobox';
+      //volumeName = path.basename(source).concat(constants.VOLUME_NAME_SUFIX);
 
     if (this.isMounted(destination)) {
       log.info(`${detination} already mounted`.red);
