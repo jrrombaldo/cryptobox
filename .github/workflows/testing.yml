@@ -32,18 +32,18 @@ jobs:
         if: matrix.platform == 'ubuntu-latest'
         run: |
           sudo apt install encfs -y
+          mkdir -p ~/cryptobox/ && echo "12345" > ~/cryptobox/pass.txt
           
           
       - name: Prepare MAC
         if: matrix.platform == 'macos-latest'
         run: |
-          ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+          sudo ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
           brew install encfs
 
 
       - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.platform}}
         run: |
-          mkdir -p /home/runner/cryptobox/
-          echo "12345" > /home/runner/cryptobox/pass.txt
+          
           npm ci
           npm test
