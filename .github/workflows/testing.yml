@@ -17,6 +17,8 @@ jobs:
     runs-on:  ${{ matrix.platform}}
 
     strategy:
+      fail-fast: false
+      max-parallel: 10
       matrix:
         platform: [ubuntu-latest, macos-latest]
         node-version: [12.x]
@@ -37,9 +39,7 @@ jobs:
           
       - name: Prepare MAC
         if: matrix.platform == 'macos-latest'
-        run: |
-          sudo ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
-          brew install encfs
+        uses: artemnovichkov/action-homebrew@0.1.0
 
 
       - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.platform}}
