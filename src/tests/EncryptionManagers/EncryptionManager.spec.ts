@@ -1,6 +1,6 @@
 const expect = require("chai").expect;
 const shell = require("shelljs");
-const EncryptionManagerFactory = require("../../scripts/EncryptionManagers/EncryptionManagerFactory");
+let EncryptionManagerFactory= require('../../scripts/EncryptionManagers/EncryptionManagerFactory');
 
 function test_setup() {}
 

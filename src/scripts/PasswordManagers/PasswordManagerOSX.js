@@ -55,4 +55,4 @@ class PasswordManagerOSX {
   }
 }
 
-module.exports = PasswordManagerOSX;
+module.exports = {PasswordManagerOSX};

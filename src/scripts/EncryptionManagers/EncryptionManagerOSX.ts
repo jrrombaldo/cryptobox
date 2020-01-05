@@ -1,43 +1,46 @@
-import PasswordManager = require("../PasswordManager");
-
 let format = require('string-format');
 import * as ShellHelper from "../ShellHelper";
 import {log} from '../LogHelper'
+import {PasswordManagerOSX} from '../PasswordManagers/PasswordManagerOSX'
 
+export class EncryptionManagerOSX extends EncryptionManagerBase {
 
-// TODO: implement class correctly (currently it is a copy of EncryptionManagerOSX)
-export class EncryptionManagerLinux {
-    MOUNT_CMD =
-        "{encfs} {container} {mountPoint} --standard --extpass='{passwordManager}' --require-macs -ohard_remove --idle={idleMinutesToUnmount}";
-    UNMOUNT_CMD = "umount {0}";
-    IS_MOUNTED_CMD = "";
+    MOUNT_CMD: string = "{encfs}  {container} {mount_point} --extpass='{password_manager}' --standard --require-macs -ovolname={name} -oallow_root -olocal -ohard_remove -oauto_xattr -onolocalcaches";
+    UNMOUNT_CMD: string = "umount {0}";
+    IS_MOUNTED_CMD: string = "";
 
-  // TODO after investigate the windows impl, consider migrate this to the base
-  mount(source: string, destination: string) {
-        log.debug(`about to mount directory [${source}] into [${destination}]`);
+    mount(source: string, destination: string): void {
+        log.debug(
+            `about to mount directory [${source}] into [${destination}] with volumeName [${this.volumeName}]`
+        );
 
-        const mountCMD = format(this.MOUNT_CMD, {
+        const passwordManager = new PasswordManagerOSX(source);
+
+        let mountCMD = format(this.MOUNT_CMD, {
             encfs: "encfs",
-            mountPoint: destination,
+            idle: 25,
             container: source,
-            idleMinutesToUnmount: 25,
-            passwordManager: "cat ~/cryptobox/pass.txt" //TODO: Replace by a password manager
+            mount_point: destination,
+            password_manager: passwordManager.getPasswordApp(),
+            name: this.volumeName
         });
 
         log.debug(`mounting command [${mountCMD}]`);
 
+
         if (this.isMounted(destination)) {
             log.info(`${destination} already mounted`.red);
         } else {
-            log.debug(`mounting directory [${source}] into [${destination}]`);
+            log.debug(
+                `mounting directory [${source}] into [${destination}] with volumeName [${this.volumeName}]`
+            );
             console.time();
             ShellHelper.execute(mountCMD);
             console.timeEnd();
         }
     }
 
-    // TODO after investigate the windows impl, consider migrate this to the base
-    unmount(destination: string): void {
+    unmount(destination:string):void {
         // destination = checkDir(destination)
         log.debug(`unmounting ${destination}`);
 
@@ -53,8 +56,7 @@ export class EncryptionManagerLinux {
         }
     }
 
-    isMounted(destination: string): boolean {
-        // destination = checkDir(destination)
+    isMounted(destination:string):boolean {
         log.debug(`checking if "${destination}" is mounted`);
 
         let cmd = format("mount | grep -qs '{}' ", destination);
@@ -76,4 +78,4 @@ export class EncryptionManagerLinux {
     }
 }
 
-module.exports = EncryptionManagerLinux;
+module.exports = EncryptionManagerOSX;
