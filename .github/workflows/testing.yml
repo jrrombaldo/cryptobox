@@ -36,10 +36,11 @@ jobs:
           sudo apt install encfs -y
           mkdir -p ~/cryptobox/ && echo "12345" > ~/cryptobox/pass.txt
           
-          
       - name: Prepare MAC
         if: matrix.platform == 'macos-latest'
-        uses: artemnovichkov/action-homebrew@0.1.0
+        run: |
+          /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+          brew install encfs
 
 
       - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.platform}}
