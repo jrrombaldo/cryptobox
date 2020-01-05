@@ -3,12 +3,10 @@ on:
     - cron:  '0 16 * * FRI'
   push:
     branches:
-    - dev
-    - master
+      - '*'
   pull_request:
     branches:
-    - dev
-    - master
+      - '*'
 
 jobs:
   testing:
