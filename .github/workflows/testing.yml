@@ -1,6 +1,6 @@
 on:
   schedule:
-    - cron:  '*/5 * * * *'
+    - cron:  '0 16 * * FRI'
   push:
     branches:
     - dev
@@ -20,8 +20,8 @@ jobs:
       fail-fast: false
       max-parallel: 10
       matrix:
-        platform: [ubuntu-latest, macos-latest]
-        node-version: [12.x]
+        platform: [ubuntu-16.04, ubuntu-18.04, ubuntu-latest, macos, macos-latest]
+        node-version: [8.x, 10.x, 12.x]
 
     steps:
       - uses: actions/checkout@v1
