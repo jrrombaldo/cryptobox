@@ -12,7 +12,7 @@ on:
 
 jobs:
   testing:
-    name: Testing on linux
+    name: Testing on 
 
     runs-on:  ${{ matrix.platform}}
 
@@ -35,6 +35,7 @@ jobs:
             brew install encfs
           elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
             sudo apt install encfs -y
+            cat "cr1pt0b0x" > ~/pass.txt
           fi
           npm ci
           npm test
