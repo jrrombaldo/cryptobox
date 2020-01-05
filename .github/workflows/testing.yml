@@ -27,15 +27,21 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-
-      - name: running the tests with node ${{ matrix.node-version }} and ${{ matrix.platform}}
+      
+      - name: Prepare linux
+        if: matrix.platform == ubuntu-latest
         run: |
-          if [ "$(uname)" == "Darwin" ]; then
-            ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
-            brew install encfs
-          elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-            sudo apt install encfs -y
-            echo "cr1pt0b0x" > ~/pass.txt
-          fi
+          sudo apt install encfs -y
+          echo "cr1pt0b0x" > /home/runner/cryptobox/pass.txt
+          
+      - name: Prepare MAC
+        if: matrix.platform == macos-latest
+        run: |
+          ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+          brew install encfs
+
+
+      - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.platform}}
+        run: |
           npm ci
           npm test
