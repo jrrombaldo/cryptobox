@@ -29,13 +29,13 @@ jobs:
           node-version: ${{ matrix.node-version }}
       
       - name: Prepare linux
-        if: matrix.platform == ubuntu-latest
+        if: matrix.platform == 'ubuntu-latest'
         run: |
           sudo apt install encfs -y
           echo "cr1pt0b0x" > /home/runner/cryptobox/pass.txt
           
       - name: Prepare MAC
-        if: matrix.platform == macos-latest
+        if: matrix.platform == 'macos-latest'
         run: |
           ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
           brew install encfs
