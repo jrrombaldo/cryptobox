@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+    - dev
+  pull_request:
+    branches:
+    - dev
+
+jobs:
+  -test: 
+    name: Testing on linux
+    
+    runs-on:  ${{ matrix.platform}}
+    
+    strategy:
+      matrix:
+        platform: [ubuntu-16.04, ubuntu-18.04, ubuntu-latest, macos-latest, macos ]
+        node-version: [8.x, 10.x, 12.x]
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Using node version ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: running the tests with node ${{ matrix.node-version }} and ${{ matrix.platform}}
+        run: |
+          npm ci
+          npm test
