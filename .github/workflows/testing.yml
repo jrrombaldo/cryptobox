@@ -14,13 +14,13 @@ jobs:
   testing:
     name: Testing on 
 
-    runs-on:  ${{ matrix.platform}}
+    runs-on:  ${{ matrix.os}}
 
     strategy:
       fail-fast: false
       max-parallel: 10
       matrix:
-        platform: [ubuntu-16.04, ubuntu-18.04, ubuntu-latest, macos, macos-latest]
+        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-latest, macos, macos-latest]
         node-version: [10.x, 12.x]
 
     steps:
@@ -31,20 +31,20 @@ jobs:
           node-version: ${{ matrix.node-version }}
       
       - name: Prepare linux
-        if: matrix.platform == 'ubuntu-latest'
+        if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04'
         run: |
           sudo apt install encfs -y
           mkdir -p ~/cryptobox/ && echo "12345" > ~/cryptobox/pass.txt
           
       - name: Prepare MAC
-        if: matrix.platform == 'macos-latest'
+        if: matrix.os == 'macos-latest' || matrix.os == 'macos'
         run: |
           /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
           brew cask install osxfuse
           brew install encfs
 
 
-      - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.platform}}
+      - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.os}}
         run: |
           npm ci
           npm test
