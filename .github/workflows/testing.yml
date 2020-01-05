@@ -43,6 +43,6 @@ jobs:
 
       - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.platform}}
         run: |
-          echo "12345" > ~/pass.txt
+          echo "12345" > /home/runner/cryptobox/pass.txt
           npm ci
           npm test
