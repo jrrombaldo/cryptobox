@@ -19,6 +19,8 @@
     "update-electron-app": "^1.1.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
     "electron-builder": "^21.2.0",
     "electron-packager": "^14.1.1"
   },
@@ -27,7 +29,7 @@
     "pack": "sh darwin-pack.sh",
     "build": " ./node_modules/.bin/electron-builder --publish never --config electron-builder.yaml",
     "app": "sh darwin-pack.sh && open release-builds/cloud-enc-darwin-x64/cloud-enc.app",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha src/**/*.spec.js"
   },
   "repository": {
     "type": "git",
