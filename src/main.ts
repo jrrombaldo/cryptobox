@@ -5,7 +5,7 @@ import {app, BrowserWindow} from 'electron';
 const fs = require("fs");
 const path = require('path');
 
-import {log} from './scripts/LogHelper.js'
+import {log} from './scripts/LogHelper'
 
 //
 // require('update-electron-app')({logger: log});
