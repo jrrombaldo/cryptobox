@@ -20,8 +20,8 @@ jobs:
       fail-fast: false
       max-parallel: 10
       matrix:
-        os: [ubuntu-16.04, ubuntu-18.04, ubuntu-latest, macos, macos-latest]
-        node-version: [10.x, 12.x]
+        os: [ubuntu-18.04, ubuntu-latest, macos, macos-latest]
+        node-version: [12.x]
 
     steps:
       - uses: actions/checkout@v1
