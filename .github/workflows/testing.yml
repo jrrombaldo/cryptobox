@@ -32,7 +32,7 @@ jobs:
         if: matrix.platform == 'ubuntu-latest'
         run: |
           sudo apt install encfs -y
-          echo "cr1pt0b0x" > /home/runner/cryptobox/pass.txt
+          
           
       - name: Prepare MAC
         if: matrix.platform == 'macos-latest'
@@ -43,5 +43,6 @@ jobs:
 
       - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.platform}}
         run: |
+          echo "12345" > ~/pass.txt
           npm ci
           npm test
