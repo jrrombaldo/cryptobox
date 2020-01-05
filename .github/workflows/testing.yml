@@ -30,5 +30,11 @@ jobs:
 
       - name: running the tests with node ${{ matrix.node-version }} and ${{ matrix.platform}}
         run: |
+          if [ "$(uname)" == "Darwin" ]; then
+            ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+            brew install encfs
+          elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
+            sudo apt install encfs -y
+          fi
           npm ci
           npm test
