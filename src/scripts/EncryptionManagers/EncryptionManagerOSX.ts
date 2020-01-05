@@ -78,4 +78,4 @@ export class EncryptionManagerOSX extends EncryptionManagerBase {
     }
 }
 
-module.exports = EncryptionManagerOSX;
+module.exports = {EncryptionManagerOSX};

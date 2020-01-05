@@ -1,6 +1,8 @@
 const expect = require("chai").expect;
 const shell = require("shelljs");
-let EncryptionManagerFactory= require('../../scripts/EncryptionManagers/EncryptionManagerFactory');
+// let EncryptionManagerFactory= require('../../scripts/EncryptionManagers/EncryptionManagerFactory.ts');
+// import {EncryptionManagerFactory} from '../../scripts/EncryptionManagers/EncryptionManagerFactory';
+import * as EncryptionManagerFactory from '../../scripts/EncryptionManagers/EncryptionManagerFactory';
 
 function test_setup() {}
 

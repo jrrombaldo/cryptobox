@@ -1,15 +1,12 @@
 import {app, BrowserWindow} from 'electron';
-// import  {Menu} = require('electron');
-// const {Tray} = require('electron');
 
 const fs = require("fs");
 const path = require('path');
 
 import {log} from './scripts/LogHelper'
 
-//
-// require('update-electron-app')({logger: log});
-// import {log} from '../scripts/LogHelper.js'
+require('update-electron-app')({logger: log});
+
 
 let mainWindow: BrowserWindow;
 // let appIcon = null;
@@ -43,29 +40,13 @@ function createWindow() {
     })
 }
 
-// function createTray() {
-//     // const { Tray } = require('electron')
-//     appIcon = new Tray(path.join(__dirname, trayIcon));
-//     // appIcon = new Tray(path.join(__dirname, 'resources/cloud-enc.png'))
-//
-//     const trayMenu = Menu.buildFromTemplate([{
-//         label: "Cryptobox",
-//         click: () => {
-//             console.log("tray menu clicked")
-//         }
-//     }]);
-//     appIcon.setTitle("Cryptobox");
-//     appIcon.setContextMenu(trayMenu)
-// }
 
 app.on('ready', () => {
     loadScripts();
-    // createTray();
     createWindow();
 });
 
 app.on('window-all-closed', function () {
-    // if (appIcon) appIcon.destroy();
     app.quit()
 });
 

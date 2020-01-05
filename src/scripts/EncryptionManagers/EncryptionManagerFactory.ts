@@ -1,8 +1,9 @@
-import {EncryptionManagerOSX} from './EncryptionManagerOSX';
-import {EncryptionManagerLinux} from './EncryptionManagerLinux';
+// let EncryptionManagerOSX = require('./EncryptionManagerOSX.ts');
+// let EncryptionManagerLinux = require('./EncryptionManagerLinux.ts');
+import{ EncryptionManagerOSX} from './EncryptionManagerOSX';
+import{EncryptionManagerLinux} from './EncryptionManagerLinux';
 
 const os = require("os");
-
 export const EncryptionManagerFactory = {
     managers: {
         darwin: EncryptionManagerOSX,
@@ -19,4 +20,4 @@ export const EncryptionManagerFactory = {
     }
 };
 
-module.exports = EncryptionManagerFactory;
+// module.exports = EncryptionManagerFactory;

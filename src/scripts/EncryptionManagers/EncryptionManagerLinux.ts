@@ -76,4 +76,4 @@ export class EncryptionManagerLinux {
     }
 }
 
-module.exports = EncryptionManagerLinux;
+module.exports = {EncryptionManagerLinux};

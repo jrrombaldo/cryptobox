@@ -30,7 +30,7 @@
     "build": "tsc",
     "watch": "tsc -w",
     "start": "npm run build && electron ./dist/main.js",
-    "test": "mocha src/**/*.spec.*"
+    "test": "npm run build && mocha src/**/*.spec.*"
   },
   "repository": {
     "type": "git",
