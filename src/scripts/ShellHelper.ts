@@ -11,7 +11,7 @@ import * as os from "os";
 // INFO: https://github.com/shelljs/shelljs/wiki/Electron-compatibility
 shell.config.execPath = shell.which("node").stdout;
 
-function execute(cmd: any, silent = false) {
+export function execute(cmd: any, silent = false) {
   log.debug(`executing command ${cmd}`);
 
   var result = shell.exec(cmd, { silent: silent });
@@ -22,13 +22,13 @@ function execute(cmd: any, silent = false) {
   return [result.code, result.stdout, result.stderr];
 }
 
-function getOS() {
+export function getOS() {
   var platform = constants.SUPPORTED_PLATFORM[os.platform()];
   if (!platform) log.error(`unsuported platform [${os.platform()}]`);
   return platform;
 }
 
-function checkOSSupport() {
+export function checkOSSupport() {
   // https://nodejs.org/dist/latest-v5.x/docs/api/os.html#os_os_platform
   log.debug(`running on OS type [${os.type()}], release [${os.release()}]`);
 
@@ -48,7 +48,7 @@ function checkOSSupport() {
   // }
 }
 
-function checkDir(dir) {
+export function checkDir(dir:string) {
   var fullpath = path.resolve(dir);
   log.debug(`absolute path: ${fullpath}`);
 
@@ -65,4 +65,4 @@ function checkDir(dir) {
   }
 }
 
-module.exports = { checkOSSupport, getOS, execute, checkDir };
+// module.exports = { checkOSSupport, getOS, execute, checkDir };
