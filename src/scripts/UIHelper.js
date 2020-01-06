@@ -1,7 +1,7 @@
-const {dialog} = require('electron');
+const { dialog } = require('electron');
 
 function getDirectoryNatively() {
-    var directory = dialog.showOpenDialogSync({properties: ['openDirectory']});
+    var directory = dialog.showOpenDialogSync({ properties: ['openDirectory'] });
     log.info(`getDirectoryNatively result: [${directory}]`);
     return directory
 }
@@ -22,4 +22,4 @@ function confirmPasswordUse() {
     })
 }
 
-module.exports = {getDirectoryNatively, confirmPasswordUse};
+module.exports = { getDirectoryNatively, confirmPasswordUse };

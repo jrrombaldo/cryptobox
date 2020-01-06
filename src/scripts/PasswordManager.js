@@ -94,7 +94,7 @@ class PasswordManagerOSX {
             comment: OSX_KEYCHAIN_DESC,
         })
 
-            [status, result] = ShellHelper.execute(command)
+        [status, result] = ShellHelper.execute(command)
     }
 
 }

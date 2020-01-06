@@ -14,7 +14,7 @@ export class EncryptionManagerLinux extends EncryptionManagerBase {
 
   getMountCMD(source: string, destination: string, passwordManager: string): string {
     let impl = "encfs";
-    return  `${impl} ${source} ${destination} --standard --extpass='${passwordManager}' --require-macs -ohard_remove --idle=${this.idleTimeout}`;
+    return `${impl} ${source} ${destination} --standard --extpass='${passwordManager}' --require-macs -ohard_remove --idle=${this.idleTimeout}`;
   }
 
   getUmountCMD(destination: string): string {

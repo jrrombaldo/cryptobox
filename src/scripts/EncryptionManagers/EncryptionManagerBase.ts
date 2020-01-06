@@ -1,19 +1,19 @@
-import {log} from "../LogHelper";
+import { log } from "../LogHelper";
 import * as ShellHelper from "../ShellHelper";
-import {PasswordManagerFactory} from "../PasswordManagers/PasswordManagerFactory";
+import { PasswordManagerFactory } from "../PasswordManagers/PasswordManagerFactory";
 
 export default abstract class EncryptionManagerBase {
   volumeName: string = "cryptobox";
-  idleTimeout:number = 25;
+  idleTimeout: number = 25;
 
   setVolumeNme(source: string): void {
     // this.volumeName = path.basename(source).concat(constants.VOLUME_NAME_SUFIX);
     this.volumeName = "cryptobox";
   }
 
-  abstract getMountCMD(source:string, destination:string, passwordManager:string):string;
-  abstract getUmountCMD(destination:string):string;
-  abstract getIsMountedCMD(destination:string):string;
+  abstract getMountCMD(source: string, destination: string, passwordManager: string): string;
+  abstract getUmountCMD(destination: string): string;
+  abstract getIsMountedCMD(destination: string): string;
 
   unmount(destination: string): void {
     log.debug(`unmounting ${destination}`);
@@ -51,7 +51,7 @@ export default abstract class EncryptionManagerBase {
 
   mount(source: string, destination: string): void {
     log.debug(
-        `about to mount directory [${source}] into [${destination}] with volumeName [${this.volumeName}]`
+      `about to mount directory [${source}] into [${destination}] with volumeName [${this.volumeName}]`
     );
 
     let passwordManager = PasswordManagerFactory.create(source);
@@ -63,7 +63,7 @@ export default abstract class EncryptionManagerBase {
       log.info(`${destination} already mounted`.red);
     } else {
       log.debug(
-          `mounting directory [${source}] into [${destination}] with volumeName [${this.volumeName}]`
+        `mounting directory [${source}] into [${destination}] with volumeName [${this.volumeName}]`
       );
       console.time();
       ShellHelper.execute(mountCMD);

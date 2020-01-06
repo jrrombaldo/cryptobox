@@ -1,17 +1,17 @@
-import {EncryptionManagerOSX} from "../EncryptionManagers/EncryptionManagerOSX";
-import {EncryptionManagerLinux} from "../EncryptionManagers/EncryptionManagerLinux";
+import { EncryptionManagerOSX } from "../EncryptionManagers/EncryptionManagerOSX";
+import { EncryptionManagerLinux } from "../EncryptionManagers/EncryptionManagerLinux";
 
 import { PasswordManagerOSX } from './PasswordManagerOSX';
-import { PasswordManagerLinux} from './PasswordManagerLinux';
+import { PasswordManagerLinux } from './PasswordManagerLinux';
 
 const os = require("os");
 
-export class PasswordManagerFactory  {
-  public static create(source:string) {
+export class PasswordManagerFactory {
+  public static create(source: string) {
     const managers = this.getManagers();
     if (!(os.platform() in managers)) {
       throw new Error(
-          `The platform ${os.platform()} is not currently supported.`
+        `The platform ${os.platform()} is not currently supported.`
       );
     }
     let manager = managers[os.platform()];

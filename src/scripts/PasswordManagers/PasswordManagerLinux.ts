@@ -1,24 +1,24 @@
-import {log} from "../LogHelper";
+import { log } from "../LogHelper";
 const format = require("string-format");
 import * as ShellHelper from '../ShellHelper'
 
 export class PasswordManagerLinux {
   PASS_CRYPTOBOX_FOLDER = "cryptobox";
-// const OSX_KEYCHAIN_SEARCH_CMD =
-//   'security find-generic-password  -a "{account}" -s "{service}" -w ';
-// const PASS_SEARCH_KEY_CMD = "pass find ";
+  // const OSX_KEYCHAIN_SEARCH_CMD =
+  //   'security find-generic-password  -a "{account}" -s "{service}" -w ';
+  // const PASS_SEARCH_KEY_CMD = "pass find ";
   OSX_KEYCHAIN_SAVE_CMD =
-      "security add-generic-password -a '{account}' -s '{service}' -D 'application password' -j \"{comment}\" -w'{password}' -U";
+    "security add-generic-password -a '{account}' -s '{service}' -D 'application password' -j \"{comment}\" -w'{password}' -U";
   OSX_KEYCHAIN_DESC = "Created by cloud-enc @ $( date +'%Y.%m.%d-%H:%M')";
-  entryName:string;
+  entryName: string;
 
 
-  constructor(sourceFolder:string) {
+  constructor(sourceFolder: string) {
     this.entryName = this.getAccountName(sourceFolder);
     log.debug(`Instance of OSX password manager for ${this.entryName}`);
   }
 
-  getAccountName(sourceFolder:string) {
+  getAccountName(sourceFolder: string) {
     return `${this.PASS_CRYPTOBOX_FOLDER}/${sourceFolder}`;
   }
 

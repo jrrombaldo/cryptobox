@@ -48,7 +48,7 @@ export function checkOSSupport() {
   // }
 }
 
-export function checkDir(dir:string) {
+export function checkDir(dir: string) {
   var fullpath = path.resolve(dir);
   log.debug(`absolute path: ${fullpath}`);
 
