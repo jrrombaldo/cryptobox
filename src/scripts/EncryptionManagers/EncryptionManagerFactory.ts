@@ -1,23 +1,23 @@
-// let EncryptionManagerOSX = require('./EncryptionManagerOSX.ts');
-// let EncryptionManagerLinux = require('./EncryptionManagerLinux.ts');
-import{ EncryptionManagerOSX} from './EncryptionManagerOSX';
-import{EncryptionManagerLinux} from './EncryptionManagerLinux';
+import { EncryptionManagerOSX } from "./EncryptionManagerOSX";
+import { EncryptionManagerLinux } from "./EncryptionManagerLinux";
+import * as os from "os";
 
-const os = require("os");
-export const EncryptionManagerFactory = {
-    managers: {
-        darwin: EncryptionManagerOSX,
-        linux: EncryptionManagerLinux
-    },
-    create() {
-        if (!(os.platform() in this.managers)) {
-            throw new Error(
-                `The platform ${os.platform()} is not currently supported.`
-            );
-        }
-        let manager = this.managers[os.platform()];
-        return new manager();
+export class EncryptionManagerFactory {
+  public static create() {
+    const managers = this.getManagers();
+    if (!(os.platform() in managers)) {
+      throw new Error(
+        `The platform ${os.platform()} is not currently supported.`
+      );
     }
-};
+    let manager = managers[os.platform()];
+    return new manager();
+  }
 
-// module.exports = EncryptionManagerFactory;
+  private static getManagers(): any {
+    return {
+      darwin: EncryptionManagerOSX,
+      linux: EncryptionManagerLinux
+    };
+  }
+}

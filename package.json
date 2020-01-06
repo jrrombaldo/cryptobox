@@ -19,18 +19,19 @@
     "update-electron-app": "^1.1.1"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
-    "mocha": "^6.2.2",
     "@types/mocha": "^5.2.7",
+    "chai": "^4.2.0",
     "electron-builder": "^21.2.0",
     "electron-packager": "^14.1.1",
+    "mocha": "^6.2.2",
+    "sucrase": "^3.12.0",
     "typescript": "^3.7.4"
   },
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
     "start": "npm run build && electron ./dist/main.js",
-    "test": "npm run build && mocha src/**/*.spec.*"
+    "test": "mocha src/**/*.spec.ts -r ./require-sucrase.js"
   },
   "repository": {
     "type": "git",
