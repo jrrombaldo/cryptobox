@@ -1,4 +1,4 @@
-on: *
+on: [push, pull_request, schedule, release, check_run, deployment]
 jobs:
     PrepareEnvironment:
       name: preparing environments to run tests
