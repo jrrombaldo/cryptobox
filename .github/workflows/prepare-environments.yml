@@ -1,21 +1,23 @@
 on: [push, pull_request, schedule, release, check_run, deployment]
 jobs:
     PrepareEnvironment:
-      name: preparing environments to run tests
-  
-      steps:
-            
+        name: preparing environments to run tests
+        
+        runs-on: [ubuntu-16.04, ubuntu-18.04, linux, ubuntu-latest, macos, macos-latest]
+
+        steps:
+
         - name: prepare SHELL
           run: |
             set -euo pipefail
             set -x
-        
+
         - name: prepare Linux
           if: matrix.os == 'ubuntu-latest' || matrix.os == 'ubuntu-16.04' || matrix.os == 'ubuntu-18.04'
           run: |
             sudo apt install encfs -y
             mkdir -p ~/cryptobox/ && echo "12345" > ~/cryptobox/pass.txt
-            
+
         - name: prepare MAC
           if: matrix.os == 'macos-latest' || matrix.os == 'macos'
           run: |
