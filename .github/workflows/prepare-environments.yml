@@ -1,3 +1,4 @@
+on: *
 jobs:
     PrepareEnvironment:
       name: preparing environments to run tests
