@@ -45,9 +45,10 @@ ipcMain.on(constants.IPC_ACCT_EXISTS, (event, arg) => {
 ipcMain.on(constants.IPC_IS_MOUNTED, (event, arg) => {
   var destination = arg["destination"];
   info(`check if ${destination} is mounted`);
+  const volume = new Volume();
 
-  const encryptionManager = encryptionManagerFactory.create();
-  var mounted = encryptionManager.isMounted(destination);
+  const encryptionService = EncryptionServiceFactory.create();
+  const mounted = encryptionService.volumeIsMounted(volume);
   if (mounted) event.returnValue = true;
   else event.returnValue = false;
 });
