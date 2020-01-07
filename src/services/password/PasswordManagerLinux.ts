@@ -1,11 +1,12 @@
-import { log } from "../LogHelper";
+import { log } from "../../utils/LogUtil";
 const format = require("string-format");
-import * as ShellHelper from '../ShellHelper'
+import * as ShellHelper from '../../utils/ShellUtil'
 
-export class PasswordManagerOSX {
-  OSX_KEYCHAIN_ACCOUNT = "cryptobox";
-  OSX_KEYCHAIN_SEARCH_CMD =
-    'security find-generic-password  -a "{account}" -s "{service}" -w ';
+export class PasswordManagerLinux {
+  PASS_CRYPTOBOX_FOLDER = "cryptobox";
+  // const OSX_KEYCHAIN_SEARCH_CMD =
+  //   'security find-generic-password  -a "{account}" -s "{service}" -w ';
+  // const PASS_SEARCH_KEY_CMD = "pass find ";
   OSX_KEYCHAIN_SAVE_CMD =
     "security add-generic-password -a '{account}' -s '{service}' -D 'application password' -j \"{comment}\" -w'{password}' -U";
   OSX_KEYCHAIN_DESC = "Created by cloud-enc @ $( date +'%Y.%m.%d-%H:%M')";
@@ -17,16 +18,13 @@ export class PasswordManagerOSX {
     log.debug(`Instance of OSX password manager for ${this.entryName}`);
   }
 
-  getAccountName(sourceFolder: string): string {
-    return `${this.OSX_KEYCHAIN_ACCOUNT}:${sourceFolder}`;
+  getAccountName(sourceFolder: string) {
+    return `${this.PASS_CRYPTOBOX_FOLDER}/${sourceFolder}`;
   }
 
-  getPasswordApp(): string {
-    let command = format(this.OSX_KEYCHAIN_SEARCH_CMD, {
-      account: this.entryName,
-      service: this.OSX_KEYCHAIN_ACCOUNT
-    });
-    return command;
+  getPasswordApp() {
+    // return `pass ${PASS_CRYPTOBOX_FOLDER}/$USER`;
+    return "cat ~/cryptobox/pass.txt";
   }
 
   searchForPassword() {
@@ -58,5 +56,5 @@ export class PasswordManagerOSX {
   //   })[(status, result)] = ShellHelper.execute(command));
   // }
 }
-
-// module.exports = {PasswordManagerOSX};
+//
+// module.exports = PasswordManagerLinux;

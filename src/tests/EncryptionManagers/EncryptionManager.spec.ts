@@ -1,4 +1,4 @@
-import { EncryptionManagerFactory } from "../../scripts/EncryptionManagers/EncryptionManagerFactory";
+import { EncryptionManagerFactory } from "../../services/encryption/EncryptionServiceFactory";
 
 const expect = require("chai").expect;
 const shell = require("shelljs");

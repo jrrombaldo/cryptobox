@@ -1,5 +1,5 @@
-import { EncryptionManagerOSX } from "../EncryptionManagers/EncryptionManagerOSX";
-import { EncryptionManagerLinux } from "../EncryptionManagers/EncryptionManagerLinux";
+import { EncryptionManagerOSX } from "../encryption/EncryptionServiceOSX";
+import { EncryptionManagerLinux } from "../encryption/EncryptionServiceLinux";
 
 import { PasswordManagerOSX } from './PasswordManagerOSX';
 import { PasswordManagerLinux } from './PasswordManagerLinux';

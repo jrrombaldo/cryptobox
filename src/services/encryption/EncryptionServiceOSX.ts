@@ -2,7 +2,7 @@ let format = require("string-format");
 // import * as ShellHelper from "../ShellHelper";
 // import { log } from "../LogHelper";
 // import { PasswordManagerOSX } from "../PasswordManagers/PasswordManagerOSX";
-import EncryptionManagerBase from "./EncryptionManagerBase";
+import EncryptionManagerBase from "./EncryptionServiceBase";
 
 export class EncryptionManagerOSX extends EncryptionManagerBase {
   getIsMountedCMD(destination: string): string {

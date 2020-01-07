@@ -1,8 +1,9 @@
-import { log } from "../LogHelper";
-import * as ShellHelper from "../ShellHelper";
-import { PasswordManagerFactory } from "../PasswordManagers/PasswordManagerFactory";
+import { log } from "../../utils/LogUtil";
+import * as ShellHelper from "../../utils/ShellUtil";
+import { PasswordManagerFactory } from "../password/PasswordManagerFactory";
+import {EncryptionService} from './EncryptionService'
 
-export default abstract class EncryptionManagerBase {
+export default abstract class EncryptionManagerBase implements EncryptionService {
   volumeName: string = "cryptobox";
   idleTimeout: number = 25;
 

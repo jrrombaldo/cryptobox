@@ -1,5 +1,5 @@
-import { EncryptionManagerOSX } from "./EncryptionManagerOSX";
-import { EncryptionManagerLinux } from "./EncryptionManagerLinux";
+import { EncryptionManagerOSX } from "./EncryptionServiceOSX";
+import { EncryptionManagerLinux } from "./EncryptionServiceLinux";
 import * as os from "os";
 
 export class EncryptionManagerFactory {

@@ -1,6 +1,6 @@
-import EncryptionManagerBase from "./EncryptionManagerBase";
-import * as ShellHelper from "../ShellHelper";
-import { log } from "../LogHelper";
+import EncryptionManagerBase from "./EncryptionServiceBase";
+import * as ShellHelper from "../../utils/ShellUtil";
+import { log } from "../../utils/LogUtil";
 
 // TODO: implement class correctly (currently it is a copy of EncryptionManagerOSX)
 export class EncryptionManagerLinux extends EncryptionManagerBase {
