@@ -1,10 +1,8 @@
 let format = require("string-format");
-// import * as ShellHelper from "../ShellHelper";
-// import { log } from "../LogHelper";
-// import { PasswordManagerOSX } from "../PasswordManagers/PasswordManagerOSX";
+import { EncryptionService } from './EncryptionService'
 import EncryptionManagerBase from "./EncryptionServiceBase";
 
-export class EncryptionManagerOSX extends EncryptionManagerBase {
+export class EncryptionManagerOSX extends EncryptionManagerBase implements EncryptionService {
   getIsMountedCMD(destination: string): string {
     return `mount | grep -qs '${destination}'`
   }

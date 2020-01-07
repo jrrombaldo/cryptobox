@@ -1,9 +1,10 @@
+import { EncryptionService } from "./EncryptionService";
 import { EncryptionManagerOSX } from "./EncryptionServiceOSX";
 import { EncryptionManagerLinux } from "./EncryptionServiceLinux";
 import * as os from "os";
 
 export class EncryptionManagerFactory {
-  public static create() {
+  public static create(): EncryptionService {
     const managers = this.getManagers();
     if (!(os.platform() in managers)) {
       throw new Error(
@@ -14,7 +15,7 @@ export class EncryptionManagerFactory {
     return new manager();
   }
 
-  private static getManagers(): any {
+  private static getManagers(): EncryptionService {
     return {
       darwin: EncryptionManagerOSX,
       linux: EncryptionManagerLinux
