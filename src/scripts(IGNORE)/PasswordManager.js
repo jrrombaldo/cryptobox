@@ -1,9 +1,9 @@
 const colors = require('colors');
 const format = require("string-format");
 
-var log = require('./LogHelper.js').log;
-var ShellHelper = require('./ShellHelper.js');
-var constants = require('../constants.js');
+var log = require('./LogHelper.js.js').log;
+var ShellHelper = require('./ShellHelper.js.js');
+var constants = require('../utils/constants.js/index.js');
 
 const OSX_KEYCHAIN_ACCOUNT = "cryptobox";
 const OSX_KEYCHAIN_SEARCH_CMD = 'security find-generic-password  -a "{account}" -s "{service}" -w ';
@@ -94,7 +94,7 @@ class PasswordManagerOSX {
             comment: OSX_KEYCHAIN_DESC,
         })
 
-            [status, result] = ShellHelper.execute(command)
+        [status, result] = ShellHelper.execute(command)
     }
 
 }

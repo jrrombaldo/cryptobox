@@ -2,7 +2,7 @@
   "name": "cryptobox",
   "version": "0.0.1",
   "description": "encrypt file systems",
-  "main": "src/main/main.js",
+  "main": "./dist/main.js",
   "dependencies": {
     "bootstrap": "^4.3.1",
     "bootswatch": "^4.3.1",
@@ -19,17 +19,19 @@
     "update-electron-app": "^1.1.1"
   },
   "devDependencies": {
+    "@types/mocha": "^5.2.7",
     "chai": "^4.2.0",
-    "mocha": "^6.2.2",
     "electron-builder": "^21.2.0",
-    "electron-packager": "^14.1.1"
+    "electron-packager": "^14.1.1",
+    "mocha": "^6.2.2",
+    "sucrase": "^3.12.0",
+    "typescript": "^3.7.4"
   },
   "scripts": {
-    "start": "electron .",
-    "pack": "sh darwin-pack.sh",
-    "build": " ./node_modules/.bin/electron-builder --publish never --config electron-builder.yaml",
-    "app": "sh darwin-pack.sh && open release-builds/cloud-enc-darwin-x64/cloud-enc.app",
-    "test": "mocha src/**/*.spec.js"
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "npm run build && electron ./dist/main.js",
+    "test": "mocha src/**/*.spec.ts -r ./require-sucrase.js"
   },
   "repository": {
     "type": "git",

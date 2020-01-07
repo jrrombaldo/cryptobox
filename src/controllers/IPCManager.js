@@ -1,10 +1,10 @@
 const { ipcMain } = require("electron");
 const colors = require("colors");
-const constants = require("../constants");
-var log = require("./LogHelper.js").log;
-var PasswordManager = require("./PasswordManager.js");
-var UIHelper = require("./UIHelper.js");
-const encryptionManagerFactory = require("./EncryptionManagers/EncryptionManagerFactory");
+const constants = require("../utils/constants");
+var log = require("./LogHelper.js.js").log;
+var PasswordManager = require("./PasswordManager.js.js");
+var UIHelper = require("./UIHelper.js.js");
+const encryptionManagerFactory = require("../services/encryption/EncryptionServiceFactory");
 
 ipcMain.on(constants.IPC_GET_DIRECTORY, (event, arg) => {
   var directory = UIHelper.getDirectoryNatively();

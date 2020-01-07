@@ -1,6 +1,6 @@
 const {ipcRenderer, dialog, window} = require('electron');
-log = require('../scripts/LogHelper.js').log;
-const constants = require('../constants.js');
+log = require('../scripts(IGNORE)/LogHelper.js.js').log;
+const constants = require('../../utils/constants.js/index.js');
 
 var source = document.getElementById('source');
 var destination = document.getElementById('destination');
