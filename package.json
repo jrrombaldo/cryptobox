@@ -4,6 +4,7 @@
   "description": "encrypt file systems",
   "main": "./dist/main.js",
   "dependencies": {
+    "@types/shelljs": "^0.8.6",
     "bootstrap": "^4.3.1",
     "bootswatch": "^4.3.1",
     "colors": "^1.3.3",
