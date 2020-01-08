@@ -1,24 +1,21 @@
-import EncryptionManagerBase from "./EncryptionServiceBase";
-import { EncryptionService } from './EncryptionService'
-import * as ShellHelper from "../../utils/ShellUtil";
-import { log } from "../../utils/LogUtil";
+import EncryptionServiceBase from "./EncryptionServiceBase";
+import { EncryptionService } from "./EncryptionService";
+import { Volume } from "../../entities/Volume";
 
-// TODO: implement class correctly (currently it is a copy of EncryptionManagerOSX)
-export class EncryptionManagerLinux extends EncryptionManagerBase implements EncryptionService  {
-
-  getIsMountedCMD(destination: string): string {
-    return `mount | grep -qs '${destination}'`
+export class EncryptionServiceLinux extends EncryptionServiceBase
+  implements EncryptionService {
+  getIsMountedCMD(volume: Volume): string {
+    return `mount | grep -qs '${volume.decryptedFolderPath}'`;
   }
 
-  getMountCMD(source: string, destination: string, passwordManager: string): string {
+  getUnmountCMD(volume: Volume): string {
+    return `umount "${volume.decryptedFolderPath}"`;
+  }
+
+  getMountCMD(volume: Volume, passwordCommand: string): string {
     let impl = "encfs";
-    return `${impl} ${source} ${destination} --standard --extpass='${passwordManager}' --require-macs -ohard_remove --idle=${this.idleTimeout}`;
+    return `${impl} ${volume.encryptedFolderPath} ${volume.decryptedFolderPath} --standard --extpass='${passwordCommand}' --require-macs -ohard_remove --idle=${volume.ttl}`;
   }
-
-  getUmountCMD(destination: string): string {
-    return `umount "${destination}"`
-  }
-
 }
 
-module.exports = { EncryptionManagerLinux };
+// module.exports = { EncryptionManagerLinux: EncryptionServiceLinux };

@@ -1,9 +1,8 @@
-import {Password} from '../../entities/Password'
-import {Volume} from '../../entities/Volume'
-import {PasswordService} from '../password/PasswordService'
+import { Password } from "../../entities/Password";
+import { Volume } from "../../entities/Volume";
 
 export interface EncryptionService {
-  mount(volume: Volume, passwordService: PasswordService): void;
+  mount(volume: Volume, password: Password): void;
   unmount(volume: Volume): void;
   volumeIsMounted(volume: Volume): boolean;
 }

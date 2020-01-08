@@ -1,70 +1,69 @@
+import { Password } from "../../entities/Password";
+import { Volume } from "../../entities/Volume";
+import { EncryptionService } from "./EncryptionService";
+import { PasswordServiceFactory } from "../password/PasswordServiceFactory";
+
 import { log } from "../../utils/LogUtil";
 import * as ShellHelper from "../../utils/ShellUtil";
-import { PasswordManagerFactory } from "../password/PasswordManagerFactory";
-import {EncryptionService} from './EncryptionService'
 
-export default abstract class EncryptionManagerBase implements EncryptionService {
-  volumeName: string = "cryptobox";
-  idleTimeout: number = 25;
+export default abstract class EncryptionServiceBase
+  implements EncryptionService {
+  abstract getMountCMD(volume: Volume, passwordCommand: string): string;
+  abstract getUnmountCMD(volume: Volume): string;
+  abstract getIsMountedCMD(volume: Volume): string;
 
-  setVolumeNme(source: string): void {
-    // this.volumeName = path.basename(source).concat(constants.VOLUME_NAME_SUFIX);
-    this.volumeName = "cryptobox";
-  }
+  unmount(volume: Volume): void {
+    log.debug(`unmounting ${volume.decryptedFolderPath}`);
 
-  abstract getMountCMD(source: string, destination: string, passwordManager: string): string;
-  abstract getUmountCMD(destination: string): string;
-  abstract getIsMountedCMD(destination: string): string;
-
-  unmount(destination: string): void {
-    log.debug(`unmounting ${destination}`);
-
-    if (this.isMounted(destination)) {
-      log.debug(` is mounted and unmounting ${destination}`);
+    if (this.volumeIsMounted(volume)) {
+      log.debug(` is mounted and unmounting ${volume.decryptedFolderPath}`);
       console.time();
-      ShellHelper.execute(this.getUmountCMD(destination));
+      ShellHelper.execute(this.getUnmountCMD(volume));
       console.timeEnd();
     } else {
-      log.info(`${destination} not mounted`);
+      log.info(`${volume.decryptedFolderPath} not mounted`);
     }
   }
 
-  isMounted(destination: string): boolean {
-    log.debug(`checking if "${destination}" is mounted`);
+  volumeIsMounted(volume: Volume): boolean {
+    log.debug(`checking if "${volume.decryptedFolderPath}" is mounted`);
 
-    let cmd = this.getIsMountedCMD(destination);
+    let cmd = this.getIsMountedCMD(volume);
     log.debug(`checking if is mounted command: ${cmd}`);
 
     let [statusCode, stdout, stderr] = ShellHelper.execute(cmd);
 
     if (statusCode == 0) {
-      log.info(`folder [${destination}] is already mounted`);
+      log.info(`folder [${volume.decryptedFolderPath}] is already mounted`);
       return true;
     } else if (statusCode == 1) {
-      log.info(`folder [${destination}] is NOT mounted`);
+      log.info(`folder [${volume.decryptedFolderPath}] is NOT mounted`);
       return false;
     } else {
-      let msg = `Failed to check is [${destination}] mounted\n\n return = ${statusCode}\n\n stderr=[${stderr}] \n\n stdout=[${stdout}]`;
+      let msg = `Failed to check is [${volume.decryptedFolderPath}] mounted\n\n return = ${statusCode}\n\n stderr=[${stderr}] \n\n stdout=[${stdout}]`;
       log.error(msg);
       return false;
     }
   }
 
-  mount(source: string, destination: string): void {
+  mount(volume: Volume, password: Password): void {
     log.debug(
-      `about to mount directory [${source}] into [${destination}] with volumeName [${this.volumeName}]`
+      `about to mount directory [${volume.encryptedFolderPath}] into [${volume.decryptedFolderPath}] with volumeName [${volume.name}]`
     );
 
-    let passwordManager = PasswordManagerFactory.create(source);
-    let mountCMD = this.getMountCMD(source, destination, passwordManager.getPasswordApp());
+    let passwordService = PasswordServiceFactory.create(volume);
+    let mountCMD = this.getMountCMD(
+      volume,
+      passwordService.retrievePasswordCommand(volume)
+    );
 
     log.debug(`mounting command [${mountCMD}]`);
 
-    if (this.isMounted(destination)) {
-      log.info(`${destination} already mounted`.red);
+    if (this.volumeIsMounted(volume)) {
+      log.info(`${volume.decryptedFolderPath} already mounted`.red);
     } else {
       log.debug(
-        `mounting directory [${source}] into [${destination}] with volumeName [${this.volumeName}]`
+        `mounting directory [${volume.encryptedFolderPath}] into [${volume.decryptedFolderPath}] with volumeName [${volume.name}]`
       );
       console.time();
       ShellHelper.execute(mountCMD);
@@ -72,4 +71,3 @@ export default abstract class EncryptionManagerBase implements EncryptionService
     }
   }
 }
-

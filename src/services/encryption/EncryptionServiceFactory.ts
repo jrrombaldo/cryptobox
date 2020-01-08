@@ -1,6 +1,6 @@
 import { EncryptionService } from "./EncryptionService";
-import { EncryptionManagerOSX } from "./EncryptionServiceOSX";
-import { EncryptionManagerLinux } from "./EncryptionServiceLinux";
+import { EncryptionServiceOSX } from "./EncryptionServiceOSX";
+import { EncryptionServiceLinux } from "./EncryptionServiceLinux";
 import * as os from "os";
 
 export class EncryptionManagerFactory {
@@ -17,8 +17,8 @@ export class EncryptionManagerFactory {
 
   private static getManagers(): EncryptionService {
     return {
-      darwin: EncryptionManagerOSX,
-      linux: EncryptionManagerLinux
+      darwin: EncryptionServiceOSX,
+      linux: EncryptionServiceLinux
     };
   }
 }
