@@ -1,6 +1,6 @@
 import { Password } from "../../entities/Password";
 import { Volume } from "../../entities/Volume";
-import PasswordServiceBase from "./PasswordServiceBase";
+import { PasswordServiceBase } from "./PasswordServiceBase";
 import { PasswordService } from "./PasswordService";
 
 import { log } from "../../utils/LogUtil";

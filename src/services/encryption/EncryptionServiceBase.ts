@@ -6,7 +6,7 @@ import { PasswordServiceFactory } from "../password/PasswordServiceFactory";
 import { log } from "../../utils/LogUtil";
 import * as ShellHelper from "../../utils/ShellUtil";
 
-export default abstract class EncryptionServiceBase
+export abstract class EncryptionServiceBase
   implements EncryptionService {
   abstract getMountCMD(volume: Volume, passwordCommand: string): string;
   abstract getUnmountCMD(volume: Volume): string;

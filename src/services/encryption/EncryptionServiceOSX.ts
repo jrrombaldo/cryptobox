@@ -1,6 +1,6 @@
 import { Volume } from "../../entities/Volume";
 import { EncryptionService } from "./EncryptionService";
-import EncryptionServiceBase from "./EncryptionServiceBase";
+import { EncryptionServiceBase } from "./EncryptionServiceBase";
 
 export class EncryptionServiceOSX extends EncryptionServiceBase
   implements EncryptionService {

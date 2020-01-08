@@ -25,4 +25,4 @@ export class PasswordServiceFactory {
   }
 }
 
-// module.exports = PasswordServiceFactory;
+module.exports = PasswordServiceFactory;

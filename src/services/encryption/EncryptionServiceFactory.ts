@@ -3,7 +3,7 @@ import { EncryptionServiceOSX } from "./EncryptionServiceOSX";
 import { EncryptionServiceLinux } from "./EncryptionServiceLinux";
 import * as os from "os";
 
-export class EncryptionManagerFactory {
+export class EncryptionServiceFactory {
   public static create(): EncryptionService {
     const managers = this.getManagers();
     if (!(os.platform() in managers)) {
@@ -22,3 +22,5 @@ export class EncryptionManagerFactory {
     };
   }
 }
+
+module.exports {EncryptionServiceFactory}

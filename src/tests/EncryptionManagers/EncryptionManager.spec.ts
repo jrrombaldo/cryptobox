@@ -1,4 +1,4 @@
-import { EncryptionManagerFactory } from "../../services/encryption/EncryptionServiceFactory";
+import { EncryptionServiceFactory } from "../../services/encryption/EncryptionServiceFactory";
 
 const expect = require("chai").expect;
 const shell = require("shelljs");
@@ -27,7 +27,7 @@ describe("scripts/EncryptionManagers/EncryptionManagerFactory(osname)", () => {
         shell.exec(`echo '12345' >> ${rootFolder}/pass.txt`); //passwordManager para Linux
         //const passwordManager = `cat ${rootFolder}/pass.txt`;
       }
-      const encryptionManager = EncryptionManagerFactory.create();
+      const encryptionManager = EncryptionServiceFactory.create();
       encryptionManager.mount(sourceFolder, destinationFolder, "");
       shell.touch(`${destinationFolder}/test.txt`);
       const results = shell.exec(`mount | grep 'decrypted'`);
