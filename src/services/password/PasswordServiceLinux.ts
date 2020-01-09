@@ -23,5 +23,5 @@ export class PasswordServiceLinux extends PasswordServiceBase
     log.info(`saving password for ${password.passwordManagerRef}`);
   }
 }
-//
-// module.exports = PasswordServiceLinux;
+
+module.exports = { PasswordServiceLinux };

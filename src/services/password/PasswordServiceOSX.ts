@@ -53,4 +53,4 @@ export class PasswordServiceOSX extends PasswordServiceBase
   }
 }
 
-// module.exports = {PasswordServiceOSX};
+module.exports = { PasswordServiceOSX};
