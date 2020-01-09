@@ -1,13 +1,13 @@
 var shell = require("shelljs");
-const log = require("../scripts/LogHelper.js").log;
-const constants = require("../constants");
-const fs = require("fs");
-const path = require("path");
+import * as shelljs from 'shelljs'
+import { log } from "./LogUtil";
+import * as constants from './constants'
 
+import * as path from 'path'
+import * as fs from 'fs'
 import * as os from "os";
-// import { log } from "../LogHelper";
-// TODO: replace with https://www.npmjs.com/package/shelljs.exec
 
+// TODO: replace with https://www.npmjs.com/package/shelljs.exec
 // INFO: https://github.com/shelljs/shelljs/wiki/Electron-compatibility
 shell.config.execPath = shell.which("node").stdout;
 
@@ -23,10 +23,17 @@ export function execute(cmd: any, silent = false) {
 }
 
 export function getOS() {
-  var platform = constants.SUPPORTED_PLATFORM[os.platform()];
-  if (!platform) log.error(`unsuported platform [${os.platform()}]`);
-  return platform;
+  let platform: string = os.platform()
+
+  if (!Object.values(constants.SUPPORTED_PLATFORM).includes(platform)) {
+    log.error(`unsuported platform [${platform}]`);
+    return null;
+  } else {
+    log.info(`running on [${platform}]`);
+    return platform;
+  }
 }
+
 
 export function checkOSSupport() {
   // https://nodejs.org/dist/latest-v5.x/docs/api/os.html#os_os_platform

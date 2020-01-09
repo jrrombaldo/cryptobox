@@ -57,11 +57,12 @@ process.on("uncaughtException", function(error) {
   console.log(error);
 });
 
-function loadScripts() {
-  const scripts = fs.readdirSync("./dist/client");
-  scripts.forEach(function(script: string) {
-    script.endsWith(".js") &&
-      import("./client/" + script) &&
-      log.debug(`imported: ${script} `);
-  });
-}
+// no longer required, also the scripts no longers sits on a single folder.
+// function loadScripts() {
+//   const scripts = fs.readdirSync("./dist/client");
+//   scripts.forEach(function(script: string) {
+//     script.endsWith(".js") &&
+//       import("./client/" + script) &&
+//       log.debug(`imported: ${script} `);
+//   });
+// }

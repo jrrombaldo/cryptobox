@@ -60,7 +60,7 @@ export abstract class EncryptionServiceBase
     log.debug(`mounting command [${mountCMD}]`);
 
     if (this.volumeIsMounted(volume)) {
-      log.info(`${volume.decryptedFolderPath} already mounted`.red);
+      log.info(`${volume.decryptedFolderPath} already mounted`);
     } else {
       log.debug(
         `mounting directory [${volume.encryptedFolderPath}] into [${volume.decryptedFolderPath}] with volumeName [${volume.name}]`
