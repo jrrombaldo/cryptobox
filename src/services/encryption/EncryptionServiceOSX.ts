@@ -4,6 +4,7 @@ import { EncryptionServiceBase } from "./EncryptionServiceBase";
 
 export class EncryptionServiceOSX extends EncryptionServiceBase
   implements EncryptionService {
+
   getIsMountedCMD(volume: Volume): string {
     return `mount | grep -qs '${volume.decryptedFolderPath}'`;
   }
@@ -18,4 +19,4 @@ export class EncryptionServiceOSX extends EncryptionServiceBase
   }
 }
 
-module.exports = { EncryptionManagerOSX: EncryptionServiceOSX };
+module.exports = { EncryptionServiceOSX };

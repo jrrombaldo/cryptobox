@@ -18,4 +18,4 @@ export class EncryptionServiceLinux extends EncryptionServiceBase
   }
 }
 
-// module.exports = { EncryptionManagerLinux: EncryptionServiceLinux };
+module.exports = { EncryptionServiceLinux };

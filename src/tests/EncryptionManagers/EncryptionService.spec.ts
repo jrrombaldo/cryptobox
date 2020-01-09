@@ -4,12 +4,10 @@ import { Password } from "../../entities/Password";
 
 const expect = require("chai").expect;
 const shell = require("shelljs");
-// let EncryptionManagerFactory= require('../../scripts/EncryptionManagers/EncryptionManagerFactory.ts');
-// import {EncryptionManagerFactory} from '../../scripts/EncryptionManagers/EncryptionManagerFactory';
 
 function test_setup() {}
 
-describe("scripts/EncryptionManagers/EncryptionManagerFactory(osname)", () => {
+describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
   describe("mount(source, destination, volumeName)", () => {
     it("Given source and destination folder should mount the volume from the correct source", () => {
       const os = require("os");
@@ -31,7 +29,8 @@ describe("scripts/EncryptionManagers/EncryptionManagerFactory(osname)", () => {
       }
       const encryptionManager = EncryptionServiceFactory.create();
       //TODO: instantiate correctly Volume and Password to make test works
-      encryptionManager.mount(new Volume(), new Password());
+      encryptionManager.mount(new Volume('testing', sourceFolder, destinationFolder, 0), 
+                              new Password());
       shell.touch(`${destinationFolder}/test.txt`);
       const results = shell.exec(`mount | grep 'decrypted'`);
       shell.exec(`umount ${destinationFolder}`);

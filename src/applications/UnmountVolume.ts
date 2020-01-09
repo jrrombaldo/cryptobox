@@ -1,6 +1,5 @@
 import { EncryptionService } from "../services/encryption/EncryptionService";
 import { Volume } from "../entities/Volume";
-import { VolumeState } from "../entities/VolumeState";
 
 export class UnmountVolume {
   encryptionService: EncryptionService;
@@ -15,7 +14,6 @@ export class UnmountVolume {
 
   public run(): void {
     try {
-      this.checkVolumeState();
       this.unmountVolume();
       this.response = `${this.volume.decryptedFolderPath} unmounted with success`;
     } catch (error) {
@@ -24,20 +22,10 @@ export class UnmountVolume {
     }
   }
 
-  private checkVolumeState(): void {
-    if (this.volume.state = VolumeState.Unmounted) {
-      throw new Error(
-        `the volume ${this.volume.encryptedFolderPath} is not mounted.`
-      );
-    }
-  }
-
   private unmountVolume(): void {
     this.encryptionService.unmount(this.volume);
-    const volumeIsMounted = this.encryptionService.volumeIsMounted(this.volume);
-    if (volumeIsMounted === false) {
-      this.volume.state = VolumeState.Unmounted;
-    } else {
+    const volumeIsMounted = this.encryptionService.isMounted(this.volume);
+    if (volumeIsMounted === true) {
       const e = `error while trying to unmount the volume ${this.volume.decryptedFolderPath}`;
       throw new Error(e);
     }

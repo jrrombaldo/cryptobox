@@ -15,12 +15,13 @@ export class EncryptionServiceFactory {
     return manager;
   }
 
-  private static getManagers(): {[platform: string] : EncryptionService}  {
+  private static getManagers(): {[platform: string] :  EncryptionService }  {
     return {
-      'darwin': new EncryptionServiceOSX,
-      'linux':  new EncryptionServiceLinux
+      'darwin':  new EncryptionServiceOSX(),
+      'linux':  new EncryptionServiceLinux()
     }
   }
+
 }
 
 module.exports = {EncryptionServiceFactory};
