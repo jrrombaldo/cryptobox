@@ -8,7 +8,7 @@ import { log } from "./utils/LogUtil";
 require("update-electron-app")({ logger: log });
 
 let mainWindow: BrowserWindow;
-// let appIcon = null;
+
 const icoPath = "./static/resources/elec.icns";
 const icoPathPNG = "./static/resources/cloud-enc.png";
 const trayIcon = "../../static/resources/example.png";
@@ -27,7 +27,7 @@ function createWindow() {
   });
 
   mainWindow.setVisibleOnAllWorkspaces(true);
-  mainWindow.loadFile("../static/ui/index.html");
+  mainWindow.loadFile("./static/ui/index.html");
 
   mainWindow.on("closed", function() {
     mainWindow = null;
@@ -39,7 +39,6 @@ function createWindow() {
 }
 
 app.on("ready", () => {
-  //TODO: fazer funcionar o loadScripts
   //loadScripts();
   createWindow();
 });
