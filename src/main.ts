@@ -5,7 +5,11 @@ const path = require("path");
 
 import { log } from "./utils/LogUtil";
 
-require("update-electron-app")({ logger: log });
+require("update-electron-app")({
+  repo: "bnh6/cryptobox",
+  updateInterval: "1 hour",
+  logger: log
+});
 
 let mainWindow: BrowserWindow;
 
@@ -27,7 +31,7 @@ function createWindow() {
   });
 
   mainWindow.setVisibleOnAllWorkspaces(true);
-  mainWindow.loadFile("./static/ui/index.html");
+  mainWindow.loadFile(`${__dirname}/static/ui/index.html`);
 
   mainWindow.on("closed", function() {
     mainWindow = null;
