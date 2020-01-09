@@ -17,8 +17,8 @@ export class EncryptionServiceFactory {
 
   private static getManagers(): {[platform: string] : EncryptionService}  {
     return {
-      'darwin': new EncryptionServiceOSX(),
-      'linux': new EncryptionServiceLinux()
+      'darwin': new EncryptionServiceOSX,
+      'linux':  new EncryptionServiceLinux
     }
   }
 }

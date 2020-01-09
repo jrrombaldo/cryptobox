@@ -19,8 +19,8 @@ export class PasswordServiceFactory {
 
   private static getManagers(): {[platform: string] : PasswordService} {
     return {
-      'darwin': new PasswordServiceOSX(),
-      'linux': new PasswordServiceLinux()
+      'darwin': new PasswordServiceOSX,
+      'linux': new PasswordServiceLinux
     };
   }
 }
