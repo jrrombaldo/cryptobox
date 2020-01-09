@@ -5,22 +5,22 @@ import * as os from "os";
 
 export class EncryptionServiceFactory {
   public static create(): EncryptionService {
-    const managers = this.getManagers();
+    const managers: {[platform: string] : EncryptionService} = this.getManagers();
     if (!(os.platform() in managers)) {
       throw new Error(
         `The platform ${os.platform()} is not currently supported.`
       );
     }
     let manager = managers[os.platform()];
-    return new manager();
+    return manager;
   }
 
-  private static getManagers(): EncryptionService {
+  private static getManagers(): {[platform: string] : EncryptionService}  {
     return {
-      darwin: EncryptionServiceOSX,
-      linux: EncryptionServiceLinux
-    };
+      'darwin': new EncryptionServiceOSX(),
+      'linux': new EncryptionServiceLinux()
+    }
   }
 }
 
-module.exports {EncryptionServiceFactory}
+module.exports = {EncryptionServiceFactory};

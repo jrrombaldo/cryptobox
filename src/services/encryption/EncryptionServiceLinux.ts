@@ -1,6 +1,6 @@
-import EncryptionServiceBase from "./EncryptionServiceBase";
-import { EncryptionService } from "./EncryptionService";
 import { Volume } from "../../entities/Volume";
+import { EncryptionService } from "./EncryptionService";
+import { EncryptionServiceBase } from "./EncryptionServiceBase";
 
 export class EncryptionServiceLinux extends EncryptionServiceBase
   implements EncryptionService {
