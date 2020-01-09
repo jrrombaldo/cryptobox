@@ -39,7 +39,8 @@ function createWindow() {
 }
 
 app.on("ready", () => {
-  loadScripts();
+  //TODO: fazer funcionar o loadScripts
+  //loadScripts();
   createWindow();
 });
 
@@ -57,10 +58,10 @@ process.on("uncaughtException", function(error) {
 });
 
 function loadScripts() {
-  const scripts = fs.readdirSync("./src/scripts");
+  const scripts = fs.readdirSync("./dist/client");
   scripts.forEach(function(script: string) {
     script.endsWith(".js") &&
-      import("./scripts/" + script) &&
+      import("./client/" + script) &&
       log.debug(`imported: ${script} `);
   });
 }

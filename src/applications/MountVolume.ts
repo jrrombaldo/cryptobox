@@ -1,21 +1,21 @@
 import { EncryptionService } from "../services/encryption/EncryptionService";
-import { PasswordService } from "../services/password/PasswordService";
+import { Password } from "../entities/Password";
 import { Volume } from "../entities/Volume";
-import { MountedState } from "../domain/aggregates/MountedState";
+import { VolumeState } from "../entities/VolumeState";
 
 export class MountVolume {
   encryptionService: EncryptionService;
-  passwordService: PasswordService;
+  password: Password;
   volume: Volume;
   response: string;
 
   constructor(
     volume: Volume,
     encryptionService: EncryptionService,
-    passwordService: PasswordService
+    password: Password
   ) {
     this.encryptionService = encryptionService;
-    this.passwordService = passwordService;
+    this.password = password;
     this.volume = volume;
   }
 
@@ -31,7 +31,7 @@ export class MountVolume {
   }
 
   private checkVolumeState(): void {
-    if (this.volume.state instanceof MountedState) {
+    if (this.volume.state == VolumeState.Mounted) {
       throw new Error(
         `the volume ${this.volume.decryptedFolderPath} is already mounted.`
       );
@@ -39,10 +39,10 @@ export class MountVolume {
   }
 
   private mountVolume(): void {
-    this.encryptionService.mount(this.volume, this.passwordService);
+    this.encryptionService.mount(this.volume, this.password);
     const volumeIsMounted = this.encryptionService.volumeIsMounted(this.volume);
     if (volumeIsMounted === true) {
-      this.volume.nextState();
+      this.volume.state = VolumeState.Mounted;
     } else {
       const e = `error while trying to mount the volume ${this.volume.encryptedFolderPath}`;
       throw new Error(e);
