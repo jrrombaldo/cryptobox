@@ -1,4 +1,6 @@
 import { EncryptionServiceFactory } from "../../services/encryption/EncryptionServiceFactory";
+import { Volume } from "../../entities/Volume";
+import { Password } from "../../entities/Password";
 
 const expect = require("chai").expect;
 const shell = require("shelljs");
@@ -28,7 +30,8 @@ describe("scripts/EncryptionManagers/EncryptionManagerFactory(osname)", () => {
         //const passwordManager = `cat ${rootFolder}/pass.txt`;
       }
       const encryptionManager = EncryptionServiceFactory.create();
-      encryptionManager.mount(sourceFolder, destinationFolder, "");
+      //TODO: instantiate correctly Volume and Password to make test works
+      encryptionManager.mount(new Volume(), new Password());
       shell.touch(`${destinationFolder}/test.txt`);
       const results = shell.exec(`mount | grep 'decrypted'`);
       shell.exec(`umount ${destinationFolder}`);

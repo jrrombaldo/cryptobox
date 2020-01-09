@@ -1,6 +1,6 @@
-import { EncryptionService } from "../domain/services/EncryptionService";
-import { PasswordService } from "../domain/services/PasswordService";
-import { Volume } from "../domain/aggregates/Volume";
+import { EncryptionService } from "../services/encryption/EncryptionService";
+import { PasswordService } from "../services/password/PasswordService";
+import { Volume } from "../entities/Volume";
 import { MountedState } from "../domain/aggregates/MountedState";
 
 export class MountVolume {

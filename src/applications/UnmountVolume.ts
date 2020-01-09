@@ -1,5 +1,5 @@
-import { EncryptionService } from "../domain/services/EncryptionService";
-import { Volume } from "../domain/aggregates/Volume";
+import { EncryptionService } from "../services/encryption/EncryptionService";
+import { Volume } from "../entities/Volume";
 import { UnmountedState } from "../domain/aggregates/UnmountedState";
 
 export class UnmountVolume {

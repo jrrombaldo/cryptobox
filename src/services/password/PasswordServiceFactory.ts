@@ -7,20 +7,20 @@ const os = require("os");
 
 export class PasswordServiceFactory {
   public static create(volume: Volume): PasswordService {
-    const managers = this.getManagers();
+    const managers: {[platform: string] : PasswordService} = this.getManagers();
     if (!(os.platform() in managers)) {
       throw new Error(
         `The platform ${os.platform()} is not currently supported.`
       );
     }
     let manager = managers[os.platform()];
-    return new manager(volume);
+    return manager;
   }
 
-  private static getManagers(): PasswordService {
+  private static getManagers(): {[platform: string] : PasswordService} {
     return {
-      darwin: PasswordServiceOSX,
-      linux: PasswordServiceLinux
+      'darwin': new PasswordServiceOSX(),
+      'linux': new PasswordServiceLinux()
     };
   }
 }
