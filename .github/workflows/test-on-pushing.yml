@@ -1,11 +1,9 @@
-name: exec tests
+name: exec tests ${{ github.ref }}"
 on: push
-
-
 
 jobs:
   testing:
-    name: Testing on "$github.ref"
+    name: Testing on 
     runs-on:  ${{ matrix.os}}
     strategy:
       fail-fast: false
