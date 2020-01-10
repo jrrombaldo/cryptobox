@@ -1,7 +1,5 @@
 import { app, BrowserWindow } from "electron";
-
-const fs = require("fs");
-const path = require("path");
+import * as path from "path";
 
 import { log } from "./utils/LogUtil";
 
@@ -31,8 +29,9 @@ function createWindow() {
   });
 
   mainWindow.setVisibleOnAllWorkspaces(true);
-  mainWindow.loadFile(`${__dirname}/static/ui/index.html`);
+  mainWindow.loadFile(path.join(__dirname, "../static/ui/index.html"));
 
+  const fs = require("fs");
   mainWindow.on("closed", function() {
     mainWindow = null;
   });
