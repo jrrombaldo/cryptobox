@@ -11,10 +11,10 @@ import * as os from "os";
 // INFO: https://github.com/shelljs/shelljs/wiki/Electron-compatibility
 shell.config.execPath = shell.which("node").stdout;
 
-export function execute(cmd: any, silent = false) {
+export function execute(cmd: any, silent = false, timeout = 5000) {
   log.debug(`executing command ${cmd}`);
 
-  var result = shell.exec(cmd, { silent: silent });
+  var result = shell.exec(cmd, { silent: silent, timeout: timeout });
   log.info(
     `the [${cmd}] exit with code [${result.code}], stdout:[${result.stdout}] and stderr:[${result.stderr}]`
   );
