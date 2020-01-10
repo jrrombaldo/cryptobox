@@ -1,6 +1,7 @@
 import { EncryptionServiceFactory } from "../../services/encryption/EncryptionServiceFactory";
 import { Volume } from "../../entities/Volume";
 import { Password } from "../../entities/Password";
+import * as constants from '../../utils/constants'
 
 const expect = require("chai").expect;
 const shell = require("shelljs");
@@ -21,7 +22,7 @@ describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
       if (os.platform() == "darwin") {
         //adding password into MacOS keychain
         shell.exec(
-          `security add-generic-password -a 'cryptobox:${sourceFolder}' -s 'cryptobox' -D 'application password' -j \"Adding password to execute unit test\" -w'12345' -U`
+          `security add-generic-password -s 'cryptobox://${sourceFolder}' -a '${constants.OSX_KEYCHAIN_ACCOUNT}' -D 'application password' -j \"Adding password to execute unit test\" -w'12345' -U`
         ); //passwordManager para Linux
       } else if (os.platform() == "linux") {
         shell.exec(`echo '12345' >> ${rootFolder}/pass.txt`); //passwordManager para Linux

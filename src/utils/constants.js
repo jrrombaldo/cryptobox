@@ -1,7 +1,7 @@
 module.exports = Object.freeze({
     ENCFS: 'encfs',
 
-    VOLUME_NAME_SUFIX: "_secure",
+    OSX_KEYCHAIN_ACCOUNT: "CryptoBox",
 
 
     IPC_GET_DIRECTORY: "zNhyGnWiqabsyPuOKOCc",

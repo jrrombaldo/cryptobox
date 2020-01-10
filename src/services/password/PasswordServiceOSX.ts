@@ -3,21 +3,21 @@ import { Volume } from "../../entities/Volume";
 import { PasswordServiceBase } from "./PasswordServiceBase";
 import { PasswordService } from "./PasswordService";
 
+import * as constants from "../../utils/constants";
+
 import { log } from "../../utils/LogUtil";
 import * as ShellHelper from "../../utils/ShellUtil";
 
 export class PasswordServiceOSX extends PasswordServiceBase
   implements PasswordService {
-  // constructor(sourceFolder: string) {
-  //   this.entryName = this.getAccountName(sourceFolder);
-  //   log.debug(`Instance of OSX password manager for ${this.entryName}`);
-  // }
+
+  getKeychainService(volume: Volume): string {
+    return `cryptobox://${volume.encryptedFolderPath}`;
+  }
 
   retrievePasswordCommand(volume: Volume): string {
-    // TODO replace the account/service
-    let account = "test";
-    let service = "test";
-    return `security find-generic-password  -a "${account}" -s "${service}" -w `;
+    let service = this.getKeychainService(volume);
+    return `security find-generic-password  -a "${constants.OSX_KEYCHAIN_ACCOUNT}" -s "${service}" -w `;
   }
 
   searchForPassword(password: Password, volume: Volume): string {
@@ -38,19 +38,17 @@ export class PasswordServiceOSX extends PasswordServiceBase
     }
   }
 
-  saveNewPassword(password: Password): void {
+  saveNewPassword(password: Password, volume: Volume): void {
     log.info(`saving password for ${password.passwordManagerRef}`);
 
     let comment = "Created by cryptobox @ $( date +'%Y.%m.%d-%H:%M')";
 
-    // TODO replace the account/service
-    let account = "test";
-    let service = "test";
+    let service = this.getKeychainService(volume);
 
-    let command = `security add-generic-password -a '${account}' -s '${service}' -D 'application password' -j \"${comment}\" -w'${password.passwordValue}' -U`;
+    let command = `security add-generic-password -a '${constants.OSX_KEYCHAIN_ACCOUNT}' -s '${service}' -D 'application password' -j \"${comment}\" -w'${password.passwordValue}' -U`;
     let result = ShellHelper.execute(command);
     // TODO parse the result and validate
   }
 }
 
-module.exports = { PasswordServiceOSX};
+module.exports = { PasswordServiceOSX };
