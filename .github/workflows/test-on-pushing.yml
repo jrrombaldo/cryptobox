@@ -5,7 +5,7 @@ on: push
 
 jobs:
   testing:
-    name: Testing on 
+    name: Testing on "$github.ref"
     runs-on:  ${{ matrix.os}}
     strategy:
       fail-fast: false
