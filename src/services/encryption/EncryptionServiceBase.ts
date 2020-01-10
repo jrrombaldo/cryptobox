@@ -57,7 +57,7 @@ export abstract class EncryptionServiceBase
         `mounting directory [${volume.encryptedFolderPath}] into [${volume.decryptedFolderPath}] with volumeName [${volume.name}]`
       );
     console.time();
-    ShellHelper.execute(mountCMD, { timeout: 1000 });
+    ShellHelper.execute(mountCMD);
     console.timeEnd();
     
   }

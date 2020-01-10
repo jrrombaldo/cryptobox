@@ -25,7 +25,7 @@ describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
           `security add-generic-password -s 'cryptobox://${sourceFolder}' -a '${constants.OSX_KEYCHAIN_ACCOUNT}' -D 'application password' -j \"Adding password to execute unit test\" -w'12345' -U`
         ); //passwordManager para Linux
       } else if (os.platform() == "linux") {
-        shell.exec(`echo '12345' >> ${rootFolder}/pass.txt`); //passwordManager para Linux
+        shell.exec (`echo '12345' >> ${rootFolder}/pass.txt`); //passwordManager para Linux
         //const passwordManager = `cat ${rootFolder}/pass.txt`;
       }
       const encryptionManager = EncryptionServiceFactory.create();
