@@ -1,4 +1,4 @@
-name: exec tests ${{ github.ref }}"
+name: exec tests ${{ GITHUB_REF }}"
 on: push
 
 jobs:
