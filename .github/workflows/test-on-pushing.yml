@@ -28,7 +28,6 @@ jobs:
           set -euo pipefail
           set -x
           sudo apt install encfs -y
-          mkdir -p ~/cryptobox/ && echo "12345" > ~/cryptobox/pass.txt
           
       - name: Prepare MAC
         if: matrix.os == 'macos-latest' || matrix.os == 'macos'
