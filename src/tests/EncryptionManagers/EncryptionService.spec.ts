@@ -66,11 +66,12 @@ describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
       expect(isMounted).to.eql(true);
     });
 
-    it("creating file on the mounted volume", () => {
-      validateShellExecution(
-        shell.touch(`${volume.decryptedFolderPath}/test.txt`)
-      );
-    });
+    //  even if is not mounted, is possible to create a file, so irrelevant test
+    // it("creating file on the mounted volume", () => {
+    //   validateShellExecution(
+    //     shell.touch(`${volume.decryptedFolderPath}/test.txt`)
+    //   );
+    // });
 
     it("umount volume", () => {
       let encryptionService = EncryptionServiceFactory.create();
