@@ -18,7 +18,8 @@ export class PasswordServiceLinux extends PasswordServiceBase
 
   searchForPassword(password: Password, volume: Volume): string | null {
     log.info(`searching password for ${password.passwordManagerRef}`);
-    return "";
+    let result:any =  ShellHelper.execute(this.retrievePasswordCommand(volume));
+    return result.stdout;
   }
 
   saveNewPassword(password: Password): void {

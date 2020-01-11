@@ -63,6 +63,12 @@ describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
       encryptionService.mount(volume, password);
     });
 
+    it("is volume mounted", () => {
+      let encryptionService = EncryptionServiceFactory.create();
+      let isMounted = encryptionService.isMounted(volume);
+      expect(isMounted).to.eql(true);
+    });
+
     it("creating file on the mounted volume", () => {
       validateShellExecution(shell.touch(`${volume.decryptedFolderPath}/test.txt`));
     });
