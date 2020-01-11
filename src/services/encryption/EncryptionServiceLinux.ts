@@ -9,7 +9,9 @@ export class EncryptionServiceLinux extends EncryptionServiceBase
   }
 
   getUnmountCMD(volume: Volume): string {
-    return `umount "${volume.decryptedFolderPath}"`;
+    // return `umount "${volume.decryptedFolderPath}"`;
+    return `fusermount -u "${volume.decryptedFolderPath}"`;
+    
   }
 
   getMountCMD(volume: Volume, passwordCommand: string): string {
