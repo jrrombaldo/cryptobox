@@ -23,7 +23,13 @@ describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
         //adding password into MacOS keychain
         shell.exec(
           `security add-generic-password -s 'cryptobox://${sourceFolder}' -a '${constants.OSX_KEYCHAIN_ACCOUNT}' -D 'application password' -j \"Adding password to execute unit test\" -w'12345' -U`
+        ); 
+        // checking password
+        shell.exec(
+          `security find-generic-password  -a "${constants.OSX_KEYCHAIN_ACCOUNT}" -s 'cryptobox://${sourceFolder}' -w `
         ); //passwordManager para Linux
+        
+        //passwordManager para Linux
       } else if (os.platform() == "linux") {
         shell.exec (`echo '12345' >> ${rootFolder}/pass.txt`); //passwordManager para Linux
         //const passwordManager = `cat ${rootFolder}/pass.txt`;

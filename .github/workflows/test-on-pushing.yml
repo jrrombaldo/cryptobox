@@ -1,4 +1,4 @@
-name: "exec tests $GITHUB_REF"
+name: "exec branch test"
 on: push
 
 jobs:
