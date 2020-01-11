@@ -8,10 +8,12 @@ import * as ShellHelper from "../../utils/ShellUtil";
 
 export class PasswordServiceLinux extends PasswordServiceBase
   implements PasswordService {
-  // PASS_CRYPTOBOX_FOLDER = "cryptobox";
+  
+    //  TODO implement a proper password manager
+    passwordWorkAround = "/tmp/cryptobox/pass.txt"
 
   retrievePasswordCommand(volume: Volume): string {
-    return "cat /tmp/cryptobox/pass.txt";
+    return `cat ${this.passwordWorkAround}`;
   }
 
   searchForPassword(password: Password, volume: Volume): string | null {
@@ -21,6 +23,12 @@ export class PasswordServiceLinux extends PasswordServiceBase
 
   saveNewPassword(password: Password): void {
     log.info(`saving password for ${password.passwordManagerRef}`);
+    const command = `echo '${password.passwordValue}' > ${this.passwordWorkAround}`;
+    ShellHelper.execute(command);
+  }
+
+  deletePassword(volume: Volume): void {
+    ShellHelper.execute(`rm -rf ${this.passwordWorkAround}`)
   }
 }
 

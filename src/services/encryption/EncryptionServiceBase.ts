@@ -13,9 +13,16 @@ export abstract class EncryptionServiceBase implements EncryptionService {
 
   unmount(volume: Volume): void {
     log.debug(`unmounting ${volume.decryptedFolderPath}`);
-    console.time();
-    ShellHelper.execute(this.getUnmountCMD(volume), false, true);
-    console.timeEnd();
+    if (this.isMounted(volume)) {
+      log.debug(
+        `volume [${volume.decryptedFolderPath}] mounted, unmounting ...`
+      );
+      ShellHelper.execute(this.getUnmountCMD(volume));
+    } else {
+      log.debug(
+        `volume[${volume.decryptedFolderPath}] NOT mounted, nothing do unmount ...`
+      );
+    }
   }
 
   isMounted(volume: Volume): boolean {
@@ -24,7 +31,7 @@ export abstract class EncryptionServiceBase implements EncryptionService {
     let cmd = this.getIsMountedCMD(volume);
     log.debug(`checking if is mounted command: ${cmd}`);
 
-    let [statusCode, stdout, stderr] = ShellHelper.execute(cmd, false, true);
+    let [statusCode, stdout, stderr] = ShellHelper.execute(cmd, false, false);
 
     if (statusCode == 0) {
       log.info(`folder [${volume.decryptedFolderPath}] is already mounted`);
@@ -43,19 +50,29 @@ export abstract class EncryptionServiceBase implements EncryptionService {
     log.debug(
       `about to mount directory [${volume.encryptedFolderPath}] into [${volume.decryptedFolderPath}] with volumeName [${volume.name}]`
     );
+    if (this.isMounted(volume)) {
+      log.debug(
+        `volume [${volume.decryptedFolderPath}] mounted, nothing to mount ...`
+      );
+      return;
+    } else {
+      log.debug(
+        `volume[${volume.decryptedFolderPath}] NOT mounted, mounting ...`
+      );
 
-    let passwordService = PasswordServiceFactory.create(volume);
-    let mountCMD = this.getMountCMD(
-      volume,
-      passwordService.retrievePasswordCommand(volume)
-    );
+      let passwordService = PasswordServiceFactory.create();
+      let mountCMD = this.getMountCMD(
+        volume,
+        passwordService.retrievePasswordCommand(volume)
+      );
 
-    log.debug(`mounting command [${mountCMD}]`);
-    log.debug(
-      `mounting directory [${volume.encryptedFolderPath}] into [${volume.decryptedFolderPath}] with volumeName [${volume.name}]`
-    );
-    console.time();
-    ShellHelper.execute(mountCMD, false, true);
-    console.timeEnd();
+      log.debug(`mounting command [${mountCMD}]`);
+      log.debug(
+        `mounting directory [${volume.encryptedFolderPath}] into [${volume.decryptedFolderPath}] with volumeName [${volume.name}]`
+      );
+      console.time();
+      ShellHelper.execute(mountCMD);
+      console.timeEnd();
+    }
   }
 }

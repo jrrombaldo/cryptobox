@@ -13,7 +13,7 @@ shell.config.execPath = shell.which("node").stdout;
 export function execute(
   cmd: any,
   silent: boolean = false,
-  failOnNonZeroReturn: boolean = false,
+  failOnNonZeroReturn: boolean = true,
   timeout: number = 5000
 ) {
   log.debug(`executing command ${cmd}`);

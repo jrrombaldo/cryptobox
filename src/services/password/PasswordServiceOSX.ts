@@ -17,8 +17,8 @@ export class PasswordServiceOSX extends PasswordServiceBase
 
   retrievePasswordCommand(volume: Volume): string {
     let service = this.getKeychainService(volume);
-    // return `security find-generic-password  -a "${constants.OSX_KEYCHAIN_ACCOUNT}" -s "${service}" -w `;
-    return "cat /tmp/cryptobox/pass.txt";
+    return `security find-generic-password  -a "${constants.OSX_KEYCHAIN_ACCOUNT}" -s "${service}" -w `;
+    // return "cat /tmp/cryptobox/pass.txt";
   }
 
   searchForPassword(password: Password, volume: Volume): string {
@@ -48,8 +48,13 @@ export class PasswordServiceOSX extends PasswordServiceBase
 
     let command = `security add-generic-password -a '${constants.OSX_KEYCHAIN_ACCOUNT}' -s '${service}' -D 'application password' -j \"${comment}\" -w'${password.passwordValue}' -U`;
     let result = ShellHelper.execute(command);
-    // TODO parse the result and validate
   }
+
+  deletePassword(volume: Volume): void {
+    const command = `security delete-generic-password -a "${constants.OSX_KEYCHAIN_ACCOUNT}" -s '${this.getKeychainService(volume)}'`
+    ShellHelper.execute(command, false, false);
+  }
+
 }
 
 module.exports = { PasswordServiceOSX };

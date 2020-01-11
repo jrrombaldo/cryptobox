@@ -6,7 +6,7 @@ import { PasswordServiceLinux } from "./PasswordServiceLinux";
 const os = require("os");
 
 export class PasswordServiceFactory {
-  public static create(volume: Volume): PasswordService {
+  public static create(): PasswordService {
     const managers: {[platform: string] : PasswordService} = this.getManagers();
     if (!(os.platform() in managers)) {
       throw new Error(
