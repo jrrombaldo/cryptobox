@@ -1,5 +1,5 @@
-import { EncryptionService } from "../services/encryption/EncryptionService";
-import { Volume } from "../entities/Volume";
+import {EncryptionService} from "../services/encryption/EncryptionService";
+import {Volume} from "../entities/Volume";
 
 export class UnmountVolume {
   encryptionService: EncryptionService;

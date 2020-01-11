@@ -1,6 +1,6 @@
-import { EncryptionService } from "../services/encryption/EncryptionService";
-import { Password } from "../entities/Password";
-import { Volume } from "../entities/Volume";
+import {EncryptionService} from "../services/encryption/EncryptionService";
+import {Password} from "../entities/Password";
+import {Volume} from "../entities/Volume";
 
 export class MountVolume {
   encryptionService: EncryptionService;

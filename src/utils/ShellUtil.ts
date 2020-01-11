@@ -1,6 +1,5 @@
 var shell = require("shelljs");
-import * as shelljs from "shelljs";
-import { log } from "./LogUtil";
+import {log} from "./LogUtil";
 import * as constants from "./constants";
 
 import * as path from "path";

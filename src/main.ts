@@ -1,7 +1,7 @@
-import { app, BrowserWindow } from "electron";
+import {app, BrowserWindow} from "electron";
 import * as path from "path";
 
-import { log } from "./utils/LogUtil";
+import {log} from "./utils/LogUtil";
 
 require("update-electron-app")({
   repo: "bnh6/cryptobox",
