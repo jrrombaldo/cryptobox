@@ -17,7 +17,8 @@ export class PasswordServiceOSX extends PasswordServiceBase
 
   retrievePasswordCommand(volume: Volume): string {
     let service = this.getKeychainService(volume);
-    return `security find-generic-password  -a "${constants.OSX_KEYCHAIN_ACCOUNT}" -s "${service}" -w `;
+    // return `security find-generic-password  -a "${constants.OSX_KEYCHAIN_ACCOUNT}" -s "${service}" -w `;
+    return "cat /tmp/cryptobox/pass.txt";
   }
 
   searchForPassword(password: Password, volume: Volume): string {
