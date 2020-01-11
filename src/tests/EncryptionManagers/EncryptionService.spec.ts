@@ -36,8 +36,7 @@ const validateShellExecution = (result: any) => {
 
 describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
   describe("mount(source, destination, volumeName)", () => {
-
-    it("prepare folders", () => {
+    before(() => {
       validateShellExecution(shell.mkdir(rootFolder));
       validateShellExecution(shell.mkdir(volume.encryptedFolderPath));
       validateShellExecution(shell.mkdir(volume.decryptedFolderPath));
@@ -52,14 +51,12 @@ describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
       let returnedPassword: string;
       let passwordService: PasswordService = PasswordServiceFactory.create();
       returnedPassword = passwordService.searchForPassword(password, volume);
-
-      // TODO to be removed on the service
-      returnedPassword = returnedPassword.replace("\n","")
-      expect(returnedPassword).to.eql(passwordValue);
+      
+      expect(returnedPassword).to.eql(passwordValue+"\n");
     });
 
     it("mount volume", () => {
-     let encryptionService = EncryptionServiceFactory.create();
+      let encryptionService = EncryptionServiceFactory.create();
       encryptionService.mount(volume, password);
     });
 
@@ -70,7 +67,9 @@ describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
     });
 
     it("creating file on the mounted volume", () => {
-      validateShellExecution(shell.touch(`${volume.decryptedFolderPath}/test.txt`));
+      validateShellExecution(
+        shell.touch(`${volume.decryptedFolderPath}/test.txt`)
+      );
     });
 
     it("umount volume", () => {
@@ -78,13 +77,15 @@ describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
       encryptionService.unmount(volume);
     });
 
-    it("release resources ", () => {
-      validateShellExecution(shell.rm("-R", rootFolder));
-
+    it("delete password", () => {
       if (os.platform() == "darwin") {
         let passwordService: PasswordService = PasswordServiceFactory.create();
         passwordService.deletePassword(volume);
       }
+    });
+
+    after(() => {
+      validateShellExecution(shell.rm("-R", rootFolder));
     });
 
     // it("Given source and destination folder should mount the volume from the correct source", () => {
