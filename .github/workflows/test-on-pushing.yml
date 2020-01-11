@@ -1,4 +1,4 @@
-name: "exec branch test"
+name: "testing on push"
 on: push
 
 jobs:
@@ -40,5 +40,5 @@ jobs:
       - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.os}}
         run: |
           npm ci
-          npm run build
+          # npm run build # embedded on the "npm run test"
           npm run test
