@@ -11,7 +11,7 @@ export class PasswordServiceLinux extends PasswordServiceBase
   // PASS_CRYPTOBOX_FOLDER = "cryptobox";
 
   retrievePasswordCommand(volume: Volume): string {
-    return "cat ~/cryptobox/pass.txt";
+    return "cat /tmp/cryptobox/pass.txt";
   }
 
   searchForPassword(password: Password, volume: Volume): string | null {

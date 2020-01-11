@@ -13,7 +13,7 @@ describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
     it("Given source and destination folder should mount the volume from the correct source", () => {
       const os = require("os");
       // const rootFolder = "~/cryptobox";
-      const rootFolder = "/tmp/";
+      const rootFolder = "/tmp/cryptobox";
       const sourceFolder = `${rootFolder}/encrypted`;
       const destinationFolder = `${rootFolder}/decrypted`;
       shell.mkdir(rootFolder);
@@ -52,6 +52,12 @@ describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
       const results = shell.exec(`mount | grep 'decrypted'`);
       shell.exec(`umount ${destinationFolder}`);
       shell.rm("-R", rootFolder);
+      if (os.platform() == "darwin") {
+        console.log("deleting keychain entry");
+        console.log(
+          shell.exec(`security delete-generic-password -a "${constants.OSX_KEYCHAIN_ACCOUNT}" -s 'cryptobox://${sourceFolder}'`)
+        )
+      }
       expect(results.code).to.eql(0);
     });
   });
