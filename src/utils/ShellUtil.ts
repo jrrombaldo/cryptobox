@@ -1,17 +1,22 @@
 var shell = require("shelljs");
-import * as shelljs from 'shelljs'
+import * as shelljs from "shelljs";
 import { log } from "./LogUtil";
-import * as constants from './constants'
+import * as constants from "./constants";
 
-import * as path from 'path'
-import * as fs from 'fs'
+import * as path from "path";
+import * as fs from "fs";
 import * as os from "os";
 
 // TODO: replace with https://www.npmjs.com/package/shelljs.exec
 // INFO: https://github.com/shelljs/shelljs/wiki/Electron-compatibility
 shell.config.execPath = shell.which("node").stdout;
 
-export function execute(cmd: any, silent = false, timeout = 5000) {
+export function execute(
+  cmd: any,
+  silent: boolean = false,
+  failOnNonZeroReturn: boolean = false,
+  timeout: number = 5000
+) {
   log.debug(`executing command ${cmd}`);
 
   var result = shell.exec(cmd, { silent: silent, timeout: timeout });
@@ -19,11 +24,15 @@ export function execute(cmd: any, silent = false, timeout = 5000) {
     `the [${cmd}] exit with code [${result.code}], stdout:[${result.stdout}] and stderr:[${result.stderr}]`
   );
 
+  if (failOnNonZeroReturn && result && result.code && 0 != result.code) {
+    throw new Error(`The command returned non-zero code [${result.code}]`);
+  }
+
   return [result.code, result.stdout, result.stderr];
 }
 
 export function getOS() {
-  let platform: string = os.platform()
+  let platform: string = os.platform();
 
   if (!Object.values(constants.SUPPORTED_PLATFORM).includes(platform)) {
     log.error(`unsuported platform [${platform}]`);
@@ -33,7 +42,6 @@ export function getOS() {
     return platform;
   }
 }
-
 
 export function checkOSSupport() {
   // https://nodejs.org/dist/latest-v5.x/docs/api/os.html#os_os_platform

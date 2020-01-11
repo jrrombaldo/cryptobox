@@ -6,9 +6,7 @@ import { PasswordServiceFactory } from "../password/PasswordServiceFactory";
 import { log } from "../../utils/LogUtil";
 import * as ShellHelper from "../../utils/ShellUtil";
 
-export abstract class EncryptionServiceBase
-  implements EncryptionService {
-    
+export abstract class EncryptionServiceBase implements EncryptionService {
   abstract getMountCMD(volume: Volume, passwordCommand: string): string;
   abstract getUnmountCMD(volume: Volume): string;
   abstract getIsMountedCMD(volume: Volume): string;
@@ -16,7 +14,7 @@ export abstract class EncryptionServiceBase
   unmount(volume: Volume): void {
     log.debug(`unmounting ${volume.decryptedFolderPath}`);
     console.time();
-    ShellHelper.execute(this.getUnmountCMD(volume));
+    ShellHelper.execute(this.getUnmountCMD(volume), false, true);
     console.timeEnd();
   }
 
@@ -26,7 +24,7 @@ export abstract class EncryptionServiceBase
     let cmd = this.getIsMountedCMD(volume);
     log.debug(`checking if is mounted command: ${cmd}`);
 
-    let [statusCode, stdout, stderr] = ShellHelper.execute(cmd);
+    let [statusCode, stdout, stderr] = ShellHelper.execute(cmd, false, true);
 
     if (statusCode == 0) {
       log.info(`folder [${volume.decryptedFolderPath}] is already mounted`);
@@ -54,11 +52,10 @@ export abstract class EncryptionServiceBase
 
     log.debug(`mounting command [${mountCMD}]`);
     log.debug(
-        `mounting directory [${volume.encryptedFolderPath}] into [${volume.decryptedFolderPath}] with volumeName [${volume.name}]`
-      );
+      `mounting directory [${volume.encryptedFolderPath}] into [${volume.decryptedFolderPath}] with volumeName [${volume.name}]`
+    );
     console.time();
-    ShellHelper.execute(mountCMD);
+    ShellHelper.execute(mountCMD, false, true);
     console.timeEnd();
-    
   }
 }

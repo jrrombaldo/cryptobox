@@ -25,7 +25,7 @@ export class PasswordServiceOSX extends PasswordServiceBase
 
     let command = this.retrievePasswordCommand(volume);
 
-    let [result, stdout, stderr] = ShellHelper.execute(command, true);
+    let [result, stdout, stderr] = ShellHelper.execute(command, true, false);
 
     if (result === 0) return stdout;
     if (result === 44)
