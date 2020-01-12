@@ -78,6 +78,12 @@ describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
       encryptionService.unmount(volume);
     });
 
+    it("should not be mounted", () => {
+      let encryptionService = EncryptionServiceFactory.create();
+      let isMounted = encryptionService.isMounted(volume);
+      expect(isMounted).to.eql(false);
+    });
+
     it("delete password", () => {
       if (os.platform() == "darwin") {
         let passwordService: PasswordService = PasswordServiceFactory.create();
