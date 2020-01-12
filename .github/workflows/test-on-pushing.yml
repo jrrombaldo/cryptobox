@@ -40,7 +40,7 @@ jobs:
           mkdir  -p /tmp/testencfs/src
           mkdir  -p /tmp/testencfs/dst
           echo "test-encfs" > /tmp/testencfs/pass
-          encfs  /tmp/testencfs/src /tmp/testencfs/dst --extpass='cat /tmp/testencfs/pass'  --idle=0 --standard --require-macs -ovolname=Testing -oallow_root -olocal -ohard_remove -oauto_xattr -onolocalcaches
+          encfs  /tmp/testencfs/src /tmp/testencfs/dst --extpass='cat /tmp/testencfs/pass'  --idle=0 --standard
           sleep 3
           mount
           umount /tmp/testencfs/dst
