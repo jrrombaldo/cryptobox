@@ -5,23 +5,16 @@ import * as os from "os";
 
 export class EncryptionServiceFactory {
   public static create(): EncryptionService {
-    const managers: {[platform: string] : EncryptionService} = this.getManagers();
-    if (!(os.platform() in managers)) {
-      throw new Error(
-        `The platform ${os.platform()} is not currently supported.`
-      );
-    }
-    let manager = managers[os.platform()];
-    return manager;
-  }
+    const services: any = {
+      darwin: EncryptionServiceOSX,
+      linux: EncryptionServiceLinux
+    };
 
-  private static getManagers(): {[platform: string] :  EncryptionService }  {
-    return {
-      'darwin':  new EncryptionServiceOSX(),
-      'linux':  new EncryptionServiceLinux()
-    }
-  }
+    const platform: string = os.platform();
 
+    if (!(platform in services)) {
+      throw new Error(`The platform ${platform} is not currently supported.`);
+    }
+    return new services[platform]();
+  }
 }
-
-module.exports = {EncryptionServiceFactory};

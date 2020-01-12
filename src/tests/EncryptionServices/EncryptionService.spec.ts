@@ -5,11 +5,11 @@ import { PasswordServiceFactory } from "../../services/password/PasswordServiceF
 import { Volume } from "../../entities/Volume";
 import { Password } from "../../entities/Password";
 import * as constants from "../../utils/constants";
-
-const expect = require("chai").expect;
-const shell = require("shelljs");
+import { expect } from "chai";
+import * as shell from "shelljs";
 
 import * as os from "os";
+
 // const rootFolder = "~/cryptobox";
 const rootFolder = "/tmp/cryptobox";
 const sourceFolder = `${rootFolder}/encrypted`;
@@ -51,8 +51,8 @@ describe("scripts/EncryptionService/EncryptionServiceFactory(osname)", () => {
       let returnedPassword: string;
       let passwordService: PasswordService = PasswordServiceFactory.create();
       returnedPassword = passwordService.searchForPassword(password, volume);
-      
-      expect(returnedPassword).to.eql(passwordValue+"\n");
+
+      expect(returnedPassword).to.eql(passwordValue + "\n");
     });
 
     it("mount volume", () => {
