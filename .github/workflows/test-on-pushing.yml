@@ -3,7 +3,7 @@ on: push
 
 jobs:
   testing:
-    name: Testing on 
+    name: Testing ${{github.ref}} on 
     runs-on:  ${{ matrix.os}}
     strategy:
       fail-fast: false
