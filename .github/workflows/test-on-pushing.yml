@@ -41,9 +41,9 @@ jobs:
           mkdir  -p /tmp/testencfs/dst
           echo "test-encfs" > /tmp/testencfs/pass
           encfs  /tmp/testencfs/src /tmp/testencfs/dst --extpass='cat /tmp/testencfs/pass'  --idle=0 --standard --require-macs -ovolname=Testing -oallow_root -olocal -ohard_remove -oauto_xattr -onolocalcaches
+          sleep 3
           mount
           umount /tmp/testencfs/dst
-          mount
 
       - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.os}}
         run: |
