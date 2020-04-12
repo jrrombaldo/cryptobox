@@ -11,24 +11,21 @@ import * as ShellHelper from "../../utils/ShellUtil";
 export class PasswordServiceOSX extends PasswordServiceBase
   implements PasswordService {
 
-  getKeychainService(volume: Volume): string {
-    return `cryptobox://${volume.encryptedFolderPath}`;
-  }
-
   retrievePasswordCommand(volume: Volume): string {
-    let service = this.getKeychainService(volume);
-    return `security find-generic-password  -a "${constants.OSX_KEYCHAIN_ACCOUNT}" -s "${service}" -w `;
+
+    return `security find-generic-password  -a "${constants.PASSWORD_MANAGER_ALIAS}" -s "${volume.getVolumeAlias()}" -w `;
     // return "cat /tmp/cryptobox/pass.txt";
   }
 
-  searchForPassword(password: Password, volume: Volume): string {
-    log.info(`searching password for ${password.passwordManagerRef}`);
+  searchForPassword(volume: Volume): Password | null {
+    log.info(`searching password for ${volume}`);
 
     let command = this.retrievePasswordCommand(volume);
 
+
     let [result, stdout, stderr] = ShellHelper.execute(command, true, false);
 
-    if (result === 0) return stdout;
+    if (result === 0) return new Password(stdout);
     if (result === 44)
       // not found
       return null;
@@ -44,14 +41,12 @@ export class PasswordServiceOSX extends PasswordServiceBase
 
     let comment = "Created by cryptobox @ $( date +'%Y.%m.%d-%H:%M')";
 
-    let service = this.getKeychainService(volume);
-
-    let command = `security add-generic-password -a '${constants.OSX_KEYCHAIN_ACCOUNT}' -s '${service}' -D 'application password' -j \"${comment}\" -w'${password.passwordValue}' -U`;
+    let command = `security add-generic-password -a '${constants.PASSWORD_MANAGER_ALIAS}' -s '${volume.getVolumeAlias()}' -D 'application password' -j \"${comment}\" -w'${password.passwordValue}' -U`;
     let result = ShellHelper.execute(command);
   }
 
   deletePassword(volume: Volume): void {
-    const command = `security delete-generic-password -a "${constants.OSX_KEYCHAIN_ACCOUNT}" -s '${this.getKeychainService(volume)}'`
+    const command = `security delete-generic-password -a "${constants.PASSWORD_MANAGER_ALIAS}" -s '${volume.getVolumeAlias()}'`
     ShellHelper.execute(command, false, false);
   }
 

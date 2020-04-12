@@ -9,5 +9,5 @@ export abstract class PasswordServiceBase implements PasswordService {
 
   abstract deletePassword(volume: Volume): void;
 
-  abstract searchForPassword(password: Password, volume: Volume): string | null;
+  abstract searchForPassword(volume: Volume): Password | null;
 }

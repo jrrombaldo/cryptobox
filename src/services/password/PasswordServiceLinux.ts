@@ -8,18 +8,18 @@ import * as ShellHelper from "../../utils/ShellUtil";
 
 export class PasswordServiceLinux extends PasswordServiceBase
   implements PasswordService {
-  
-    //  TODO implement a proper password manager
-    passwordWorkAround = "/tmp/cryptobox/pass.txt"
+
+  //  TODO implement a proper password manager
+  passwordWorkAround = "/tmp/cryptobox/pass.txt"
 
   retrievePasswordCommand(volume: Volume): string {
     return `cat ${this.passwordWorkAround}`;
   }
 
-  searchForPassword(password: Password, volume: Volume): string | null {
-    log.info(`searching password for ${password.passwordManagerRef}`);
-    let [result, stdout, stderr] =  ShellHelper.execute(this.retrievePasswordCommand(volume));
-    return stdout;
+  searchForPassword(volume: Volume): Password | null {
+    log.info(`searching password for ${volume}`);
+    let [result, stdout, stderr] = ShellHelper.execute(this.retrievePasswordCommand(volume));
+    return new Password(stdout);
   }
 
   saveNewPassword(password: Password): void {
