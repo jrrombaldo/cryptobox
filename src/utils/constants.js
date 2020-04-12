@@ -1,11 +1,13 @@
 module.exports = Object.freeze({
     ENCFS: 'encfs',
 
-    OSX_KEYCHAIN_ACCOUNT: "CryptoBox",
+    PASSWORD_MANAGER_ALIAS: "CryptoBox",
+    VOLUME_ALIAS_SUFFIX: "cryptobox",
 
     CONFIG_FILE:"settings",
     CONFIG_DIR:".cryptobox",
     CONFIG_ENCKEY:"4Z94d2tErFhU28tL", //TODO - should go to the KeyChain
+
 
 
     IPC_GET_DIRECTORY: "zNhyGnWiqabsyPuOKOCc",
