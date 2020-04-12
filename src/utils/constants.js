@@ -3,6 +3,10 @@ module.exports = Object.freeze({
 
     OSX_KEYCHAIN_ACCOUNT: "CryptoBox",
 
+    CONFIG_FILE:"settings",
+    CONFIG_DIR:".cryptobox",
+    CONFIG_ENCKEY:"4Z94d2tErFhU28tL", //TODO - should go to the KeyChain
+
 
     IPC_GET_DIRECTORY: "zNhyGnWiqabsyPuOKOCc",
     IPC_ACCT_EXISTS: "fSEvzUveABIZCypkXPGE",

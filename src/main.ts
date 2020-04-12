@@ -2,6 +2,10 @@ import {app, BrowserWindow} from "electron";
 import * as path from "path";
 
 import {log} from "./utils/LogUtil";
+import * as store from "./services/store/StoreManager"
+
+log.debug(`config store ->${store}`)
+log.debug(store)
 
 require("update-electron-app")({
   repo: "bnh6/cryptobox",
