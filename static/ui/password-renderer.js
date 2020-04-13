@@ -2,7 +2,7 @@
 var zxcvbn = require('zxcvbn');
 
 const { ipcRenderer } = require("electron")
-const constants = require('../utils/constants');
+const constants = require('../../src/utils/constants');
 const querystring = require('querystring');
 const remote = require('electron').remote;
 const path = require("path");

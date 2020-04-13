@@ -1,6 +1,7 @@
 const { ipcRenderer } = require('electron');
-const log = require('../utils/LogUtil').log;
-const constants = require('../utils/constants');
+const constants = require('../../src/utils/constants');
+const log = require('../../src/utils/LogUtil').log;
+
 const path = require('path')
 // var UIHelper = require("../controllers/UIHelper.ts");
 
