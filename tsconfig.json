@@ -2,7 +2,8 @@
   "compilerOptions": {
     "module": "commonjs",
     "noImplicitAny": true,
-    "sourceMap": true,
+    "inlineSources": true, //for debuggin on webstorm
+    "sourceMap": true, ////for debuggin on webstorm
     "outDir": "dist",
     "allowJs": true,
     "target": "es6",

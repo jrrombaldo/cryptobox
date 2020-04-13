@@ -5,9 +5,11 @@ import { log } from "./utils/LogUtil";
 import * as store from "./services/store/StoreManager"
 
 
-log.debug(`config store ->${store}`)
+log.debug(`config store ->${store}`);
 // log.debug(store)
 
+// https://github.com/electron/electron/issues/18397
+app.allowRendererProcessReuse = true;
 
 // hot reload of web content
 require('electron-reload')(require("path").join(__dirname, "../static/"));
