@@ -5,7 +5,7 @@ const { ipcRenderer } = require("electron")
 const constants = require('../../src/utils/constants');
 const querystring = require('querystring');
 const remote = require('electron').remote;
-const path = require("path");
+// const path = require('path')
 
 // console.log(window.process.argv)
 let query = querystring.parse(global.location.search);
@@ -40,8 +40,10 @@ save.onclick = () => {
     }
     var result = ipcRenderer.send(constants.IPC_SAVE_PASSWOD, args)
     console.log("returned data", result)
-    notify("Password saved with success") // TODO move to application return
 
+    // notify("Password saved with success") 
+    ipcRenderer.sendSync(constants.IPC_NOTIFICATION, {"message": "Password saved with success"});
+    
     closeWindow()
 }
 
@@ -84,17 +86,16 @@ passwd.onkeypress = () => {
 
 
 
-// TODO duplicated with volume-rendered, consider move to UIHelper
-function notify(message) {
-    const myNotification =
-        new window.Notification(constants.WINDOWS_TITLE, {
-            body: message,
-            silent: true,
-            icon: path.join(__dirname, "../../static/resources/cloud-enc.png"),
+// function notify(message) {
+//     const myNotification =
+//         new window.Notification(constants.WINDOWS_TITLE, {
+//             body: message,
+//             silent: true,
+//             icon: path.join(__dirname, "../../static/resources/cloud-enc.png"),
             
-        });
+//         });
 
-    myNotification.onclick = () => {
-        console.log('Notification clicked')
-    }
-}
+//     myNotification.onclick = () => {
+//         console.log('Notification clicked')
+//     }
+// }

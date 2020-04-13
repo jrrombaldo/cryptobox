@@ -2,7 +2,7 @@ const { ipcRenderer } = require('electron');
 const constants = require('../../src/utils/constants');
 const log = require('../../src/utils/LogUtil').log;
 
-const path = require('path')
+// const path = require('path')
 // var UIHelper = require("../controllers/UIHelper.ts");
 
 
@@ -35,7 +35,8 @@ cloudEncForm.onsubmit = () => {
     log.info(`IPC here is the result ${JSON.stringify(response)}`);
     updateMountBtn();
 
-    notify(response.message)
+    // notify(response.message)
+    ipcRenderer.sendSync(constants.IPC_NOTIFICATION, {"message": response.message});
 
     return false
 };
@@ -56,16 +57,15 @@ function checkIfPasswordExist(source){
 }
 
 
-// TODO duplicated with password--rendered, consider move to UIHelper
-function notify(message) {
-    const myNotification =
-        new window.Notification(constants.WINDOWS_TITLE, {
-            body: message,
-            silent: true,
-            icon: path.join(__dirname, "../../static/resources/cloud-enc.png")
-        });
+// function notify(message) {
+//     const myNotification =
+//         new window.Notification(constants.WINDOWS_TITLE, {
+//             body: message,
+//             silent: true,
+//             icon: path.join(__dirname, "../../static/resources/cloud-enc.png")
+//         });
 
-    myNotification.onclick = () => {
-        console.log('Notification clicked')
-    }
-}
+//     myNotification.onclick = () => {
+//         console.log('Notification clicked')
+//     }
+// }

@@ -45,7 +45,7 @@ function createWindow() {
   });
 
   mainWindow.setVisibleOnAllWorkspaces(true);
-  mainWindow.loadFile(path.join(__dirname, "../static/ui/index.html"));
+  mainWindow.loadFile(path.join(__dirname, "../static/ui/volume.html"));
 
   const fs = require("fs");
   mainWindow.on("closed", function () {
@@ -74,8 +74,9 @@ app.on("activate", function () {
 });
 
 process.on("uncaughtException", function (error) {
-  console.log("UNCATCH EXCEPTION FOUND ");
-  console.log(error);
+  log.error("UNCATCH EXCEPTION FOUND ");
+  log.error(error);
+  // console.error(error)
 });
 
 function loadScripts() {

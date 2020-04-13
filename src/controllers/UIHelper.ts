@@ -1,22 +1,33 @@
 import { Volume } from "../entities/Volume";
 
-const { dialog, BrowserWindow, ipcMain } = require('electron');
+const { dialog, BrowserWindow, Notification } = require('electron');
 var path = require("path");
 const constants = require("../utils/constants");
 var log = require("../utils/LogUtil").log;
 
 
-function notify(message:string) {
-    const myNotification =
-        new window.Notification(constants.WINDOWS_TITLE, {
-            body: message,
-            silent: true,
-            icon: path.join(__dirname, "../../static/resources/cloud-enc.png")
-        });
+function notify(message: string) {
+    log.info("is notification supported ", Notification.isSupported()) // TODO do something with it 
 
-    myNotification.onclick = () => {
-        console.log('Notification clicked')
-    }
+    let myNotification = new Notification({
+        title: constants.WINDOWS_TITLE,
+        // subtitle: "testing subtitle",
+        body: message,
+        silent : true,
+        icon: path.join(__dirname, "../../static/resources/cloud-enc.png")
+    });
+
+    myNotification.show();
+    // const myNotification =
+    //     new window.Notification(constants.WINDOWS_TITLE, {
+    //         body: message,
+    //         silent: true,
+    //         icon: path.join(__dirname, "../../static/resources/cloud-enc.png")
+    //     });
+
+    // myNotification.onclick = () => {
+    //     console.log('Notification clicked')
+    // }
 }
 
 
@@ -27,7 +38,7 @@ function getDirectoryNatively() {
 }
 
 
-function passwordPrompt(volume:Volume) {
+function passwordPrompt(volume: Volume) {
     log.debug("rendering password prompt modal...")
     let activeWindow = BrowserWindow.getAllWindows()[0] // TODO will fail if there is more than one window
     console.log(activeWindow.getSize())
@@ -58,7 +69,7 @@ function passwordPrompt(volume:Volume) {
     // promptWindow.webContents.openDevTools();
 
     // Load the HTML dialog box
-    promptWindow.loadFile(path.join(__dirname, "../../static/ui/password.html"), {query: {"source": volume.encryptedFolderPath}})
+    promptWindow.loadFile(path.join(__dirname, "../../static/ui/password.html"), { query: { "source": volume.encryptedFolderPath } })
     promptWindow.once('ready-to-show', () => {
         log.debug("password prompt ready to show ...")
         promptWindow.show()
@@ -68,7 +79,6 @@ function passwordPrompt(volume:Volume) {
 
 module.exports = {
     getDirectoryNatively,
-    // confirmPasswordUse , 
     notify,
     passwordPrompt,
 };

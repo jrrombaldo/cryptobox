@@ -54,13 +54,13 @@ ipcMain.on(constants.IPC_SAVE_PASSWOD, (event, arg) => {
   var source = arg["source"];
   var passwordStr = arg["password"];
   log.info(`[IPC_MAIN] mount/umount for  "${source}"`)
-  
+
   let volume = new Volume(source)
   let password = new Password(passwordStr)
 
   let passwdApp = new PasswordApplication();
   passwdApp.savePassword(password, volume)
-  
+
   event.returnValue = "success";
 
 });
@@ -73,12 +73,26 @@ ipcMain.on(constants.IPC_PASSWORD_EXIST, (event, arg) => {
   let volume = new Volume(source)
 
   let passwdApp = new PasswordApplication();
-    if (!passwdApp.findPassword(volume)){
-      UIHelper.passwordPrompt(volume);
-    }
+  if (!passwdApp.findPassword(volume)) {
+    UIHelper.passwordPrompt(volume);
+  }
 
-    event.returnValue = "success";
+  event.returnValue = "success";
 });
+
+
+
+ipcMain.on(constants.IPC_NOTIFICATION, (event, arg) => {
+  var message = arg["message"];
+  log.info(`[IPC_MAIN] notification "${message}"`)
+
+  UIHelper.notify(message)
+
+  event.returnValue = "success";
+});
+
+
+
 
 
 // UIHelper.passwordPrompt( new Volume("/tmp/testfdd /sdf"));

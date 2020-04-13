@@ -15,6 +15,7 @@ module.exports = Object.freeze({
     IPC_MOUNT_UNMOUNT: "agjHVeGQNYADkZSXFtDf",
     IPC_SAVE_PASSWOD: "sdferyq3gwrGVerg",
     IPC_PASSWORD_EXIST: "asdf52ytqKJZGXKJH",
+    IPC_NOTIFICATION: "HGJFjhgIJOPlkjhttb",
 
 
     SUPPORTED_PLATFORM: Object.freeze({
