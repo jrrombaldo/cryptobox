@@ -7,25 +7,17 @@ const path = require('path')
 log.debug("volume-rendered starting ...")
 
 var source = document.getElementById('source');
-var destination = document.getElementById('destination');
 var cloudEncForm = document.getElementById('cloudEncForm');
 var mountBtn = document.getElementById('mountBtn');
 
-var mounted = false;
 
-function updateMountBtn() {
-    var mounted = ipcRenderer.sendSync(constants.IPC_IS_MOUNTED, { destination: destination.value });
-    if (mounted)
-        mountBtn.innerText = "Dismount";
-    else
-        mountBtn.innerText = "Mount"
-}
 
 source.onclick = () => {
     log.debug(`IPC source folder requesting a native directory browser -> ${constants.IPC_GET_DIRECTORY}`)
     var directory = ipcRenderer.sendSync(constants.IPC_GET_DIRECTORY, {});
     if (directory) {
         source.value = directory;
+        updateMountBtn();
     }
 };
 
@@ -38,7 +30,7 @@ cloudEncForm.onsubmit = () => {
     log.debug(`IPC requesting to mount/umount ${source.value}`)
     var response = ipcRenderer.sendSync(constants.IPC_MOUNT_UNMOUNT, args);
     log.info(`IPC here is the result ${JSON.stringify(response)}`);
-    // updateMountBtn();
+    updateMountBtn();
 
     notify(response)
 
@@ -59,6 +51,15 @@ function notify(response) {
     myNotification.onclick = () => {
         console.log('Notification clicked')
     }
+}
+
+function updateMountBtn() {
+    var resp = ipcRenderer.sendSync(constants.IPC_IS_MOUNTED, { source: source.value });
+
+    if (resp.isMounted )
+        mountBtn.innerText = "UNmount";
+    else
+        mountBtn.innerText = "Mount"
 }
 
 

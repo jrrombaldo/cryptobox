@@ -28,14 +28,21 @@ ipcMain.on(constants.IPC_MOUNT_UNMOUNT, (event, arg) => {
   log.info("IPC mount/umount")
   let mountApp = new MountVolume(volume)
   let resp = mountApp.mount();
-  
+
   event.returnValue = resp;
 
 });
 
 
+ipcMain.on(constants.IPC_IS_MOUNTED, (event, arg) => {
+  log.info("IPC isMount")
 
+  var source = arg["source"];
+  let volume = new Volume(source)
 
+  let mountApp = new MountVolume(volume)
+  event.returnValue = mountApp.isMount();
+});
 
 
 // ipcMain.on(constants.IPC_ACCT_EXISTS, (event, arg) => {

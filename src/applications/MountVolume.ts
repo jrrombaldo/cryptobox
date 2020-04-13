@@ -44,7 +44,7 @@ export class MountVolume {
         response.message = "volume unmounted!"
       } else {
         this.encryptionService.mount(this.volume, passwordApp.findPassword(this.volume))
-        response.message = "volume unmounted!"
+        response.message = "volume mounted!"
       }
 
       response.status = "success"
@@ -57,4 +57,27 @@ export class MountVolume {
     }
     return response
   }
+
+  public isMount(): { [k: string]: any } {
+    let response: { [k: string]: any } = {};
+
+    try {
+      response.volume = this.volume;
+
+      let isMounted = this.encryptionService.isMounted(this.volume);
+      response.isMounted = isMounted
+     
+      response.status = "success"
+
+    } catch (error) {
+      response.status = "error";
+      response.message = "operation failed :("
+      response.error = error
+      // throw new Error(error);
+    }
+    return response
+  }
+
+
+
 }
