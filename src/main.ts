@@ -21,8 +21,8 @@ const trayIcon = "../../static/resources/example.png";
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 360,
+    width: 400,
+    height: 250,
     fullscreenable: false,
     resizable: true,
     icon: path.join(__dirname, icoPath),
@@ -49,7 +49,7 @@ app.on("ready", () => {
   loadScripts();
   createWindow();
 
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 });
 
 app.on("window-all-closed", function () {

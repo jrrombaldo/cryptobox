@@ -22,4 +22,6 @@ module.exports = Object.freeze({
         linux: "linux"
     }),
 
+    WINDOWS_TITLE:"CryptoBox",
+
 });

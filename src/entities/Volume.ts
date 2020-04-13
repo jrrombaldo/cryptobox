@@ -12,7 +12,7 @@ export class Volume {
         this.encryptedFolderPath = encryptedFolderPath;
         this.ttl = 30; //TODO get from property
         this.name = String(path.parse(this.encryptedFolderPath).base)//TODO move this app layer ...
-        this.decryptedFolderPath = String(path.join(os.homedir(), this.name)) //TODO move this to app layer
+        this.decryptedFolderPath = String(path.join(os.homedir(),"cryptobox", this.name)) //TODO move this to app layer
     }
 
     getVolumeAlias(): string | null {

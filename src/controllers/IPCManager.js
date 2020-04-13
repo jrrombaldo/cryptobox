@@ -3,8 +3,8 @@ const constants = require("../utils/constants");
 var log = require("../utils/LogUtil").log;
 var UIHelper = require("./UIHelper");
 
-import {MountVolume} from "../applications/MountVolume"
-import {Volume} from "../entities/Volume"
+import { MountVolume } from "../applications/MountVolume"
+import { Volume } from "../entities/Volume"
 
 log.info("IPCManager loaded !")
 
@@ -22,12 +22,16 @@ ipcMain.on(constants.IPC_GET_DIRECTORY, (event, arg) => {
 
 
 ipcMain.on(constants.IPC_MOUNT_UNMOUNT, (event, arg) => {
-    var source = arg["source"];
-    let volume = new Volume(source)
+  var source = arg["source"];
+  let volume = new Volume(source)
 
-    let mountApp = new MountVolume(volume)
+  log.info("IPC mount/umount")
+  let mountApp = new MountVolume(volume)
+  let resp = mountApp.mount();
   
-  });
+  event.returnValue = resp;
+
+});
 
 
 

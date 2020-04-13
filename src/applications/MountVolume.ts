@@ -1,39 +1,60 @@
-import {EncryptionService} from "../services/encryption/EncryptionService";
-import {Password} from "../entities/Password";
-import {Volume} from "../entities/Volume";
+var log = require("../utils/LogUtil").log;
+
+import { EncryptionService } from "../services/encryption/EncryptionService";
+import { EncryptionServiceFactory } from "../services/encryption/EncryptionServiceFactory";
+
+import { Password } from "../entities/Password";
+import { Volume } from "../entities/Volume";
+import { PasswordApplication } from "./PasswordApp";
+
+
+let response_example = {
+  "status": "operation with success/error",
+  "message": "detailed message, not to be displayed to user, it will contain stacktraces...",
+  "isMounted" : "boolean"
+}
+
+
 
 export class MountVolume {
   encryptionService: EncryptionService;
   password: Password;
   volume: Volume;
-  response: string;
 
-  constructor(
-    volume: Volume,
-    encryptionService: EncryptionService,
-    password: Password
-  ) {
-    this.encryptionService = encryptionService;
-    this.password = password;
+  constructor(volume: Volume) {
+    this.encryptionService = EncryptionServiceFactory.create();
     this.volume = volume;
   }
 
-  public run(): void {
-    try {
-      this.mountVolume();
-      this.response = `${this.volume.encryptedFolderPath} -> ${this.volume.decryptedFolderPath} mounted with success`;
-    } catch (error) {
-      this.response = error;
-      throw new Error(error);
-    }
-  }
+  public mount(): { [k: string]: any } {
+    let response: { [k: string]: any } = {};
 
-  private mountVolume(): void {
-    this.encryptionService.mount(this.volume, this.password);
-    const volumeIsMounted = this.encryptionService.isMounted(this.volume);
-    if (volumeIsMounted === false) {
-      const e = `error while trying to mount the volume ${this.volume.encryptedFolderPath}`;
-      throw new Error(e);
+    try {
+      response.volume = this.volume;
+
+      let passwordApp = new PasswordApplication()
+      passwordApp.checkSource(this.volume)
+
+      let isMounted = this.encryptionService.isMounted(this.volume);
+      response.isMounted = isMounted
+      log.info(`${this.volume} is already mounted? = ${isMounted}`)
+
+      if (isMounted) {
+        this.encryptionService.unmount(this.volume)
+        response.message = "volume unmounted!"
+      } else {
+        this.encryptionService.mount(this.volume, passwordApp.findPassword(this.volume))
+        response.message = "volume unmounted!"
+      }
+
+      response.status = "success"
+
+    } catch (error) {
+      response.status = "error";
+      response.message = "operation failed :("
+      response.error = error
+      // throw new Error(error);
     }
+    return response
   }
 }

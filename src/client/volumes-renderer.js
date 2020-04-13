@@ -1,22 +1,20 @@
-const {ipcRenderer, dialog, window} = require('electron');
+const { ipcRenderer } = require('electron');
 const log = require('../utils/LogUtil').log;
 const constants = require('../utils/constants');
+const path = require('path')
+
 
 log.debug("volume-rendered starting ...")
 
 var source = document.getElementById('source');
 var destination = document.getElementById('destination');
-var passwordDiv = document.getElementById('passwordDiv');
-var password = document.getElementById('password');
-var volumeName = document.getElementById('volumeName');
-var status = document.getElementById('statusLbl');
 var cloudEncForm = document.getElementById('cloudEncForm');
 var mountBtn = document.getElementById('mountBtn');
 
 var mounted = false;
 
 function updateMountBtn() {
-    var mounted = ipcRenderer.sendSync(constants.IPC_IS_MOUNTED, {destination: destination.value});
+    var mounted = ipcRenderer.sendSync(constants.IPC_IS_MOUNTED, { destination: destination.value });
     if (mounted)
         mountBtn.innerText = "Dismount";
     else
@@ -24,50 +22,62 @@ function updateMountBtn() {
 }
 
 source.onclick = () => {
-    log.debug(`source folder requesting a native directory browser -> ${constants.IPC_GET_DIRECTORY}`)
+    log.debug(`IPC source folder requesting a native directory browser -> ${constants.IPC_GET_DIRECTORY}`)
     var directory = ipcRenderer.sendSync(constants.IPC_GET_DIRECTORY, {});
     if (directory) {
         source.value = directory;
     }
 };
 
-// destination.onclick = () => {
-//     var directory = ipcRenderer.sendSync(constants.IPC_GET_DIRECTORY, {});
-//     if (directory) {
-//         destination.value = directory
-//         //    updateMountBtn()
-//     }
-// };
 
 cloudEncForm.onsubmit = () => {
     log.debug("form submit")
-
-    
-    // log.debug(`source:${source.value}  destination:${destination.value}  volume:${volumeName.value}`);
-    // var args = {
-    //     source: source.value,
-    //     destination: destination.value,
-    //     volumeName: volumeName.value,
-    // };
-    // var result = ipcRenderer.sendSync(constants.IPC_MOUNT_UNMOUNT, args);
-    // log.info(`here is the ${result}`);
+    var args = {
+        source: source.value,
+    };
+    log.debug(`IPC requesting to mount/umount ${source.value}`)
+    var response = ipcRenderer.sendSync(constants.IPC_MOUNT_UNMOUNT, args);
+    log.info(`IPC here is the result ${JSON.stringify(response)}`);
     // updateMountBtn();
-    // // notify(result+" with success")
 
-    // // avoid the form to reload
-    // return false
+    notify(response)
+
+    return false
 };
 
-function notify(title = "CloudEnc", message) {
-    const notification = {
-        title: title,
-        body: message,
-        silent: true,
-        icon: './resources/cloud-enc2.ico'
-    };
-    const myNotification = new window.Notification(notification.title, notification);
+constants.WINDOWS_TITLE
+function notify(response) {
+    // if (!response) { return }
+
+    const myNotification =
+        new window.Notification(constants.WINDOWS_TITLE, {
+            body: response.message,
+            silent: true,
+            icon: path.join(__dirname, "../../static/resources/cloud-enc.png")
+        });
 
     myNotification.onclick = () => {
         console.log('Notification clicked')
     }
 }
+
+
+
+// let response = {
+//     "status": "test"
+// }
+// notify(response)
+
+// function notify(title = "CloudEnc", message) {
+//     const notification = {
+//         title: title,
+//         body: message,
+//         silent: true,
+//         icon: './resources/cloud-enc2.ico'
+//     };
+//     const myNotification = new window.Notification(notification.title, notification);
+
+//     myNotification.onclick = () => {
+//         console.log('Notification clicked')
+//     }
+// }

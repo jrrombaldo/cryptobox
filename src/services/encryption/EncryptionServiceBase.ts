@@ -5,6 +5,7 @@ import { PasswordServiceFactory } from "../password/PasswordServiceFactory";
 
 import { log } from "../../utils/LogUtil";
 import * as ShellHelper from "../../utils/ShellUtil";
+import { shell } from "electron";
 
 export abstract class EncryptionServiceBase implements EncryptionService {
   abstract getMountCMD(volume: Volume, passwordCommand: string): string;
@@ -65,6 +66,8 @@ export abstract class EncryptionServiceBase implements EncryptionService {
         volume,
         passwordService.retrievePasswordCommand(volume)
       );
+
+      ShellHelper.execute(`mkdir -p "${volume.decryptedFolderPath}"`); //TODO here is the place for it.
 
       log.debug(`mounting command [${mountCMD}]`);
       log.debug(
