@@ -4,8 +4,19 @@ import * as path from "path";
 import { log } from "./utils/LogUtil";
 import * as store from "./services/store/StoreManager"
 
+
 log.debug(`config store ->${store}`)
 // log.debug(store)
+
+
+// hot reload of web content
+require('electron-reload')(require("path").join(__dirname, "../static/"));
+// require('electron-reload')(__dirname, {
+//   electron: require('electron')
+// });
+
+
+
 
 // require("update-electron-app")({
 //   repo: "bnh6/cryptobox",
@@ -49,7 +60,7 @@ app.on("ready", () => {
   loadScripts();
   createWindow();
 
-  // mainWindow.webContents.openDevTools();
+  mainWindow.webContents.openDevTools();
 });
 
 app.on("window-all-closed", function () {
@@ -77,21 +88,3 @@ function loadScripts() {
 }
 
 
-
-// import { PasswordApplication } from "./applications/PasswordApp"
-// import { Volume } from "./entities/Volume"
-// function testing() {
-
-//   const volumeSrc: Volume = new Volume(
-//     "testingVolume",
-//     "/tmp/",
-//     null,
-//     0
-//   );
-
-//   let passwordApp = new PasswordApplication();
-//   passwordApp.checkSource(volumeSrc)
-
-//   // app.quit()
-
-// }
