@@ -1,5 +1,5 @@
 const expect = require("chai").expect;
-const PasswordManagerLinux = require("../../services/password/PasswordServiceLinux");
+const PasswordManagerLinux = require("../services/password/PasswordServiceLinux");
 
 describe.skip("scripts/PasswordManagers/PasswordServiceLinux", () => {
   describe("searchForPassword()", () => {
