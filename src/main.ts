@@ -11,6 +11,7 @@ log.debug(`config store ->${store}`)
 
 // hot reload of web content
 require('electron-reload')(require("path").join(__dirname, "../static/"));
+// require('electron-reload')(__dirname);
 // require('electron-reload')(__dirname, {
 //   electron: require('electron')
 // });
@@ -32,8 +33,8 @@ const trayIcon = "../../static/resources/example.png";
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 400,
-    height: 250,
+    width: 600,
+    height: 350,
     fullscreenable: false,
     resizable: true,
     icon: path.join(__dirname, icoPath),
@@ -60,7 +61,8 @@ app.on("ready", () => {
   loadScripts();
   createWindow();
 
-  mainWindow.webContents.openDevTools();
+  // enabled debug
+  // mainWindow.webContents.openDevTools();
 });
 
 app.on("window-all-closed", function () {

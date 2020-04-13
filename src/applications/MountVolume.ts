@@ -11,7 +11,7 @@ import { PasswordApplication } from "./PasswordApp";
 let response_example = {
   "status": "operation with success/error",
   "message": "detailed message, not to be displayed to user, it will contain stacktraces...",
-  "isMounted" : "boolean"
+  "isMounted": "boolean"
 }
 
 
@@ -33,7 +33,11 @@ export class MountVolume {
       response.volume = this.volume;
 
       let passwordApp = new PasswordApplication()
-      passwordApp.checkSource(this.volume)
+      if (!passwordApp.passwordExists(this.volume)) {
+        response.status = "error";
+        response.message = `try again when there is a password for ${this.volume.encryptedFolderPath}`
+        return response;
+      }
 
       let isMounted = this.encryptionService.isMounted(this.volume);
       response.isMounted = isMounted
@@ -66,7 +70,7 @@ export class MountVolume {
 
       let isMounted = this.encryptionService.isMounted(this.volume);
       response.isMounted = isMounted
-     
+
       response.status = "success"
 
     } catch (error) {

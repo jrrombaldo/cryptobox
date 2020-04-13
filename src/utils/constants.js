@@ -11,9 +11,10 @@ module.exports = Object.freeze({
 
 
     IPC_GET_DIRECTORY: "zNhyGnWiqabsyPuOKOCc",
-    IPC_ACCT_EXISTS: "fSEvzUveABIZCypkXPGE",
     IPC_IS_MOUNTED: "qdNhgTGYmniSwJKTijFx",
     IPC_MOUNT_UNMOUNT: "agjHVeGQNYADkZSXFtDf",
+    IPC_SAVE_PASSWOD: "sdferyq3gwrGVerg",
+    IPC_PASSWORD_EXIST: "asdf52ytqKJZGXKJH",
 
 
     SUPPORTED_PLATFORM: Object.freeze({

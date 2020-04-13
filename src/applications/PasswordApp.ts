@@ -12,22 +12,25 @@ export class PasswordApplication {
         this.passwordService = PasswordServiceFactory.create();
     }
 
-    checkSource(sourceVol: Volume) {
+    passwordExists(sourceVol: Volume): boolean {
         let password = this.passwordService.searchForPassword(sourceVol)
 
         if (password) {
-            log.info(` password found ${password.passwordValue}`)
+            log.info(` password found *******`)
+            return true
         }
         else {
             log.info("password not found, prompting one")
-            //TODO must be promted by the user
-            let passwordToSave = new Password("test123");
-            this.passwordService.saveNewPassword(passwordToSave, sourceVol)
+            return false;
         }
     }
 
     findPassword(volume: Volume): Password {
         return this.passwordService.searchForPassword(volume)
+    }
+
+    savePassword(password:Password, volume: Volume): void {
+        this.passwordService.saveNewPassword(password, volume);
     }
 
 }
