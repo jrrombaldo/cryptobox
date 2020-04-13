@@ -1,13 +1,24 @@
+import * as constants from "../utils/constants";
+var path = require('path');
+var os  = require('os')
+
 export class Volume {
     name: string;
     ttl: number;
     encryptedFolderPath: string;
     decryptedFolderPath: string;
-
-    constructor(name: string, encryptedFolderPath: string, decryptedFolderPath: string, ttl: number) {
-        this.name = name;
+    
+    constructor(encryptedFolderPath: string) {
         this.encryptedFolderPath = encryptedFolderPath;
-        this.decryptedFolderPath = decryptedFolderPath;
-        this.ttl = ttl;
+        this.ttl = 30; //TODO get from property
+        this.name = String(path.parse(this.encryptedFolderPath).base)//TODO move this app layer ...
+        this.decryptedFolderPath = String(path.join(os.homedir(), this.name)) //TODO move this to app layer
+    }
+
+    getVolumeAlias(): string | null {
+        if (this.encryptedFolderPath)
+            return `${constants.VOLUME_ALIAS_SUFFIX}://${this.encryptedFolderPath}`
+        else return null;
+
     }
 }
