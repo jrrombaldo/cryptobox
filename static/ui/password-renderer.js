@@ -15,6 +15,7 @@ console.log(`source folder ${source}`)
 
 var passwd = document.getElementById("passwd")
 var passwdLabel = document.getElementById("passwdLabel")
+var passwwdForm = document.getElementById("PasswordForm")
 var feedback = document.getElementById("passwdFeedback")
 var save = document.getElementById("saveBtn")
 var cancel = document.getElementById("cancelBtn")
@@ -33,7 +34,7 @@ cancel.onclick = () => {
     closeWindow();
 }
 
-save.onclick = () => {
+function submit_password_form(){
     var args = {
         "password": passwd.value,
         "source": source,
@@ -45,7 +46,11 @@ save.onclick = () => {
     ipcRenderer.sendSync(constants.IPC_NOTIFICATION, {"message": "Password saved with success"});
     
     closeWindow()
+    return false
 }
+
+save.onclick = submit_password_form;
+passwwdForm.onsubmit = submit_password_form;
 
 passwd.onkeypress = () => {
     resp = zxcvbn(passwd.value)
