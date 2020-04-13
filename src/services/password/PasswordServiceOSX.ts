@@ -25,7 +25,7 @@ export class PasswordServiceOSX extends PasswordServiceBase
 
     let [result, stdout, stderr] = ShellHelper.execute(command, true, false);
 
-    if (result === 0) return new Password(stdout);
+    if (result === 0) return new Password(String(stdout));
     if (result === 44)
       // not found
       return null;

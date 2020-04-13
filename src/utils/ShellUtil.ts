@@ -1,4 +1,4 @@
-var shell = require("shelljs");
+import * as shell from "shelljs";
 import {log} from "./LogUtil";
 import * as constants from "./constants";
 
