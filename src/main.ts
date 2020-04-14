@@ -11,12 +11,17 @@ log.debug(`config store ->${store}`);
 // https://github.com/electron/electron/issues/18397
 app.allowRendererProcessReuse = true;
 
-// hot reload of web content
-require('electron-reload')(require("path").join(__dirname, "../static/"));
-// require('electron-reload')(__dirname);
-// require('electron-reload')(__dirname, {
-//   electron: require('electron')
-// });
+
+const isDev = process.argv0.includes("node_modules")
+log.info(`isDev = ${isDev}`)
+if (isDev) {
+  // hot reload of web content
+  require('electron-reload')(require("path").join(__dirname, "../static/"));
+  // require('electron-reload')(__dirname);
+  // require('electron-reload')(__dirname, {
+  //   electron: require('electron')
+  // });
+}
 
 
 

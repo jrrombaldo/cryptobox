@@ -1,12 +1,11 @@
 {
   "name": "cryptobox",
   "version": "0.0.1",
-  "description": "encrypt file systems",
+  "description": "Presere data privacy, not matter where ...",
   "main": "./dist/main.js",
   "dependencies": {
     "@types/shelljs": "^0.8.7",
     "bootswatch": "^4.4.1",
-    "electron": "^8.2.1",
     "electron-log": "^4.1.1",
     "electron-store": "^5.1.1",
     "shelljs": "^0.8.3",
@@ -17,6 +16,8 @@
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",
+    "electron": "^8.2.1",
+    "electron-builder": "^22.4.1",
     "electron-reload": "^1.5.0",
     "mocha": "^7.1.1",
     "sucrase": "^3.13.0",
