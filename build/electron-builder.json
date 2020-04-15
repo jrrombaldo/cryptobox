@@ -3,14 +3,13 @@
     "productName": "CryptoBox",
     "copyright": "Copyright © 2020 ${author}",
     "directories": {
-        "output": "electron-builder"
+        "output": "out/electron-builder"
     },
-    "asar": true,
     "mac": {
         "icon": "static/resources/cloud-enc.icns",
-        "target": ["dmg","zip"],
-        "darkModeSupport": true,
-        "type": "distribution"
+        "target": ["dmg"],
+        "type": "distribution",
+        "category":"Utilities"
     },
     "linux":{
         "icon": "static/resources/cloud-enc.icns",

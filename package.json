@@ -9,14 +9,21 @@
     "electron-log": "^4.1.1",
     "electron-store": "^5.1.1",
     "shelljs": "^0.8.3",
-    "update-electron-app": "^1.5.0",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.50",
+    "@electron-forge/maker-deb": "^6.0.0-beta.50",
+    "@electron-forge/maker-dmg": "^6.0.0-beta.50",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.50",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.50",
+    "@electron-forge/maker-zip": "^6.0.0-beta.50",
     "@types/chai": "^4.2.11",
     "@types/mocha": "^7.0.2",
     "chai": "^4.2.0",
     "electron": "^8.2.1",
+    "electron-builder": "^22.4.1",
+    "electron-packager": "^14.2.1",
     "electron-reload": "^1.5.0",
     "mocha": "^7.1.1",
     "sucrase": "^3.13.0",
@@ -27,9 +34,13 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "start": "npm run build && electron ./dist/main.js",
+    "start": "electron-forge start",
     "test": "npm run build && mocha src/**/*.spec.ts -r ./require-sucrase.js",
-    "lint": "tslint -c tslint.json -p tsconfig.json"
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "package": "electron-forge package",
+    "make": "npm run build && electron-forge make",
+    "make-builder": "npm run build && electron-builder --config ./build/electron-builder.json --x64 --ia32 --arm64",
+    "make-packager": "npm run build && electron-packager . --overwrite --platform=darwin --out=out/electron-packager --icon='static/resources/cloud-enc.icns' "
   },
   "repository": {
     "type": "git",
@@ -40,5 +51,8 @@
   "bugs": {
     "url": "https://github.com/jrrombaldo/cloud-enc/issues"
   },
-  "homepage": "https://github.com/jrrombaldo/cloud-enc#readme"
+  "homepage": "https://github.com/jrrombaldo/cloud-enc#readme",
+  "config": {
+    "forge": "./build/forge.config.js"
+  }
 }
