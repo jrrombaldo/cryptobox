@@ -1,11 +1,10 @@
-dist: bionic
+dist: trusty
 language: node_js
 node_js: 13
 
 jobs:
   include:
     - os: linux
-      dist: trusty
     - os: osx
       osx_image: xcode9
 before_install:
@@ -13,10 +12,9 @@ before_install:
       set -x
       set -euo pipefail
       if [ "$TRAVIS_OS_NAME" = "osx" ]; then 
-        softwareupdate --all --install --force
         brew cask install osxfuse;
         brew install encfs;
-        udo security unlock-keychain;
+        sudo security unlock-keychain;
       fi
       if [ "$TRAVIS_OS_NAME" = "linux" ]; then 
         sudo apt update
