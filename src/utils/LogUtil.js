@@ -5,7 +5,7 @@ const isDev = process.argv0.includes("node_modules")
 if (isDev)
   log.transports.file.level = false;
 else
-  log.transports.file.level = false;
+  log.transports.file.level = true;
 
 
 log.transports.console.format =

@@ -17,6 +17,7 @@ import * as os from "os";
 
 // import { execSync } from 'child_process';  // since node 4
 import { spawnSync } from 'child_process'; // since node 12
+import { shell } from "electron";
 
 
 
@@ -27,7 +28,7 @@ export function execute(
   failOnNonZeroReturn: boolean = true,
   timeout: number = 5000): [number, string, string] {
 
-  log.debug(`executing command [${command}] [${args}]`);
+  log.debug(`executing command [${command}] [${args}], failOnNon0=${failOnNonZeroReturn}`);
 
   const result = spawnSync(command, args, {
     timeout,
@@ -69,23 +70,22 @@ export function checkOSSupport() {
 }
 
 export function checkRequirements(): boolean {
-  // cheking ENCFS
-  // const result = shell.which(constants.ENCFS)
-  // if (!result) {
-  //   log.error("shelljs is not working :(")
-  //   return false
-  // }
-  // if (result.code === 0) {
-  //   log.info(`found encfs at ${result.stdout}`)
-  //   return true
-  // }
-  // else {
-  //   log.debug("encfs not found", result)
-  //   return false;
-  //   // throw new Error("EncFS not found, please install")
-  // }
+  // log.debug(execute("env"))
 
-  return true
+  const result = execute("which", ["encfs"], false)
+  if (!result) {
+    log.error("erron on findin encfs ")
+    return false
+  }
+
+  if (result[0] === 0) {
+    log.info(`found encfs at ${result[1]}`)
+    return true
+  }
+  else {
+    log.debug("encfs not found", result)
+    return false;
+  }
 
 }
 

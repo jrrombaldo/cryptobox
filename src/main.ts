@@ -6,6 +6,9 @@ import * as store from "./services/store/StoreManager"
 
 import * as ShellHelper from "./utils/ShellUtil";
 
+// TODO th proccess env was missing /usr/local/bin, where encfs is...
+process.env.PATH += ":/usr/local/bin"
+log.debug("proccess path ",process.env.PATH)
 
 log.debug(`config store ->${store}`);
 // log.debug(store)
