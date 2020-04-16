@@ -1,5 +1,5 @@
 import * as shell from "shelljs";
-import {log} from "./LogUtil";
+import { log } from "./LogUtil";
 import * as constants from "./constants";
 
 import * as path from "path";
@@ -8,7 +8,11 @@ import * as os from "os";
 
 // TODO: replace with https://www.npmjs.com/package/shelljs.exec
 // INFO: https://github.com/shelljs/shelljs/wiki/Electron-compatibility
-shell.config.execPath = shell.which("node").stdout;
+// shell.config.execPath = shell.which("node").stdout; // d
+log.debug("shell.config.execPath", shell.config.execPath)
+log.debug('shell.which("node")', shell.which("node"));
+log.debug('shell.which("nodejs")', shell.which("nodejs"));
+
 
 export function execute(
   cmd: any,
@@ -30,8 +34,8 @@ export function execute(
   return [result.code, result.stdout, result.stderr];
 }
 
-export function getOS() {
-  let platform: string = os.platform();
+export function checkOSSupport() {
+  const platform: string = os.platform();
 
   if (!Object.values(constants.SUPPORTED_PLATFORM).includes(platform)) {
     log.error(`unsuported platform [${platform}]`);
@@ -42,28 +46,27 @@ export function getOS() {
   }
 }
 
-export function checkOSSupport() {
-  // https://nodejs.org/dist/latest-v5.x/docs/api/os.html#os_os_platform
-  log.debug(`running on OS type [${os.type()}], release [${os.release()}]`);
-
-  // if (constants.SUPPORTED_PLATFORM.indexOf(os.platform()) < 0) {
-  //     log.error(`unsuported platform ${os.platform()}`)
-  //     throw new Error(`unsuported platform ${os.platform()}`)
-  // }
-  // log.info(`platform supported ${os.platform()}`.green)
-
+export function checkRequirements(): boolean {
   // cheking ENCFS
-  // var result = shell.which(constants.ENCFS)
-  // if (result.code === 0)
-  //     log.info(`found encfs at ${result.stdout}`)
-  // else {
-  //     log.debug(result)
-  //     throw new Error("EncFS not found, please install")
-  // }
+  const result = shell.which(constants.ENCFS)
+  if (!result) {
+    log.error("shelljs is not working :(")
+    return false
+  }
+  if (result.code === 0) {
+    log.info(`found encfs at ${result.stdout}`)
+    return true
+  }
+  else {
+    log.debug("encfs not found", result)
+    return false;
+    // throw new Error("EncFS not found, please install")
+  }
+
 }
 
 export function checkDir(dir: string) {
-  var fullpath = path.resolve(dir);
+  const fullpath = path.resolve(dir);
   log.debug(`absolute path: ${fullpath}`);
 
   if (!fs.existsSync(fullpath)) {
@@ -79,4 +82,3 @@ export function checkDir(dir: string) {
   }
 }
 
-// module.exports = { checkOSSupport, getOS, execute, checkDir };

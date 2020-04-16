@@ -4,6 +4,8 @@ import * as path from "path";
 import { log } from "./utils/LogUtil";
 import * as store from "./services/store/StoreManager"
 
+import * as ShellHelper from "./utils/ShellUtil";
+
 
 log.debug(`config store ->${store}`);
 // log.debug(store)
@@ -65,6 +67,7 @@ function createWindow() {
 }
 
 app.on("ready", () => {
+  statupPreReq()
   loadScripts();
   createWindow();
 
@@ -83,6 +86,7 @@ app.on("activate", function () {
 process.on("uncaughtException", function (error) {
   log.error("UNCATCH EXCEPTION FOUND ");
   log.error(error);
+  app.quit()
   // console.error(error)
 });
 
@@ -95,6 +99,16 @@ function loadScripts() {
   //       import("./client/" + script) &&
   //       log.debug(`imported: ${script} `);
   //   });
+}
+
+function statupPreReq(){
+
+  ShellHelper.checkOSSupport();
+  if (!ShellHelper.checkRequirements()){
+    log.error("environment does not meet requirements ...")
+    app.quit();
+  }
+
 }
 
 

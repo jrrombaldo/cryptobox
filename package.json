@@ -34,7 +34,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "start": "electron-forge start",
+    "start": "npm run build && electron ./dist/main.js",
     "test": "npm run build && mocha src/**/*.spec.ts -r ./require-sucrase.js",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "package": "electron-forge package",
