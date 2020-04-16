@@ -13,10 +13,13 @@ before_install:
       set -x
       set -euo pipefail
       if [ "$TRAVIS_OS_NAME" = "osx" ]; then 
+        softwareupdate --all --install --force
         brew cask install osxfuse;
         brew install encfs;
         udo security unlock-keychain;
-      else
+      fi
+      if [ "$TRAVIS_OS_NAME" = "linux" ]; then 
+        sudo apt update
         sudo apt install encfs -y
       fi
 
