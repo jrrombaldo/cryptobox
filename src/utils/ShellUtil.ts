@@ -1,23 +1,8 @@
-// import * as shell from "shelljs";
 import { log } from "./LogUtil";
 import * as constants from "./constants";
-
-// import * as path from "path";
-// import * as fs from "fs";
-import * as os from "os";
-
-// TODO: replace with https://www.npmjs.com/package/shelljs.exec
-// INFO: https://github.com/shelljs/shelljs/wiki/Electron-compatibility
-// shell.config.execPath = shell.which("node").stdout; // d
-// log.debug("shell.config.execPath", shell.config.execPath)
-// log.debug('shell.which("node")', shell.which("node"));
-// log.debug('shell.which("nodejs")', shell.which("nodejs"));
-
-
-
 // import { execSync } from 'child_process';  // since node 4
 import { spawnSync } from 'child_process'; // since node 12
-import { shell } from "electron";
+import * as os from "os";
 
 
 

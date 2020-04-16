@@ -3,7 +3,7 @@
     "productName": "CryptoBox",
     "copyright": "Copyright © 2020 ${author}",
     "directories": {
-        "output": "out/electron-builder"
+        "output": "release"
     },
     "mac": {
         "icon": "static/resources/cloud-enc.icns",
