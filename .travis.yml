@@ -1,8 +1,6 @@
 dist: bionic
 language: node_js
 node_js: 13
-# os: osx
-# osx_image: xcode9
 
 jobs:
   include:
@@ -47,6 +45,7 @@ script:
 #                 npm run test
 #                 npm run make
 #                 ls -larthR
+
 # jobs:    
 #     include:
 #     - name: ubuntu
