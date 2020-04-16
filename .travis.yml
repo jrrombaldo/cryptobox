@@ -1,46 +1,59 @@
-
-dist: trusty
-sudo: true
+dist: bionic
 language: node_js
 node_js: 13
-
+os: osx
+osx_image: xcode9
 
 jobs:
-    allow_failures: true
-    
     include:
-        - name: ubuntu
-            os: linux
-            dist: bionic
-            before_install:
-                - |
-                    set -euo pipefail
-                    set -x
-                    sudo apt install encfs -y
-            install:
-                - |
-                    npm install
-                    npm run build
-                    npm run test
-                    npm run make
-                    ls -larthR
+        before_install:
+            - |
+                set -x
+                set -euo pipefail
+                brew update
+                brew cask install osxfuse
+                brew install encfs
+                sudo security unlock-keychain
+        script:
+            - |
+                npm install
+                npm run build
+                npm run test
+                npm run make
+                ls -larthR
+# jobs:    
+#     include:
+#     - name: ubuntu
+#         # os: linux
+#         # dist: bionic
+#         before_install:
+#             - set -euo pipefail
+#             - set -x
+#             - sudo apt install encfs -y
+    #         install:
+    #             - |
+    #                 npm install
+    #                 npm run build
+    #                 npm run test
+    #                 npm run make
+    #                 ls -larthR
 
         
-        - name: mac 10.12
-                os: osx
-                osx_image: xcode9
-                before_install:
-                    - |
-                    set -x
-                    set -euo pipefail
-                    brew update
-                    brew cask install osxfuse
-                    brew install encfs
-                    sudo security unlock-keychain
-                install:
-                    - |
-                        npm install
-                        npm run build
-                        npm run test
-                        npm run make
-                        ls -larthR
+    #     - name: mac 10.12
+    #             os: osx
+    #             osx_image: xcode9
+    #             before_install:
+    #                 - |
+    #                 set -x
+    #                 set -euo pipefail
+    #                 brew update
+    #                 brew cask install osxfuse
+    #                 brew install encfs
+    #                 sudo security unlock-keychain
+    #             install:
+    #                 - |
+    #                     npm install
+    #                     npm run build
+    #                     npm run test
+    #                     npm run make
+    #                     ls -larthR
