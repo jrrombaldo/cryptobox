@@ -14,7 +14,7 @@
     "linux":{
         "icon": "static/resources/cloud-enc.icns",
         "category": "Utility",
-        "target": ["deb","rpm", "apk", "snap", "freebsd", "tar.gz"]
+        "target": ["deb","rpm", "tar.gz"]
     },
     "dmg": {
         "backgroundColor": "#3f4247",
