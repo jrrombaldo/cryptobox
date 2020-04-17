@@ -20,10 +20,10 @@ before_install:
         sudo apt install encfs -y
       fi
 
-install:
+script:
+    - npm install
     - npm run build
     - npm run test
-script:
     - npm make
     - ls -larthR
 
