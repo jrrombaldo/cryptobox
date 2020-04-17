@@ -1,6 +1,5 @@
+name: "testing on all PUSH and PR"
 on:
-  schedule:
-    - cron:  '0 16 * * FRI'
   push:
     branches:
       - '*'
@@ -19,7 +18,7 @@ jobs:
       max-parallel: 10
       matrix:
         os: [ubuntu-18.04, ubuntu-latest, macos, macos-latest]
-        node-version: [13.x]
+        node-version: [12.x, 13.x]
 
     steps:
       - uses: actions/checkout@v1
@@ -45,7 +44,7 @@ jobs:
           /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
           brew cask install osxfuse
           brew install encfs
-          sudo security unlock-keychain
+          sudo security unlock-keychain -u
 
 
       - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.os}}
