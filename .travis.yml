@@ -29,3 +29,7 @@ before_install:
       sudo apt install encfs -y
       mkdir -p ~/cryptobox/ && echo "12345" > ~/cryptobox/pass.txt
     fi
+
+script:
+  - |
+    npm run make
