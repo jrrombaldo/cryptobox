@@ -2,7 +2,7 @@
 
 
 | Branch        | Travis           | GitHub  |
-| ------------- |:-------------:| -----:|
+| :------------- |:-------------|:-----|
 | MASTER        |[![Build Status](https://travis-ci.org/bnh6/cryptobox.svg?branch=master)](https://travis-ci.org/bnh6/cryptobox)| ![testing on all PUSH and PR](https://github.com/bnh6/cryptobox/workflows/testing%20on%20all%20PUSH%20and%20PR/badge.svg?branch=master) |
 | DEV           |[![Build Status](https://travis-ci.org/bnh6/cryptobox.svg?branch=dev)](https://travis-ci.org/bnh6/cryptobox)      |   ![testing on all PUSH and PR](https://github.com/bnh6/cryptobox/workflows/testing%20on%20all%20PUSH%20and%20PR/badge.svg?branch=dev)|
 | JR        |[![Build Status](https://travis-ci.org/bnh6/cryptobox.svg?branch=travis)](https://travis-ci.org/bnh6/cryptobox)      |    ![testing on all PUSH and PR](https://github.com/bnh6/cryptobox/workflows/testing%20on%20all%20PUSH%20and%20PR/badge.svg?branch=travis) |
