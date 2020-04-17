@@ -8,10 +8,7 @@ jobs:
     - os: linux
     - os: osx
 install:
-    - |
-      set -x
-      set -euo pipefail
-      npm ci
+    - npm ci
 cache:
   directories:
     - "node_modules"
