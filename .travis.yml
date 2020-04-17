@@ -6,7 +6,9 @@ node_js: 13
 jobs:
   include:
     - os: linux
+      env: LABEL=linux
     - os: osx
+      env: LABEL=osx
 cache:
   directories:
     - "node_modules"
