@@ -4,33 +4,28 @@ import { PasswordServiceFactory } from "../services/password/PasswordServiceFact
 
 import { Volume } from "../entities/Volume";
 import { Password } from "../entities/Password";
-import * as constants from "../utils/constants";
 import { expect } from "chai";
-import * as shell from "../utils/ShellUtil"
-var path = require("path")
-
+import * as shell from "../utils/ShellUtil";
 import * as os from "os";
 
 import { log } from "../utils/LogUtil";
-log.debug("running password and encryption tests")
 
+let path = require("path");
 
+log.debug("running password and encryption tests");
 
 // const rootFolder = "~/cryptobox";
-const rootFolder:string = path.join("/tmp", "cryptobox")
-const sourceFolder:string = `${rootFolder}/encrypted`;
-const destinationFolder = `${rootFolder}/decrypted`;
+const rootFolder: string = path.join("/tmp", "cryptobox");
+const sourceFolder: string = `${rootFolder}/encrypted`;
+// const destinationFolder = `${rootFolder}/decrypted`;
 // const passwordValue = "MyPassword@2020";
 const passwordValue = Math.random().toString(36).substr(2, 16);
-log.debug(`generated password = [${passwordValue}]`)
+log.debug(`generated password = [${passwordValue}]`);
 
-
-const volume: Volume = new Volume(
-  sourceFolder,
-);
+const volume: Volume = new Volume(sourceFolder);
 const password: Password = new Password(passwordValue);
 
-const validateShellExecution = (result:[number, string, string]) => {
+const validateShellExecution = (result: [number, string, string]) => {
   if (result[0] !== 0) {
     log.error(
       `function failed, result=[${result[0]}], stdout=[${result[1]}] stderr[${result[2]}]`
@@ -39,13 +34,17 @@ const validateShellExecution = (result:[number, string, string]) => {
   }
 };
 
-log.info("testing encryption code")
+log.info("testing encryption code");
 
 describe("testing password and encryption together", () => {
   before(() => {
     validateShellExecution(shell.execute("mkdir", [`-p "${rootFolder}"`]));
-    validateShellExecution(shell.execute("mkdir", [`-p "${volume.encryptedFolderPath}"`]));
-    validateShellExecution(shell.execute("mkdir", [`-p "${volume.decryptedFolderPath}"`]));
+    validateShellExecution(
+      shell.execute("mkdir", [`-p "${volume.encryptedFolderPath}"`])
+    );
+    validateShellExecution(
+      shell.execute("mkdir", [`-p "${volume.decryptedFolderPath}"`])
+    );
   });
 
   it("create password", () => {
@@ -71,7 +70,6 @@ describe("testing password and encryption together", () => {
     let isMounted = encryptionService.isMounted(volume);
     expect(isMounted).to.eql(true);
   });
-
 
   it("umount volume", () => {
     let encryptionService = EncryptionServiceFactory.create();

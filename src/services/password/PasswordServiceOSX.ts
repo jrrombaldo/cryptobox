@@ -10,10 +10,10 @@ import * as ShellHelper from "../../utils/ShellUtil";
 
 export class PasswordServiceOSX extends PasswordServiceBase
   implements PasswordService {
-
   retrievePasswordCommand(volume: Volume): string {
-
-    return `security find-generic-password  -a "${constants.PASSWORD_MANAGER_ALIAS}" -s "${volume.getVolumeAlias()}" -w `;
+    return `security find-generic-password  -a "${
+      constants.PASSWORD_MANAGER_ALIAS
+    }" -s "${volume.getVolumeAlias()}" -w `;
     // return "cat /tmp/cryptobox/pass.txt";
   }
 
@@ -21,7 +21,6 @@ export class PasswordServiceOSX extends PasswordServiceBase
     log.info(`searching password for ${volume}`);
 
     let command = this.retrievePasswordCommand(volume);
-
 
     let [result, stdout, stderr] = ShellHelper.execute(command, [], false);
 
@@ -41,15 +40,20 @@ export class PasswordServiceOSX extends PasswordServiceBase
 
     let comment = "Created by cryptobox @ $( date +'%Y.%m.%d-%H:%M')";
 
-    let command = `security add-generic-password -a '${constants.PASSWORD_MANAGER_ALIAS}' -s '${volume.getVolumeAlias()}' -D 'application password' -j \"${comment}\" -w'${password.passwordValue}' -U`;
+    let command = `security add-generic-password -a '${
+      constants.PASSWORD_MANAGER_ALIAS
+    }' -s '${volume.getVolumeAlias()}' -D 'application password' -j \"${comment}\" -w'${
+      password.passwordValue
+    }' -U`;
     let result = ShellHelper.execute(command);
   }
 
   deletePassword(volume: Volume): void {
-    const command = `security delete-generic-password -a "${constants.PASSWORD_MANAGER_ALIAS}" -s '${volume.getVolumeAlias()}'`
+    const command = `security delete-generic-password -a "${
+      constants.PASSWORD_MANAGER_ALIAS
+    }" -s '${volume.getVolumeAlias()}'`;
     ShellHelper.execute(command, []);
   }
-
 }
 
 module.exports = { PasswordServiceOSX };
