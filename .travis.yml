@@ -7,8 +7,6 @@ jobs:
   include:
     - os: linux
     - os: osx
-install:
-    - npm ci
 cache:
   directories:
     - "node_modules"
