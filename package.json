@@ -34,7 +34,7 @@
     "type": "git",
     "url": "git+https://github.com/jrrombaldo/cloud-enc.git"
   },
-  "author": "Carlos Rombaldo",
+  "author": "Carlos Rombaldo <ju@bnh6.dev>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/jrrombaldo/cloud-enc/issues"
