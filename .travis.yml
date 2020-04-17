@@ -10,4 +10,13 @@ jobs:
 cache:
   directories:
     - "node_modules"
+install:
+  - |
+  if [ $TRAVIS_OS_NAME = 'osx' ]; then
+    echo "MAC"
+  fi
+
+  if [ $TRAVIS_OS_NAME = 'linux' ]; then
+    echo "llinux"
+  fi
   
