@@ -11,7 +11,7 @@ export function execute(
   command: string,
   args: string[] = [],
   failOnNonZeroReturn: boolean = true,
-  timeout: number = 45000): [number, string, string] {
+  timeout: number = 7000): [number, string, string] {
 
   log.debug(`executing command [${command}] [${args}], failOnNon0=${failOnNonZeroReturn}`);
 

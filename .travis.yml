@@ -6,7 +6,7 @@ jobs:
   include:
     - os: linux
     - os: osx
-before_install:
+install:
     - |
       set -x
       set -euo pipefail
@@ -18,14 +18,11 @@ before_install:
     #   if [ "$TRAVIS_OS_NAME" = "linux" ]; then 
     #     sudo apt update
     #     sudo apt install encfs -y
-    #   fi
-      npm ci
-
-script:
-    - npm run build
-    - npm run test
-    - npm make
-    - ls -larthR
+    #   fi 
+    npm install 
+    # npm run test
+    # npm make
+    # ls -larthR
 
 # jobs:
 #     include:
