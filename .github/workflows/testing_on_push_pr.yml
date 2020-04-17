@@ -48,7 +48,7 @@ jobs:
           brew install encfs
           sudo security unlock-keychain -u
           npm ci
-          mpn run make
+          npm run make
 
 
       # - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.os}}
