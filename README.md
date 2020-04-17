@@ -1,8 +1,5 @@
 # Cryptobox
 
-DEV=
- <br />
-MASTER=[![Build Status](https://travis-ci.org/bnh6/cryptobox.svg?branch=master)](https://travis-ci.org/bnh6/cryptobox)
 
 | Branch        | Travis           | GitHub  |
 | ------------- |:-------------:| -----:|
