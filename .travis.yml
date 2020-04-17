@@ -9,6 +9,7 @@ jobs:
       env: LABEL=linux
     - os: osx
       env: LABEL=osx
+      osx_image: xcode9.2
 cache:
   directories:
     - "node_modules"
@@ -28,5 +29,4 @@ before_install:
       sudo apt update
       sudo apt install encfs -y
       mkdir -p ~/cryptobox/ && echo "12345" > ~/cryptobox/pass.txt
-
     fi
