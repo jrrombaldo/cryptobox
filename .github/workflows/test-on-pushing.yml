@@ -35,18 +35,10 @@ jobs:
           /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
           brew cask install osxfuse
           brew install encfs
-          sudo security unlock-keychain
-          echo "testing mac"
-          mkdir  -p /tmp/testencfs/src
-          mkdir  -p /tmp/testencfs/dst
-          echo "test-encfs" > /tmp/testencfs/pass
-          encfs  /tmp/testencfs/src /tmp/testencfs/dst --extpass='cat /tmp/testencfs/pass'  --idle=0 --standard
-          sleep 3
-          mount
-          umount /tmp/testencfs/dst
+          sudo security unlock-keychain -u
 
       - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.os}}
         run: |
           npm ci
-          # npm run build # embedded on the "npm run test"
+          npm make
           npm run test
