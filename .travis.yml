@@ -10,6 +10,7 @@ install:
     - |
       set -x
       set -euo pipefail
+      npm ci
     #   if [ "$TRAVIS_OS_NAME" = "osx" ]; then 
     #     brew cask install osxfuse;
     #     brew install encfs;
@@ -19,7 +20,7 @@ install:
     #     sudo apt update
     #     sudo apt install encfs -y
     #   fi 
-    npm install 
+    # npm install 
     # npm run test
     # npm make
     # ls -larthR
