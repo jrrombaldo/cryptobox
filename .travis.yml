@@ -17,14 +17,11 @@ before_install:
   - |
     if [ $TRAVIS_OS_NAME = 'osx' ]; then
       echo -e "\n\n\t>>>> running on MAC\t\t"
-      sudo xcode-select --install # do we need this ??
       /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
       brew cask install osxfuse
       brew install encfs
       sudo security unlock-keychain -u
-      
     fi
-
     if [ $TRAVIS_OS_NAME = 'linux' ]; then
       echo -e "\n\n\t>>>> running on LINUX\t\t"
       sudo apt clean
