@@ -39,6 +39,6 @@ jobs:
 
       - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.os}}
         run: |
-          npm ci
+          npm install
           npm make
           npm run test
