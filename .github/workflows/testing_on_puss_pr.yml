@@ -50,7 +50,8 @@ jobs:
       - name: Running the tests with node ${{ matrix.node-version }} and ${{ matrix.os}}
         run: |
             npm ci
-            if ! ( matrix.os == 'macos-latest' || matrix.os == 'macos' ); then
+            if [[ matrix.os != 'macos'* ]]; then
               npm test
+            else
+              npm run make
             fi
-            npm run make
