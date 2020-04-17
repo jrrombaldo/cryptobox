@@ -27,7 +27,6 @@ before_install:
       sudo apt clean
       sudo apt update
       sudo apt install encfs -y
-      sudo apt install snapd -y
       mkdir -p ~/cryptobox/ && echo "12345" > ~/cryptobox/pass.txt
     fi
 
