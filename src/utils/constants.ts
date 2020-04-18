@@ -1,4 +1,4 @@
-const constants = Object.freeze({
+export const constants = Object.freeze({
   ENCFS: "encfs",
 
   PASSWORD_MANAGER_ALIAS: "CryptoBox",
@@ -24,4 +24,4 @@ const constants = Object.freeze({
   WINDOWS_TITLE: "CryptoBox",
 });
 
-module.exports = constants;
+// module.exports = constants;

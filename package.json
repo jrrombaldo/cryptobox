@@ -4,6 +4,7 @@
   "description": "Presere data privacy, not matter where ...",
   "main": "./dist/main.js",
   "dependencies": {
+    "@types/zxcvbn": "^4.4.0",
     "@typescript-eslint/eslint-plugin": "^2.28.0",
     "@typescript-eslint/parser": "^2.28.0",
     "bootswatch": "^4.4.1",
