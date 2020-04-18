@@ -1,14 +1,14 @@
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
 
-import { log } from "./utils/LogUtil";
-import * as store from "./services/store/StoreManager"
+import log from "./utils/LogUtil";
+import * as store from "./services/store/StoreManager";
 
 import * as ShellHelper from "./utils/ShellUtil";
 
 // TODO th proccess env was missing /usr/local/bin, where encfs is...
-process.env.PATH += ":/usr/local/bin"
-log.debug("proccess path ",process.env.PATH)
+process.env.PATH += ":/usr/local/bin";
+log.debug("process path ", process.env.PATH);
 
 log.debug(`config store ->${store}`);
 // log.debug(store)
@@ -16,20 +16,16 @@ log.debug(`config store ->${store}`);
 // https://github.com/electron/electron/issues/18397
 app.allowRendererProcessReuse = true;
 
-
-const isDev = process.argv0.includes("node_modules")
-log.info(`isDev = ${isDev}`)
+const isDev = process.argv0.includes("node_modules");
+log.info(`isDev = ${isDev}`);
 if (isDev) {
   // hot reload of web content
-  require('electron-reload')(require("path").join(__dirname, "../static/"));
+  require("electron-reload")(require("path").join(__dirname, "../static/"));
   // require('electron-reload')(__dirname);
   // require('electron-reload')(__dirname, {
   //   electron: require('electron')
   // });
 }
-
-
-
 
 // require("update-electron-app")({
 //   repo: "bnh6/cryptobox",
@@ -52,8 +48,8 @@ function createWindow() {
     icon: path.join(__dirname, icoPath),
     webPreferences: {
       nodeIntegration: true,
-      preload: path.join(__dirname, "preload.js")
-    }
+      preload: path.join(__dirname, "preload.js"),
+    },
   });
 
   mainWindow.setVisibleOnAllWorkspaces(true);
@@ -70,7 +66,7 @@ function createWindow() {
 }
 
 app.on("ready", () => {
-  statupPreReq()
+  statupPreReq();
   loadScripts();
   createWindow();
 
@@ -89,12 +85,12 @@ app.on("activate", function () {
 process.on("uncaughtException", function (error) {
   log.error("UNCATCH EXCEPTION FOUND ");
   log.error(error);
-  app.quit()
+  app.quit();
   // console.error(error)
 });
 
 function loadScripts() {
-  import("./controllers/IPCManager")
+  import("./controllers/IPCManager");
 
   //   const scripts = fs.readdirSync("./dist/client");
   //   scripts.forEach(function(script: string) {
@@ -104,14 +100,10 @@ function loadScripts() {
   //   });
 }
 
-function statupPreReq(){
-
+function statupPreReq() {
   ShellHelper.checkOSSupport();
-  if (!ShellHelper.checkRequirements()){
-    log.error("environment does not meet requirements ...")
+  if (!ShellHelper.checkRequirements()) {
+    log.error("environment does not meet requirements ...");
     app.quit();
   }
-
 }
-
-

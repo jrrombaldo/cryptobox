@@ -3,9 +3,8 @@ import { Volume } from "../../entities/Volume";
 import { EncryptionService } from "./EncryptionService";
 import { PasswordServiceFactory } from "../password/PasswordServiceFactory";
 
-import { log } from "../../utils/LogUtil";
+import log from "../../utils/LogUtil";
 import * as ShellHelper from "../../utils/ShellUtil";
-import { shell } from "electron";
 
 export abstract class EncryptionServiceBase implements EncryptionService {
   abstract getMountCMD(volume: Volume, passwordCommand: string): string;
