@@ -13,8 +13,10 @@ headers = {
 
 print ("triggering travis on branch "+os.environ['BRANCH'])
 
-def doRequest(method, url, data=None):
-    response = requests.request(method, host+url, data=data, headers=headers, verify=False)
+requests.packages.urllib3.disable_warnings() 
+
+def doRequest(method, url, json=None):
+    response = requests.request(method, host+url, json=json, headers=headers, verify=False)
     if (response.status_code > 299):
         print ("something went wrong ", response.status_code)
         # print (response.content) # can leak data 
@@ -22,9 +24,9 @@ def doRequest(method, url, data=None):
 
 def requestBuild():
     requestId =  doRequest("POST", "/repo/bnh6%2Fcryptobox/requests",
-        data={"request": {"branch":os.environ['BRANCH']}} 
+        json={"request": {"branch":os.environ['BRANCH']}} 
     )["request"]["id"]
-    print ("requestId = ", requestId,)
+    print ("requestId = ", requestId)
     return requestId
 
 def getBuildId(requestId):

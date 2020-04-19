@@ -16,7 +16,7 @@ jobs:
             architecture: 'x64' # Optional - x64 or x86, defaults to x64
         - name: trigger Travis
           run: |
-            BRANCH=$(basename $BRANCH)
+            # BRANCH=$(basename $BRANCH)
             echo $BRANCH
             cd ./build
             pip install -r requirements.txt
