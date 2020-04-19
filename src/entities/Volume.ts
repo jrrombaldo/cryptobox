@@ -1,6 +1,6 @@
 import { constants } from "../utils/constants";
-var path = require("path");
-var os = require("os");
+import * as path from "path";
+import * as os from "os";
 
 export class Volume {
   name: string;
