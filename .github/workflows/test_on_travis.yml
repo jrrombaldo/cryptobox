@@ -7,7 +7,7 @@ jobs:
     test:
       runs-on: ubuntu-latest
       env:
-        BRANCH: ${{ github.ref }}
+        BRANCH: ${{ basename github.ref }}
       steps:
         - uses: actions/checkout@v2
         - uses: actions/setup-python@v1
@@ -16,6 +16,7 @@ jobs:
             architecture: 'x64' # Optional - x64 or x86, defaults to x64
         - name: trigger Travis
           run: |
+            # basename "ref/heads/featreu_actions"
             echo $BRANCH
             cd ./build
             pip install -r requirements.txt

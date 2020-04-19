@@ -11,6 +11,8 @@ headers = {
     "Authorization": "token gSE73C-CzWaJ3L2QhgSOrA"
 }
 
+print ("triggering travis on branch"+os.environ['BRANCH'])
+
 def doRequest(method, url, data=None):
     response = requests.request(method, host+url, data=data, headers=headers, verify=False)
     if (response.status_code > 299):
@@ -20,9 +22,9 @@ def doRequest(method, url, data=None):
 
 def requestBuild():
     requestId =  doRequest("POST", "/repo/bnh6%2Fcryptobox/requests",
-        data={"request": {"branch":"master"}} 
+        data={"request": {"branch":os.environ['BRANCH']}} 
     )["request"]["id"]
-    print ("requestId =", requestId)
+    print ("requestId =", requestId,)
     return requestId
 
 def getBuildId(requestId):
