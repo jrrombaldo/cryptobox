@@ -1,9 +1,7 @@
 import { app, BrowserWindow } from "electron";
 import * as path from "path";
-
 import log from "./utils/LogUtil";
 import * as store from "./services/store/StoreManager";
-
 import * as ShellHelper from "./utils/ShellUtil";
 
 // TODO th proccess env was missing /usr/local/bin, where encfs is...
