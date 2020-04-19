@@ -23,5 +23,3 @@ export class EncryptionServiceOSX extends EncryptionServiceBase
     // return `${impl}  ${volume.encryptedFolderPath} ${volume.decryptedFolderPath} --extpass='${passwordCommand}';
   }
 }
-
-module.exports = { EncryptionServiceOSX };
