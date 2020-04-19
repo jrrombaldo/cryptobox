@@ -1,16 +1,14 @@
 import { EncryptionServiceFactory } from "../services/encryption/EncryptionServiceFactory";
 import { PasswordService } from "../services/password/PasswordService";
 import { PasswordServiceFactory } from "../services/password/PasswordServiceFactory";
-
 import { Volume } from "../entities/Volume";
 import { Password } from "../entities/Password";
 import { expect } from "chai";
 import * as shell from "../utils/ShellUtil";
 import * as path from "path";
-
 import * as os from "os";
-
 import log from "../utils/LogUtil";
+
 log.debug("running password and encryption tests");
 
 // const rootFolder = "~/cryptobox";
