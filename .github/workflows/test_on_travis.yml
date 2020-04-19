@@ -1,4 +1,4 @@
-name: "Testing on Travis"
+name: "run Travis"
 on:
     push:
       branches:
