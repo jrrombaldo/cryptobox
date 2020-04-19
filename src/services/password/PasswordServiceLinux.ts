@@ -2,7 +2,6 @@ import { Password } from "../../entities/Password";
 import { Volume } from "../../entities/Volume";
 import { PasswordServiceBase } from "./PasswordServiceBase";
 import { PasswordService } from "./PasswordService";
-
 import log from "../../utils/LogUtil";
 import * as ShellHelper from "../../utils/ShellUtil";
 
@@ -33,5 +32,3 @@ export class PasswordServiceLinux extends PasswordServiceBase
     ShellHelper.execute(`rm -rf ${this.passwordWorkAround}`);
   }
 }
-
-module.exports = { PasswordServiceLinux };

@@ -2,9 +2,7 @@ import { Password } from "../../entities/Password";
 import { Volume } from "../../entities/Volume";
 import { PasswordServiceBase } from "./PasswordServiceBase";
 import { PasswordService } from "./PasswordService";
-
 import { constants } from "../../utils/constants";
-
 import log from "../../utils/LogUtil";
 import * as ShellHelper from "../../utils/ShellUtil";
 
@@ -55,5 +53,3 @@ export class PasswordServiceOSX extends PasswordServiceBase
     ShellHelper.execute(command, []);
   }
 }
-
-module.exports = { PasswordServiceOSX };
