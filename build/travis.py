@@ -19,9 +19,11 @@ def doRequest(method, url, data=None):
     return response.json()
 
 def requestBuild():
-    return doRequest("POST", "/repo/bnh6%2Fcryptobox/requests",
+    requestId =  doRequest("POST", "/repo/bnh6%2Fcryptobox/requests",
         data={"request": {"branch":"master"}} 
     )["request"]["id"]
+    print ("requestId =", requestId)
+    return requestId
 
 def getBuildId(requestId):
     while True:
@@ -31,6 +33,7 @@ def getBuildId(requestId):
 
 def getBuild(buildId):
     buildJson  =  doRequest("GET", "/build/{0}".format (buildId))
+    print ("buildId =", buildId, ", state = ",buildJson["state"]) 
     return buildJson["state"], buildJson["finished_at"], [job["id"] for job in  buildJson["jobs"]]
 
 def getLogs(jobId): 
