@@ -11,20 +11,21 @@ headers = {
     "Authorization": "token gSE73C-CzWaJ3L2QhgSOrA"
 }
 
-print ("triggering travis on branch "+os.environ['BRANCH'])
+print ("triggering travis on branch "+os.environ["BRANCH"])
 
 requests.packages.urllib3.disable_warnings() 
 
-def doRequest(method, url, json=None):
-    response = requests.request(method, host+url, json=json, headers=headers, verify=False)
+def doRequest(method, url, data=None):
+    response = requests.request(method, host+url, json=data, headers=headers, verify=False)
     if (response.status_code > 299):
         print ("something went wrong ", response.status_code)
         # print (response.content) # can leak data 
+        sys.exit(os.EX_SOFTWARE)
     return response.json()
 
 def requestBuild():
     requestId =  doRequest("POST", "/repo/bnh6%2Fcryptobox/requests",
-        json={"request": {"branch":os.environ['BRANCH']}} 
+        data={"request": {"branch":os.environ["BRANCH"]}}
     )["request"]["id"]
     print ("requestId = ", requestId)
     return requestId
