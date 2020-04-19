@@ -4,22 +4,19 @@ import { ipcRenderer } from "electron";
 import { constants } from "../utils/constants";
 import * as querystring from "querystring";
 import { remote } from "electron";
-// const path = require('path')
 import log from "../utils/LogUtil";
-// console.log(window.process.argv)
-// let query = querystring.parse(global.location.search);
-// let query = querystring.parse(global);
-const query = { "?source": "" };
-log.info("******************query on Global: ", global);
-let source = query["?source"];
-log.info(`*******************source folder ${source}`);
 
-const passwd = document.getElementById("passwd");
-const passwdLabel = document.getElementById("passwdLabel");
-const passwwdForm = document.getElementById("PasswordForm");
+console.log(window.process.argv);
+// let query = querystring.parse(global.location.search);
+// let source = query["?source"];
+let source = { "?query": "" };
+
+const passwd = <HTMLInputElement>document.getElementById("passwd");
+const passwdLabel = <HTMLLabelElement>document.getElementById("passwdLabel");
+const passwwdForm = <HTMLFormElement>document.getElementById("PasswordForm");
 const feedback = document.getElementById("passwdFeedback");
-const save = document.getElementById("saveBtn");
-const cancel = document.getElementById("cancelBtn");
+const save = <HTMLButtonElement>document.getElementById("saveBtn");
+const cancel = <HTMLButtonElement>document.getElementById("cancelBtn");
 
 // adjusting the label
 passwdLabel.innerHTML = `Password for folder "${source}"`;
