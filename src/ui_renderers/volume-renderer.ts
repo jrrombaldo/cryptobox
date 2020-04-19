@@ -2,17 +2,11 @@ import { ipcRenderer } from "electron";
 import { constants } from "../utils/constants";
 import log from "../utils/LogUtil";
 
-// const { ipcRenderer } = require("electron");
-// const constants = require("../utils/constants");
-// const log = require("../utils/LogUtil").log;
-// const path = require('path')
-// var UIHelper = require("../controllers/UIHelper.ts");
-
 log.debug("volume-rendered starting ...");
 
-var source: HTMLElement = document.getElementById("source");
-var cloudEncForm = document.getElementById("cloudEncForm");
-var mountBtn = document.getElementById("mountBtn");
+let source = <HTMLInputElement>document.getElementById("source");
+let cloudEncForm = <HTMLFormElement>document.getElementById("cloudEncForm");
+let mountBtn = <HTMLButtonElement>document.getElementById("mountBtn");
 
 source.onclick = () => {
   log.debug(
@@ -20,10 +14,8 @@ source.onclick = () => {
   );
   const directory = ipcRenderer.sendSync(constants.IPC_GET_DIRECTORY, {});
   if (directory) {
-    log.debug("directory: ", directory);
-    source.textContent = directory;
-    log.debug("source.innerText: ", source.textContent);
-    checkIfPasswordExist(source.textContent);
+    source.value = directory;
+    checkIfPasswordExist(source.value);
     updateMountBtn();
   }
 };
@@ -31,9 +23,9 @@ source.onclick = () => {
 cloudEncForm.onsubmit = () => {
   log.debug("form submit");
   const args = {
-    source: source.textContent,
+    source: source.value,
   };
-  log.debug(`IPC requesting to mount/umount ${source.textContent}`);
+  log.debug(`IPC requesting to mount/umount ${source.value}`);
   const response = ipcRenderer.sendSync(constants.IPC_MOUNT_UNMOUNT, args);
   log.info(`IPC here is the result ${JSON.stringify(response)}`);
   updateMountBtn();
@@ -47,18 +39,17 @@ cloudEncForm.onsubmit = () => {
 };
 
 function updateMountBtn() {
-  const resp = ipcRenderer.sendSync(constants.IPC_IS_MOUNTED, {
-    source: source.textContent,
+  const response = ipcRenderer.sendSync(constants.IPC_IS_MOUNTED, {
+    source: source.value,
   });
-
-  mountBtn.innerText = resp.isMounted ? "UNmount" : "Mount";
+  mountBtn.innerText = response.isMounted ? "UNmount" : "Mount";
 }
 
 function checkIfPasswordExist(source: string): void {
-  const ret = ipcRenderer.sendSync(constants.IPC_PASSWORD_EXIST, {
+  const response = ipcRenderer.sendSync(constants.IPC_PASSWORD_EXIST, {
     source: source,
   });
-  log.debug("IPC check if password exist", ret);
+  log.debug("IPC check if password exist", response);
 }
 
 // function notify(message) {
