@@ -10,12 +10,11 @@ jobs:
         BRANCH: ${{ github.ref }}
       steps:
         - uses: actions/checkout@v2
-        - name: trigger Travis
-          uses: actions/setup-python@v1
-          
+        - uses: actions/setup-python@v1
           with:
             python-version: '3.x' # Semantic version range syntax or exact version of a Python version
             architecture: 'x64' # Optional - x64 or x86, defaults to x64
+        - name: trigger Travis
           run: |
             cd ./build
             pip install requirements.txt
