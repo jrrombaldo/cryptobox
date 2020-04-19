@@ -11,12 +11,12 @@ headers = {
     "Authorization": "token gSE73C-CzWaJ3L2QhgSOrA"
 }
 
-print ("triggering travis on branch"+os.environ['BRANCH'])
+print ("triggering travis on branch "+os.environ['BRANCH'])
 
 def doRequest(method, url, data=None):
     response = requests.request(method, host+url, data=data, headers=headers, verify=False)
     if (response.status_code > 299):
-        print ("something went wrong", response.status_code)
+        print ("something went wrong ", response.status_code)
         # print (response.content) # can leak data 
     return response.json()
 
@@ -24,7 +24,7 @@ def requestBuild():
     requestId =  doRequest("POST", "/repo/bnh6%2Fcryptobox/requests",
         data={"request": {"branch":os.environ['BRANCH']}} 
     )["request"]["id"]
-    print ("requestId =", requestId,)
+    print ("requestId = ", requestId,)
     return requestId
 
 def getBuildId(requestId):
@@ -35,7 +35,7 @@ def getBuildId(requestId):
 
 def getBuild(buildId):
     buildJson  =  doRequest("GET", "/build/{0}".format (buildId))
-    print ("buildId =", buildId, ", state = ",buildJson["state"]) 
+    print ("buildId = ", buildId, ", state = ",buildJson["state"]) 
     return buildJson["state"], buildJson["finished_at"], [job["id"] for job in  buildJson["jobs"]]
 
 def getLogs(jobId): 
@@ -47,6 +47,6 @@ while True:
     if (finishedAt != None): break;
     else: time.sleep(10)
 
-print ("RESULT =",state)
+print ("RESULT = ",state)
 if state == "passed": sys.exit(os.EX_OK)
 sys.exit(os.EX_SOFTWARE)
