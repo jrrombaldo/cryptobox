@@ -6,15 +6,8 @@ import * as querystring from "querystring";
 import { remote } from "electron";
 import log from "../utils/LogUtil";
 
-
-// log.debug("window.process.argv", window.process.argv);
-// let query = querystring.parse(global.location.search);
 let query = querystring.parse(location.search);
 let source = query["?source"];
-
-
-
-
 
 const passwd = <HTMLInputElement>document.getElementById("passwd");
 const passwdLabel = <HTMLLabelElement>document.getElementById("passwdLabel");
