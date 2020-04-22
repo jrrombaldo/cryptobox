@@ -1,6 +1,6 @@
 const expect = require("chai").expect;
-import { PasswordApplication } from "../applications/PasswordApp"
-import { Volume } from "../entities/Volume"
+import { PasswordApplication } from "../applications/PasswordApp";
+import { Volume } from "../entities/Volume";
 
 
 // const volumeSrc: Volume = new Volume(

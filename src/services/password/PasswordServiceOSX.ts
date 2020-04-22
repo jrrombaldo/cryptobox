@@ -2,18 +2,16 @@ import { Password } from "../../entities/Password";
 import { Volume } from "../../entities/Volume";
 import { PasswordServiceBase } from "./PasswordServiceBase";
 import { PasswordService } from "./PasswordService";
-
-import * as constants from "../../utils/constants";
-
-import { log } from "../../utils/LogUtil";
+import { constants } from "../../utils/constants";
+import log from "../../utils/LogUtil";
 import * as ShellHelper from "../../utils/ShellUtil";
 
 export class PasswordServiceOSX extends PasswordServiceBase
   implements PasswordService {
-
   retrievePasswordCommand(volume: Volume): string {
-
-    return `security find-generic-password  -a "${constants.PASSWORD_MANAGER_ALIAS}" -s "${volume.getVolumeAlias()}" -w `;
+    return `security find-generic-password  -a "${
+      constants.PASSWORD_MANAGER_ALIAS
+    }" -s "${volume.getVolumeAlias()}" -w `;
     // return "cat /tmp/cryptobox/pass.txt";
   }
 
@@ -21,7 +19,6 @@ export class PasswordServiceOSX extends PasswordServiceBase
     log.info(`searching password for ${volume}`);
 
     let command = this.retrievePasswordCommand(volume);
-
 
     let [result, stdout, stderr] = ShellHelper.execute(command, [], false);
 
@@ -32,7 +29,7 @@ export class PasswordServiceOSX extends PasswordServiceBase
       // not found
       return null;
     if (result === 0) {
-      log.error(`unknown error when searching password`);
+      log.error("unknown error when searching password");
       return null;
       // throw new Error(stderr)
     }
@@ -45,15 +42,18 @@ export class PasswordServiceOSX extends PasswordServiceBase
 
     const encodedPassword = Buffer.from(password.passwordValue, 'ascii').toString('base64')
 
-    let command = `security add-generic-password -a '${constants.PASSWORD_MANAGER_ALIAS}' -s '${volume.getVolumeAlias()}' -D 'application password' -j \"${comment}\" -w'${encodedPassword}' -U`;
+    let command = `security add-generic-password -a '${
+      constants.PASSWORD_MANAGER_ALIAS
+    }' -s '${volume.getVolumeAlias()}' -D 'application password' -j \"${comment}\" -w'${
+      encodedPassword
+    }' -U`;
     let result = ShellHelper.execute(command);
   }
 
   deletePassword(volume: Volume): void {
-    const command = `security delete-generic-password -a "${constants.PASSWORD_MANAGER_ALIAS}" -s '${volume.getVolumeAlias()}'`
+    const command = `security delete-generic-password -a "${
+      constants.PASSWORD_MANAGER_ALIAS
+    }" -s '${volume.getVolumeAlias()}'`;
     ShellHelper.execute(command, []);
   }
-
 }
-
-module.exports = { PasswordServiceOSX };

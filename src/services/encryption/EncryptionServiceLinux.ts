@@ -18,5 +18,3 @@ export class EncryptionServiceLinux extends EncryptionServiceBase
     return `${impl} '${volume.encryptedFolderPath}' '${volume.decryptedFolderPath}' --standard --extpass='${passwordCommand}' --require-macs -ohard_remove --idle=${volume.ttl}`;
   }
 }
-
-module.exports = { EncryptionServiceLinux };
