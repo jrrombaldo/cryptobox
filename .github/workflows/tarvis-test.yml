@@ -1,8 +1,8 @@
-name: "run Travis"
-on:
-    push:
-      branches:
-        - 'feature-actions'
+name: "Test on Travis"
+# on:
+#     push:
+#       branches:
+#         - 'feature-actions'
 jobs:
     test:
       runs-on: ubuntu-latest
