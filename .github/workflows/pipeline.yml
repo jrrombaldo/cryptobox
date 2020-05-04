@@ -1,10 +1,10 @@
-name: "Test on Travis"
+name: "Cryptobox CI"
 on:
     push:
       branches:
         - 'feature-actions'
 jobs:
-    "test":
+    "Test on Travis":
       runs-on: ubuntu-latest
       env:
         BRANCH_FULL: ${{ github.ref }}
