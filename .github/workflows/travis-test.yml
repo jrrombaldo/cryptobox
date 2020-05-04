@@ -1,4 +1,4 @@
-name: "Test on Travis $GITHUB_REF_NAME"
+name: "Test on Travis"
 on:
     push:
       branches:
