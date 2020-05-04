@@ -4,14 +4,14 @@ on:
       branches:
         - 'feature-actions'
 jobs:
-    "test ${{ GITHUB_REF_NAME }}":
+    "test ${{ matrix }}":
       runs-on: ubuntu-latest
       env:
         BRANCH_FULL: ${{ github.ref }}
       steps:
         - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
           shell: bash
-        - run: echo "Building on branch $BRANCH"
+        - run: echo "Building on branch $BRANCH and $GITHUB_REF_NAME":"
           
         - uses: actions/checkout@v2
         - uses: actions/setup-python@v1
