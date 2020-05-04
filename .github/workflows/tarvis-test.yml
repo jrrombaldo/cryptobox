@@ -11,7 +11,10 @@ jobs:
       steps:
         - run:   echo ::set-env name=GITHUB_REF_NAME::$(echo "$GITHUB_REF_NAME" | awk -F / '{print $2}')
           shell: bash
-        - run:   echo "$GITHUB_REF_NAME"
+        - run: |
+                echo $GITHUB_REF_NAME
+                BRANCH2=$(basename $BRANCH)
+                echo "$BRANCH2"
           shell: bash
           
         - uses: actions/checkout@v2
