@@ -4,10 +4,10 @@ on:
       branches:
         - 'feature-actions'
 jobs:
-    "test ${{github.ref}}":
+    "test ${{ GITHUB_REF_NAME }}":
       runs-on: ubuntu-latest
       env:
-        BRANCH_FULL: ${{ GITHUB_REF_NAME }}
+        BRANCH_FULL: ${{ github.ref }}
       steps:
         - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
           shell: bash
