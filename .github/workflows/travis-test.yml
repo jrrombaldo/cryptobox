@@ -1,4 +1,4 @@
-name: "Test on Travis ${{ github.ref }} "
+name: "Test on Travis ${{ GITHUB_REF_NAME }} "
 on:
     push:
       branches:
