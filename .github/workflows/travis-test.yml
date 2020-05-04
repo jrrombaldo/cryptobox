@@ -9,13 +9,9 @@ jobs:
       env:
         BRANCH_FULL: ${{ github.ref }}
       steps:
-        - run: echo ::set-env name=BRANCH::$(echo "$BRANCH_FULL" | awk -F / '{print $2}')
+        - run: echo ::set-env name=BRANCH::$(basename $BRANCH)
           shell: bash
-        - run: |
-                echo "git=$GITHUB_REF_NAME"
-                BRANCH2=$(basename $BRANCH)
-                echo "b=$BRANCH2"
-          shell: bash
+        - run: echo "Building on branch $BRANCH"
           
         - uses: actions/checkout@v2
         - uses: actions/setup-python@v1
