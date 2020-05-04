@@ -4,7 +4,7 @@ on:
       branches:
         - 'feature-actions'
 jobs:
-    test:
+    "test ${{github.ref}}":
       runs-on: ubuntu-latest
       env:
         BRANCH_FULL: ${{ github.ref }}
