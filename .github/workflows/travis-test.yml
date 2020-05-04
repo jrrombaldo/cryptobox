@@ -9,7 +9,7 @@ jobs:
       env:
         BRANCH_FULL: ${{ github.ref }}
       steps:
-        - run: echo ::set-env name=BRANCH::$(basename $BRANCH)
+        - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
           shell: bash
         - run: echo "Building on branch $BRANCH"
           
