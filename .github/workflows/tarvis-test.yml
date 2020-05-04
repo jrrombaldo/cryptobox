@@ -1,4 +1,4 @@
-name: "Test on Travis"
+name: "Test on Travis ${{ github.ref }} "
 on:
     push:
       branches:
@@ -9,7 +9,7 @@ jobs:
       env:
         BRANCH: ${{ github.ref }}
       steps:
-        - run:   echo ::set-env name=GITHUB_REF_NAME::$(echo "$BRANCH" | awk -F / '{print $2}')
+        - run: echo ::set-env name=GITHUB_REF_NAME::$(echo "$BRANCH" | awk -F / '{print $2}')
           shell: bash
         - run: |
                 echo "git=$GITHUB_REF_NAME"
