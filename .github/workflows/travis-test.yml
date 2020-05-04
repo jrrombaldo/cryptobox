@@ -7,9 +7,9 @@ jobs:
     test:
       runs-on: ubuntu-latest
       env:
-        BRANCH: ${{ github.ref }}
+        BRANCH_FULL: ${{ github.ref }}
       steps:
-        - run: echo ::set-env name=GITHUB_REF_NAME::$(echo "$BRANCH" | awk -F / '{print $2}')
+        - run: echo ::set-env name=BRANCH::$(echo "$BRANCH_FULL" | awk -F / '{print $2}')
           shell: bash
         - run: |
                 echo "git=$GITHUB_REF_NAME"
@@ -24,8 +24,6 @@ jobs:
             architecture: 'x64' # Optional - x64 or x86, defaults to x64
         - name: trigger Travis on $BRANCH
           run: |
-            BRANCH=$(basename $BRANCH)
-            echo $BRANCH
             cd ./build
             pip install -r requirements.txt
             python3 travis.py
