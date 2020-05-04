@@ -7,7 +7,7 @@ jobs:
     "test ${{github.ref}}":
       runs-on: ubuntu-latest
       env:
-        BRANCH_FULL: ${{ github.ref }}
+        BRANCH_FULL: ${{ GITHUB_REF_NAME }}
       steps:
         - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
           shell: bash
