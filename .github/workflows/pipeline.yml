@@ -8,7 +8,7 @@ jobs:
       runs-on: ubuntu-latest
       env:
         BRANCH_FULL: ${{ github.ref }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        TRAVIS_TOKEN: ${{ secrets.TRAVIS_TOKEN }}
 
       steps:
         - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
@@ -21,7 +21,8 @@ jobs:
             sudo apt install ruby-dev libffi-dev make gcc
             sudo gem install travis
             travis --version
-            echo "gh=$GITHUB_TOKEN"
+            echo "1=${{ secrets.TRAVIS_TOKEN }}"
+            echo "2=${TRAVIS_TOKEN}"
             travis login --pro --github-token $GITHUB_TOKEN
             travis token --pro
             echo ::set-env name=TRAVIS_TOKEN::$(travis token --pro)
