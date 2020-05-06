@@ -43,7 +43,6 @@ jobs:
         if: startsWith(matrix.os, 'ubuntu')
         run: |
           sudo apt install encfs -y
-          npm ci
           npm test
 
       - name: Prepare MAC
@@ -53,7 +52,6 @@ jobs:
           brew cask install osxfuse
           brew install encfs
           sudo security unlock-keychain -u
-          npm ci
           # npm run make
       
 
@@ -91,14 +89,15 @@ jobs:
 
   Build-Artifacts:
     runs-on: ubuntu-latest
-    needs:  [Test-on-Travis, Lint-App]
+    # needs:  [Test-on-Travis, Lint-App]
+    matrix:
+      os: [macos-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
       - name: linting for branch => ${{ github.ref }}
         run: |
           echo "building artifacts"
-          npm ci
           npm run make || true
 
       - name: uploading artifacts
