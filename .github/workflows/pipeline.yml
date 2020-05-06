@@ -14,13 +14,13 @@ jobs:
         - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
         - run: echo "Building on branch $BRANCH and $GITHUB_REF_NAME"
 
-        - run: |
-            echo "Installing Travis "
-            set -eo pipefail
-            sudo apt install ruby-dev libffi-dev make gcc &&  sudo gem install travis
-            travis --version
-            travis login --pro --github-token ${{ secrets.TRAVIS_TOKEN }}
-            echo ::set-env name=TRAVIS_TOKEN_API::$(travis token --pro)
+        # - run: |
+        #     echo "Installing Travis "
+        #     set -eo pipefail
+        #     sudo apt install ruby-dev libffi-dev make gcc &&  sudo gem install travis
+        #     travis --version
+        #     travis login --pro --github-token ${{ secrets.TRAVIS_TOKEN }}
+        #     echo ::set-env name=TRAVIS_TOKEN_API::$(travis token --pro)
             
         - uses: actions/checkout@v2
         - uses: actions/setup-python@v1

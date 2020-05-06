@@ -9,10 +9,8 @@ sleetime = 20
 headers = {
     "Accept": "application/vnd.travis-ci.2.1+json",
     "Travis-API-Version": "3",
-    "Authorization": "token {0}".format(os.environ["TRAVIS_TOKEN_API"])
+    "Authorization": "token {0}".format(os.environ["TRAVIS_TOKEN"])
 }
-
-print (headers)
 
 print ("triggering travis on branch "+os.environ["BRANCH"])
 
