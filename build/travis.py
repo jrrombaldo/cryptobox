@@ -6,7 +6,7 @@ host = 'https://api.travis-ci.org'
 repoId = 28512573
 sleetime = 20
 
-
+print (os.environ["TRAVIS_TOKEN_API"])
 
 headers = {
     "Accept": "application/vnd.travis-ci.2.1+json",
