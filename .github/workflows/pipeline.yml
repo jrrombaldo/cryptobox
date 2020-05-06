@@ -16,10 +16,11 @@ jobs:
         - run: echo "Building on branch $BRANCH and $GITHUB_REF_NAME"
 
         - run: |
-            echo "installing travis"
+            echo "Installing Travis "
             sudo apt install ruby-dev libffi-dev make gcc
             sudo gem install travis
             travis --version
+            echo $GITHUB_TOKEN
             travis login --pro --github-token $GITHUB_TOKEN
             echo ::set-env name=TRAVIS_TOKEN::$(travis token --pro)
             echo "travis=$TRAVIS_TOKEN"
