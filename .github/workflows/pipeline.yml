@@ -100,13 +100,12 @@ jobs:
           echo "building artifacts"
           npm run make || true
 
-      - name: uploading artifacts
-        run: |
-          echo "uploading artifacts"
-        # uses: actions/upload-artifact@v1
-        # with:
-        #   name: my id
-        #   path: actuall file
+      - name: uploading artefacts
+        # if: startsWith(matrix.os, 'ubuntu')
+        uses: actions/upload-artifact@v2
+        with:
+          name: releases
+          path: release/
 
   # distribute:
     # if: ${{ startsWith(github.ref, 'features-' }}
