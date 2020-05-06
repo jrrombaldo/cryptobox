@@ -64,8 +64,6 @@ jobs:
       TRAVIS_TOKEN: ${{ secrets.TRAVIS_TOKEN }}
     steps:
       - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
-      - run: echo "Building on branch $BRANCH and $GITHUB_REF_NAME"
-
       - uses: actions/checkout@v2
       # - uses: actions/setup-python@v1
       #   with:
@@ -110,7 +108,8 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: releases
-          path: release/**/[Cc]rypto[Bb]ox.*
+          # path: release/**/[Cc]rypto[Bb]ox.*
+          path: ./release/
 
   # distribute:
     # if: ${{ contains(['master', 'dev'], github.ref}}
