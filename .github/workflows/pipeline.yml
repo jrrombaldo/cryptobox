@@ -109,10 +109,10 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: releases
-          path: release/**/CryptoBox.*
+          path: release/**/[Cc]rypto[Bb]ox.*
 
   # distribute:
-    # if: ${{ startsWith(github.ref, 'features-' }}
+    # if: ${{ contains(['master', 'dev'], github.ref}}
     # steps:
     #   - name: download CLI image
     #     uses: actions/download-artifact@v1
