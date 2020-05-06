@@ -9,7 +9,7 @@ jobs:
       env:
         BRANCH_FULL: ${{ github.ref }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
+
       steps:
         - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
           shell: bash
@@ -21,6 +21,9 @@ jobs:
             sudo gem install travis
             travis --version
             travis login --pro --github-token $GITHUB_TOKEN
+            echo ::set-env name=TRAVIS_TOKEN::$(travis token --pro)
+            echo "travis=$TRAVIS_TOKEN"
+            
 
             
           
