@@ -17,8 +17,8 @@ jobs:
         - uses: actions/setup-node@v1
         - name: linting for branch => ${{ github.ref }}
         - run: |
-          echo "linting the app"
-          npm run lint || true # lint is currently failling
+            echo "linting the app"
+            npm run lint || true # lint is currently failling
 
 
 
