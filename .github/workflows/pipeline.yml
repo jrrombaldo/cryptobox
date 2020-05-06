@@ -14,9 +14,9 @@ jobs:
         - uses: actions/checkout@v2
         - name: linting for branch => ${{ github.ref }}
         - run: |
-          echo "linting the app"
-          npm ci
-          npm run lint || true # lint is currently failling,
+            echo "linting the app"
+            npm ci
+            npm run lint || true # lint is currently failling,
       
 
     Test-on-Travis:
@@ -56,9 +56,9 @@ jobs:
         - uses: actions/checkout@v2
         - name: linting for branch => ${{ github.ref }}
         - run: |
-          echo "linting the app"
-          npm ci
-          npm run make || true
+            echo "linting the app"
+            npm ci
+            npm run make || true
 
         - name: uploading artifacts
           run: |
