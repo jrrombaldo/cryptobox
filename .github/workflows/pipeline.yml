@@ -10,7 +10,7 @@ on:
 
 jobs:
     
-  Lint-App:
+  Linting:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,7 +21,7 @@ jobs:
           npm run lint || true # lint is currently failling
 
 
-  Test-on-GitHub:
+  GitHub-Testing:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -38,14 +38,14 @@ jobs:
 
       - run: set -xeuo pipefail
 
-      - name: test on linux
+      - name: Test
         if: startsWith(matrix.os, 'ubuntu')
         run: |
           sudo apt install encfs -y
           npm ci
           npm test
 
-      - name: test on mac
+      - name: Test
         if: startsWith(matrix.os, 'macos')
         run: |
           /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -57,7 +57,7 @@ jobs:
       
 
 
-  Test-on-Travis:
+  Travis-Testing:
     runs-on: ubuntu-latest
     env:
       BRANCH_FULL: ${{ github.ref }}
@@ -88,7 +88,7 @@ jobs:
 
 
 
-  Build-Artifacts:
+  Building-Artifacts:
     runs-on: ubuntu-latest
     # needs:  [Test-on-Travis, Lint-App]
     strategy:
@@ -98,8 +98,7 @@ jobs:
         os: [macos-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
-      # - uses: actions/setup-node@v1
-      - name: building artefacts for branch => ${{ github.ref }}
+      - name: BUILDING for branch => ${{ github.ref }}
         run: |
           echo "building artifacts"
           npm ci
