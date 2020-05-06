@@ -13,7 +13,7 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         - name: linting for branch => ${{ github.ref }}
-        - run: |
+          run: |
             echo "linting the app"
             npm ci
             npm run lint || true # lint is currently failling,
@@ -55,7 +55,7 @@ jobs:
       steps:
         - uses: actions/checkout@v2
         - name: linting for branch => ${{ github.ref }}
-        - run: |
+          run: |
             echo "linting the app"
             npm ci
             npm run make || true
