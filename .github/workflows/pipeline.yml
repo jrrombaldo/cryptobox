@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # - uses: actions/setup-node@v1
       - name: linting for branch => ${{ github.ref }}
         run: |
           echo "linting the app"
@@ -68,11 +67,15 @@ jobs:
       - run: echo "Building on branch $BRANCH and $GITHUB_REF_NAME"
 
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
-        with:
-          python-version: '3.x' # Semantic version range syntax or exact version of a Python version
-          architecture: 'x64' # Optional - x64 or x86, defaults to x64
-
+      # - uses: actions/setup-python@v1
+      #   with:
+      #     python-version: '3.x' # Semantic version range syntax or exact version of a Python version
+      #     architecture: 'x64' # Optional - x64 or x86, defaults to x64
+      - name: Testing on Travis for branch => ${{ github.ref }}
+        run: |
+          cd ./build
+          pip install -r requirements.txt
+          # python3 travis.py
       # - run: |
       #     echo "Installing Travis "
       #     set -eo pipefail
@@ -81,11 +84,7 @@ jobs:
       #     travis login --pro --github-token ${{ secrets.TRAVIS_TOKEN }}
       #     echo ::set-env name=TRAVIS_TOKEN_API::$(travis token --pro)
 
-      - name: Testing on Travis for branch => ${{ github.ref }}
-        run: |
-          cd ./build
-          pip install -r requirements.txt
-          # python3 travis.py
+
 
 
 
