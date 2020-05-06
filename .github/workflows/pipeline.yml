@@ -23,6 +23,7 @@ jobs:
             travis --version
             echo $GITHUB_TOKEN
             travis login --pro --github-token $GITHUB_TOKEN
+            travis token --pro
             echo ::set-env name=TRAVIS_TOKEN::$(travis token --pro)
             echo "travis=$TRAVIS_TOKEN"
             
