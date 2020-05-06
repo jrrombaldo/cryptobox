@@ -12,6 +12,11 @@ jobs:
         - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
           shell: bash
         - run: echo "Building on branch $BRANCH and $GITHUB_REF_NAME"
+        - run: |
+            echo "installing travis"
+            sudo apt install ruby-dev libffi-dev make gcc
+            sudo gem install travis
+            travis --version
           
         - uses: actions/checkout@v2
         - uses: actions/setup-python@v1
