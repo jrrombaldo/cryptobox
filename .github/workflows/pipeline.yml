@@ -21,40 +21,40 @@ jobs:
           npm run lint || true # lint is currently failling
 
 
-#   Test-on-GitHub:
-#     runs-on: ubuntu-latest
-#     strategy:
-#       fail-fast: false
-#       max-parallel: 10
-#       matrix:
-#         os: [ubuntu-18.04, ubuntu-latest]
-#         node-version: [12.x, 13.x]
-#     steps:
-#       - uses: actions/checkout@v1
-#       - name: Using node version ${{ matrix.node-version }}
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: ${{ matrix.node-version }}
+  Test-on-GitHub:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 10
+      matrix:
+        os: [ubuntu-18.04, ubuntu-latest]
+        node-version: [12.x, 13.x]
+    steps:
+      - uses: actions/checkout@v1
+      - name: Using node version ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-#       - name: Prepare shell 
-#         run: set -xeuo pipefail
+      - name: Prepare shell 
+        run: set -xeuo pipefail
 
-#       - name: Prepare linux
-#         if: startsWith(matrix.os, 'ubuntu')
-#         run: |
-#           sudo apt install encfs -y
-#           npm ci
-#           npm test
+      - name: Prepare linux
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt install encfs -y
+          npm ci
+          npm test
 
-#       - name: Prepare MAC
-#         if: startsWith(matrix.os, 'macos')
-#         run: |
-#           /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-#           brew cask install osxfuse
-#           brew install encfs
-#           sudo security unlock-keychain -u
-#           npm ci
-#           # npm run make
+      - name: Prepare MAC
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+          brew cask install osxfuse
+          brew install encfs
+          sudo security unlock-keychain -u
+          npm ci
+          # npm run make
       
 
 
