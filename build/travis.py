@@ -46,10 +46,18 @@ def getLogs(jobId):
     return doRequest("GET", "/job/{0}/log".format (jobId))["content"]
 
 buildId = getBuildId(requestBuild())
+jobIds = []
 while True:
     state, finishedAt, jobIds = getBuild(buildId)
     if (finishedAt != None): break;
     else: time.sleep(10)
+
+
+for jobId in jobIds:
+    print ('='*74, 
+    '\n\nTravis JobID={0} \n\navailable at https://www.travis-ci.org/github/bnh6/cryptobox/jobs/{0} \n\n{1}'
+    .format(jobId, getLogs(jobId)))
+
 
 print ("RESULT = ",state)
 if state == "passed": sys.exit(os.EX_OK)
