@@ -91,7 +91,7 @@ jobs:
         - uses: actions/setup-node@v1
         - name: linting for branch => ${{ github.ref }}
         - run: |
-          echo "linting the app"
+          echo "building artifacts"
           npm ci
           npm run make || true
 
