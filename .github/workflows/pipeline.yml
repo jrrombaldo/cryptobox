@@ -23,6 +23,7 @@ jobs:
 
 
     Test-on-GitHub:
+      runs-on: ubuntu-latest
       strategy:
         fail-fast: false
         max-parallel: 10
@@ -97,9 +98,9 @@ jobs:
         - uses: actions/setup-node@v1
         - name: linting for branch => ${{ github.ref }}
         - run: |
-          echo "building artifacts"
-          npm ci
-          npm run make || true
+            echo "building artifacts"
+            npm ci
+            npm run make || true
 
         - name: uploading artifacts
           run: |
