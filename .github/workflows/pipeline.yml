@@ -8,6 +8,8 @@ jobs:
       runs-on: ubuntu-latest
       env:
         BRANCH_FULL: ${{ github.ref }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
       steps:
         - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
           shell: bash
@@ -19,16 +21,16 @@ jobs:
             sudo gem install travis
             travis --version
             travis login --pro --github-token $GITHUB_TOKEN
-          with:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+            
           
-        - uses: actions/checkout@v2
-        - uses: actions/setup-python@v1
-          with:
-            python-version: '3.x' # Semantic version range syntax or exact version of a Python version
-            architecture: 'x64' # Optional - x64 or x86, defaults to x64
-        - name: trigger Travis on $BRANCH
-          run: |
-            cd ./build
-            pip install -r requirements.txt
-            python3 travis.py
+        # - uses: actions/checkout@v2
+        # - uses: actions/setup-python@v1
+        #   with:
+        #     python-version: '3.x' # Semantic version range syntax or exact version of a Python version
+        #     architecture: 'x64' # Optional - x64 or x86, defaults to x64
+        # - name: trigger Travis on $BRANCH
+        #   run: |
+        #     cd ./build
+        #     pip install -r requirements.txt
+        #     python3 travis.py
