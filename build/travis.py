@@ -58,7 +58,8 @@ while True:
 for jobId in jobIds:
     print ('='*74, 
     '\n\nTravis JobID={0} \n\navailable at https://www.travis-ci.org/github/bnh6/cryptobox/jobs/{0} \n\n{1}'
-    .format(jobId, getLogs(jobId)))
+    .format(jobId, getLogs(jobId)), 
+    file=sys.stdout, flush=False)
 
 
 print ("RESULT = ",state)
