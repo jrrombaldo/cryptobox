@@ -1,18 +1,38 @@
 name: "Cryptobox CI"
 on:
-    push:
-      branches:
-        - 'feature-actions'
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
 jobs:
-    "Test-on-Travis":
+    Lint-App:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+        - name: linting for branch => ${{ github.ref }}
+        - run: |
+          echo "linting the app"
+          npm ci
+          npm run lint || true # lint is currently failling,
+      
+
+    Test-on-Travis:
       runs-on: ubuntu-latest
       env:
         BRANCH_FULL: ${{ github.ref }}
         TRAVIS_TOKEN: ${{ secrets.TRAVIS_TOKEN }}
-
       steps:
         - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
         - run: echo "Building on branch $BRANCH and $GITHUB_REF_NAME"
+       
+        - uses: actions/checkout@v2
+        - uses: actions/setup-python@v1
+          with:
+            python-version: '3.x' # Semantic version range syntax or exact version of a Python version
+            architecture: 'x64' # Optional - x64 or x86, defaults to x64
 
         # - run: |
         #     echo "Installing Travis "
@@ -21,14 +41,32 @@ jobs:
         #     travis --version
         #     travis login --pro --github-token ${{ secrets.TRAVIS_TOKEN }}
         #     echo ::set-env name=TRAVIS_TOKEN_API::$(travis token --pro)
-            
-        - uses: actions/checkout@v2
-        - uses: actions/setup-python@v1
-          with:
-            python-version: '3.x' # Semantic version range syntax or exact version of a Python version
-            architecture: 'x64' # Optional - x64 or x86, defaults to x64
-        - name: Testing on travis
+          
+        - name: Testing on Travis for branch => ${{ github.ref }}
           run: |
             cd ./build
             pip install -r requirements.txt
-            python3 travis.py
+            # python3 travis.py
+
+
+    build artifacts:
+      runs-on: ubuntu-latest
+      needs:  [Test-on-Travis, Lint-App]
+      steps:
+        - uses: actions/checkout@v2
+        - name: linting for branch => ${{ github.ref }}
+        - run: |
+          echo "linting the app"
+          npm ci
+          npm run make || true
+
+        - name: uploading artifacts
+          run: |
+            echo "uploading artifacts"
+          # uses: actions/upload-artifact@v1
+          # with:
+          #   name: my id
+          #   path: actuall file
+
+    # distribute:
+      # if: ${{ startsWith(github.ref, 'features-' }}
