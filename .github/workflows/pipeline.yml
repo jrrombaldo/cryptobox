@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      # - uses: actions/setup-node@v1
       - name: linting for branch => ${{ github.ref }}
         run: |
           echo "linting the app"
@@ -32,13 +32,12 @@ jobs:
         node-version: [12.x, 13.x]
     steps:
       - uses: actions/checkout@v1
-      - name: Using node version ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
-        with:
-          node-version: ${{ matrix.node-version }}
+      # - name: Using node version ${{ matrix.node-version }}
+        # uses: actions/setup-node@v1
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
 
-      - name: Prepare shell 
-        run: set -xeuo pipefail
+      - run: set -xeuo pipefail
 
       - name: test on linux
         if: startsWith(matrix.os, 'ubuntu')
@@ -100,8 +99,8 @@ jobs:
         os: [macos-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-      - name: linting for branch => ${{ github.ref }}
+      # - uses: actions/setup-node@v1
+      - name: building artefacts for branch => ${{ github.ref }}
         run: |
           echo "building artifacts"
           npm ci
