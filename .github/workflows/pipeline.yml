@@ -12,11 +12,45 @@ jobs:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
+        - uses: actions/setup-node@v1
         - name: linting for branch => ${{ github.ref }}
         - run: |
           echo "linting the app"
-          npm ci
-          npm run lint || true # lint is currently failling,
+          npm run lint || true # lint is currently failling
+
+    Test-on-GitHub:
+      strategy:
+        fail-fast: false
+        max-parallel: 10
+        matrix:
+          os: [ubuntu-18.04, ubuntu-latest]
+          node-version: [12.x, 13.x]
+        steps:
+          - uses: actions/checkout@v1
+          - name: Using node version ${{ matrix.node-version }}
+            uses: actions/setup-node@v1
+            with:
+              node-version: ${{ matrix.node-version }}
+              
+          - name: Prepare shell 
+            run: set -xeuo pipefail
+
+          - name: Prepare linux
+            if: startsWith(matrix.os, 'ubuntu')
+            run: |
+              sudo apt install encfs -y
+              npm ci
+              npm test
+              
+          - name: Prepare MAC
+            if: startsWith(matrix.os, 'macos')
+            run: |
+              /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+              brew cask install osxfuse
+              brew install encfs
+              sudo security unlock-keychain -u
+              npm ci
+              # npm run make
       
 
     Test-on-Travis:
@@ -54,6 +88,7 @@ jobs:
       needs:  [Test-on-Travis, Lint-App]
       steps:
         - uses: actions/checkout@v2
+        - uses: actions/setup-node@v1
         - name: linting for branch => ${{ github.ref }}
         - run: |
           echo "linting the app"
@@ -70,3 +105,45 @@ jobs:
 
     # distribute:
       # if: ${{ startsWith(github.ref, 'features-' }}
+      # steps:
+      #   - name: download CLI image
+      #     uses: actions/download-artifact@v1
+      #     with:
+      #       name: raspbian-cli
+
+      #   - name: download GUI image
+      #     uses: actions/download-artifact@v1
+      #     with:
+      #       name: raspbian-gui
+
+      #   - name: create release
+      #     uses: actions/create-release@v1
+      #     id: create_release
+      #     env:
+      #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     with:
+      #         tag_name: ${{ github.run_number }}
+      #         release_name: Release ${{ github.run_number }}
+      #         draft: false
+      #         prerelease: false
+      #         body: |
+      #           Montly release of customised raspbians images lite (CLI only) and complete (with GUI)
+      #   - name: upload CLI image
+      #     uses: actions/upload-release-asset@v1
+      #     env:
+      #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     with:
+      #         upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #         asset_path: ./raspbian-cli/raspbian-cli.img.zip
+      #         asset_name: raspbian-cli.img.zip
+      #         asset_content_type: application/zip
+
+      #   - name: upload GUI image
+      #     uses: actions/upload-release-asset@v1
+      #     env:
+      #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     with:
+      #         upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #         asset_path: ./raspbian-gui/raspbian-gui.img.zip
+      #         asset_name: raspbian-gui.img.zip
+      #         asset_content_type: application/zip
