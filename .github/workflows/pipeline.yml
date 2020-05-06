@@ -22,8 +22,8 @@ jobs:
             sudo gem install travis
             travis --version
             echo $GITHUB_TOKEN
-            travis login --pro --github-token $GITHUB_TOKEN
-            travis token --pro
+            travis login --com --github-token $GITHUB_TOKEN
+            travis token --com
             echo ::set-env name=TRAVIS_TOKEN::$(travis token --pro)
             echo "travis=$TRAVIS_TOKEN"
             
