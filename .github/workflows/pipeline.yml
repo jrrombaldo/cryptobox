@@ -16,6 +16,7 @@ jobs:
         - run: echo "Building on branch $BRANCH and $GITHUB_REF_NAME"
 
         - run: |
+            set -eo pipefail
             echo "Installing Travis "
             sudo apt install ruby-dev libffi-dev make gcc
             sudo gem install travis
