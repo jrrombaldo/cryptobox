@@ -20,8 +20,9 @@ def doRequest(method, url, data=None):
     response = requests.request(method, host+url, json=data, headers=headers, verify=False)
     if (response.status_code > 299):
         print ("something went wrong ", response.status_code)
-        # print (response.content) # can leak data 
-        response.status_code == 429: print ("Travis request limit exceeded, wait a few minutes and try again ...")
+        if response.status_code == 429: 
+            print ("Travis request limit exceeded, wait a few minutes and try again ...")
+        print (response.content) # can leak data 
         sys.exit(os.EX_SOFTWARE)
     return response.json()
 
