@@ -5,10 +5,13 @@ import sys, os
 host = 'https://api.travis-ci.org'
 repoId = 28512573
 sleetime = 20
+
+
+
 headers = {
     "Accept": "application/vnd.travis-ci.2.1+json",
     "Travis-API-Version": "3",
-    "Authorization": "token gSE73C-CzWaJ3L2QhgSOrA"
+    "Authorization": "token {0}".format(os.environ["TRAVIS_TOKEN_API"])
 }
 
 print ("triggering travis on branch "+os.environ["BRANCH"])

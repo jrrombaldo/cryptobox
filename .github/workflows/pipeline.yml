@@ -17,26 +17,20 @@ jobs:
         - run: |
             echo "Installing Travis "
             set -eo pipefail
-            sudo apt install ruby-dev libffi-dev make gcc
-            sudo gem install travis
+            sudo apt install ruby-dev libffi-dev make gcc &&  sudo gem install travis
             travis --version
-            echo "1=${{ secrets.TRAVIS_TOKEN }}"
-            echo "2=${TRAVIS_TOKEN}"
             travis login --pro --github-token ${{ secrets.TRAVIS_TOKEN }}
             travis token --pro
             echo ::set-env name=TRAVIS_TOKEN_API::$(travis token --pro)
             echo "travis=$TRAVIS_TOKEN_API"
             
-
-            
-          
-        # - uses: actions/checkout@v2
-        # - uses: actions/setup-python@v1
-        #   with:
-        #     python-version: '3.x' # Semantic version range syntax or exact version of a Python version
-        #     architecture: 'x64' # Optional - x64 or x86, defaults to x64
-        # - name: trigger Travis on $BRANCH
-        #   run: |
-        #     cd ./build
-        #     pip install -r requirements.txt
-        #     python3 travis.py
+        - uses: actions/checkout@v2
+        - uses: actions/setup-python@v1
+          with:
+            python-version: '3.x' # Semantic version range syntax or exact version of a Python version
+            architecture: 'x64' # Optional - x64 or x86, defaults to x64
+        - name: trigger Travis on $BRANCH
+          run: |
+            cd ./build
+            pip install -r requirements.txt
+            python3 travis.py
