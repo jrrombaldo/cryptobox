@@ -6,13 +6,13 @@ host = 'https://api.travis-ci.org'
 repoId = 28512573
 sleetime = 20
 
-print (os.environ["TRAVIS_TOKEN_API"])
-
 headers = {
     "Accept": "application/vnd.travis-ci.2.1+json",
     "Travis-API-Version": "3",
     "Authorization": "token {0}".format(os.environ["TRAVIS_TOKEN_API"])
 }
+
+pring (headers)
 
 print ("triggering travis on branch "+os.environ["BRANCH"])
 

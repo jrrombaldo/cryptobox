@@ -20,9 +20,7 @@ jobs:
             sudo apt install ruby-dev libffi-dev make gcc &&  sudo gem install travis
             travis --version
             travis login --pro --github-token ${{ secrets.TRAVIS_TOKEN }}
-            travis token --pro
             echo ::set-env name=TRAVIS_TOKEN_API::$(travis token --pro)
-            echo "travis=$TRAVIS_TOKEN_API"
             
         - uses: actions/checkout@v2
         - uses: actions/setup-python@v1
