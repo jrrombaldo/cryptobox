@@ -76,12 +76,12 @@ jobs:
       #   with:
       #     python-version: '3.x' # Semantic version range syntax or exact version of a Python version
       #     architecture: 'x64' # Optional - x64 or x86, defaults to x64
-      - name: Testing on Travis for branch => ${{ github.ref }}
-        run: |
-          echo ${{ matrix.target }}
-          cd ./build
-          pip install -r requirements.txt
-          # python3 travis.py
+#       - name: Testing on Travis for branch => ${{ github.ref }}
+#         run: |
+#           echo ${{ matrix.target }}
+#           cd ./build
+#           pip install -r requirements.txt
+#           python3 travis.py
       # - run: |
       #     echo "Installing Travis "
       #     set -eo pipefail
@@ -128,6 +128,8 @@ jobs:
     runs-on: ubuntu-latest
     # if: ${{ contains(['master', 'dev'], github.ref}}
 #     needs: [Building-Artifacts]
+    needs: [Travis-Testing]
+  
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
