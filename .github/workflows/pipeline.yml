@@ -152,24 +152,24 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
             upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: release/${{PRODUCT_NAME}}-${{PRODUCT_VERSION}}.dmg
-            asset_name: ${{PRODUCT_NAME}}-${{PRODUCT_VERSION}}.dmg
+            asset_path: release/$PRODUCT_NAME-$PRODUCT_VERSION.dmg
+            asset_name: $PRODUCT_NAME-$PRODUCT_VERSION.dmg
             asset_content_type: application/zip
 
       - name: Upload RPM x86
         uses: actions/upload-release-asset@v1
         with:
             upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: release/${{PRODUCT_NAME}}-${{PRODUCT_VERSION}}.i686.rpm
-            asset_name: cryptobox-${{PRODUCT_VERSION}}.i686.rpm
+            asset_path: release/$PRODUCT_NAME-$PRODUCT_VERSION.i686.rpm
+            asset_name: cryptobox-$PRODUCT_VERSION.i686.rpm
             asset_content_type: application/zip
 
       - name: Upload RPM x64
         uses: actions/upload-release-asset@v1
         with:
             upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: release/cryptobox-${{PRODUCT_VERSION}}.x86_64.rpm
-            asset_name: cryptobox-${{PRODUCT_VERSION}}.x86_64.rpm
+            asset_path: release/cryptobox-$PRODUCT_VERSION.x86_64.rpm
+            asset_name: cryptobox-$PRODUCT_VERSION.x86_64.rpm
             asset_content_type: application/zip
     
       # - name: Upload DEB x86
