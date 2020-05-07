@@ -89,7 +89,7 @@ jobs:
 
 
   Building-Artifacts:
-    runs-on: ubuntu-latest
+    runs-on: ${{matrix.os}}
     # needs:  [Test-on-Travis, Lint-App]
     strategy:
       fail-fast: false
@@ -111,7 +111,7 @@ jobs:
         with:
           name: releases-${{matrix.os}}
           # path: release/**/[Cc]rypto[Bb]ox.*
-          path: ./releases/cryptobox*
+          path: releases/cryptobox*
 
   # distribute:
     # if: ${{ contains(['master', 'dev'], github.ref}}
