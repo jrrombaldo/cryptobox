@@ -61,7 +61,7 @@ jobs:
 
   Travis-Testing:
     runs-on: ubuntu-latest
-    if: false
+    if: true
     env:
       BRANCH_FULL: ${{ github.ref }}
       TRAVIS_TOKEN: ${{ secrets.TRAVIS_TOKEN }}
@@ -127,22 +127,24 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-            tag_name: ${{ github.run_number }}
-            release_name: Release ${{ github.run_number }}
-            draft: true
-            prerelease: true
-            body: |
-              testing releases through the pipelines
+      - run: echo $BRANCH
+#       - name: Create release
+#         id: create_release
+#         uses: actions/create-release@v1
+#         with:
+#             tag_name: ${{ github.run_number }}
+#             release_name: Release ${{ github.run_number }}
+#             draft: true
+#             prerelease: true
+#             body: |
+#               testing releases through the pipelines
 
     
     
 
 
   Upload-Release:
+    if: false
     runs-on: ubuntu-latest
     needs: [Create-Release]
     env:
