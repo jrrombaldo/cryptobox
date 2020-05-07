@@ -167,8 +167,9 @@ jobs:
       max-parallel: 10
       matrix:
         # flavour: [".dmg", ".tar.gz", "-ia32.tar.gz", "_i386.deb", "_amd64.deb", ".i686.rpm", ".x86_64.rpm"]
-        flavour : ["cryptobox-0.0.1.tar.gz", "cryptobox-0.0.1-ia32.tar.gz", "cryptobox_0.0.1_i386.deb", "cryptobox_0.0.1_amd64.deb", "cryptobox-0.0.1.i686.rpm", "cryptobox-0.0.1.x86_64.rpm"]
-    
+#         flavour : ["cryptobox-0.0.1.tar.gz", "cryptobox-0.0.1-ia32.tar.gz", "cryptobox_0.0.1_i386.deb", "cryptobox_0.0.1_amd64.deb", "cryptobox-0.0.1.i686.rpm", "cryptobox-0.0.1.x86_64.rpm"]
+        flavour : ["cryptobox-0.0.1.tar.gz"]
+
     steps:
       - run: echo "this is my release url ${{ needs.Create-Release.outputs.release_url }}"
       - name: download ${{ matrix.flavour }}
@@ -184,7 +185,7 @@ jobs:
       - name: Upload ${{ matrix.flavour }}
         uses: actions/upload-release-asset@v1
         with:
-            upload_url: ${{ steps.create_release.outputs.upload_url }}
+            upload_url: ${{ needs.Create-Release.outputs.release_url }}
             asset_path: release/${{ matrix.flavour }}
             asset_name: ${{ matrix.flavour }}
             asset_content_type: application/zip
