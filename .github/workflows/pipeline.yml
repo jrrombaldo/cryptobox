@@ -124,7 +124,7 @@ jobs:
   Create-Release:
     runs-on: ubuntu-latest
     # if: ${{ contains(['master', 'dev'], github.ref}}
-    needs: [Building-Artifacts]
+#     needs: [Building-Artifacts]
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
