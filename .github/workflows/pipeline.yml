@@ -128,7 +128,6 @@ jobs:
     runs-on: ubuntu-latest
     # if: ${{ contains(['master', 'dev'], github.ref}}
 #     needs: [Building-Artifacts]
-    needs: [Travis-Testing]
   
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
