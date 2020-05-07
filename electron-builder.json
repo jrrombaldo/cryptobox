@@ -1,6 +1,6 @@
 {
     "appId": "dev.bnh6.cryptobox",
-    "productName": "CryptoBox",
+    "productName": "cryptobox",
     "copyright": "Copyright © 2020 ${author}",
     "directories": {
         "output": "release"
@@ -14,7 +14,6 @@
     },
     "linux":{
         "icon": "static/resources/cloud-enc.icns",
-        "executableName": "CryptoBox",
         "category": "Utility",
         "target": ["deb","rpm", "tar.gz"]
     },
