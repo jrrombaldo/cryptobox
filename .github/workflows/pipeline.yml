@@ -110,7 +110,6 @@ jobs:
       - name: uploading artefacts
         # if: startsWith(matrix.os, 'ubuntu')
         uses: actions/upload-artifact@v2
-        if: ! failure()
         with:
           name: releases-${{matrix.os}}
           # path: release/**/[Cc]rypto[Bb]ox.*
