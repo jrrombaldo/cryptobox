@@ -114,51 +114,40 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: release
+          # here https://github.com/actions/upload-artifact it does mention the pattern follows https://facelessuser.github.io/wcmatch/glob/ but the following links does not work
           # path: release/**/[Cc]rypto[Bb]ox.*
           # path: release/cryptobox*.*(dmg|app|deb|rpm|tar.gz) 	
           path: release/cryptobox*
 
-  # distribute:
+
+  Distribute:
     # if: ${{ contains(['master', 'dev'], github.ref}}
-    # steps:
-    #   - name: download CLI image
-    #     uses: actions/download-artifact@v1
-    #     with:
-    #       name: raspbian-cli
+    needs: [Building-Artifacts]
+    steps:
+      - name: download CLI image
+        uses: actions/download-artifact@v1
+        with:
+          name: release
 
-    #   - name: download GUI image
-    #     uses: actions/download-artifact@v1
-    #     with:
-    #       name: raspbian-gui
+      - name: create release
+        uses: actions/create-release@v1
+        id: create_release
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            tag_name: ${{ github.run_number }}
+            release_name: Release ${{ github.run_number }}
+            draft: true
+            prerelease: true
+            body: |
+              testing releases through the pipelines
 
-    #   - name: create release
-    #     uses: actions/create-release@v1
-    #     id: create_release
-    #     env:
-    #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #     with:
-    #         tag_name: ${{ github.run_number }}
-    #         release_name: Release ${{ github.run_number }}
-    #         draft: false
-    #         prerelease: false
-    #         body: |
-    #           Montly release of customised raspbians images lite (CLI only) and complete (with GUI)
-    #   - name: upload CLI image
-    #     uses: actions/upload-release-asset@v1
-    #     env:
-    #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #     with:
-    #         upload_url: ${{ steps.create_release.outputs.upload_url }}
-    #         asset_path: ./raspbian-cli/raspbian-cli.img.zip
-    #         asset_name: raspbian-cli.img.zip
-    #         asset_content_type: application/zip
-
-    #   - name: upload GUI image
-    #     uses: actions/upload-release-asset@v1
-    #     env:
-    #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #     with:
-    #         upload_url: ${{ steps.create_release.outputs.upload_url }}
-    #         asset_path: ./raspbian-gui/raspbian-gui.img.zip
-    #         asset_name: raspbian-gui.img.zip
-    #         asset_content_type: application/zip
+      - name: upload CLI image
+        uses: actions/upload-release-asset@v1
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+            upload_url: ${{ steps.create_release.outputs.upload_url }}
+            asset_path: release
+            asset_name: cryptobox-release.zip
+            asset_content_type: application/zip
