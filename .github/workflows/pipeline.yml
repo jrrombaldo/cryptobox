@@ -7,8 +7,6 @@ on:
   pull_request:
     branches:
       - '*'
-env:
-  BRANCH: ${{ github.ref }}
 
 jobs:
      
@@ -64,13 +62,13 @@ jobs:
 
   Travis-Testing:
     runs-on: ubuntu-latest
-    if: true
+    if: false
     env:
       BRANCH_FULL: ${{ github.ref }}
       TRAVIS_TOKEN: ${{ secrets.TRAVIS_TOKEN }}
     steps:
       - run: set -xeuo pipefail
-      - run: echo ::set-env name=BRANCH::$(basename $BRANCH)
+      - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
       - run: echo ::set-env name=action_state::yellow
       - uses: actions/checkout@v2
       # - uses: actions/setup-python@v1
@@ -126,6 +124,7 @@ jobs:
 
 
   Create-Release:
+    if: true
     runs-on: ubuntu-latest
     # if: ${{ contains(['master', 'dev'], github.ref}}
 #     needs: [Building-Artifacts]
@@ -134,7 +133,6 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - run: echo "branch=$BRANCH state=$action_state"
 #       - name: Create release
 #         id: create_release
 #         uses: actions/create-release@v1
@@ -145,6 +143,8 @@ jobs:
 #             prerelease: true
 #             body: |
 #               testing releases through the pipelines
+      - id: release_url_task
+        run: echo "::set-output name=release_url::1.2.3"
 
     
     
@@ -164,23 +164,24 @@ jobs:
         flavour : ["cryptobox-0.0.1.tar.gz", "cryptobox-0.0.1-ia32.tar.gz", "cryptobox_0.0.1_i386.deb", "cryptobox_0.0.1_amd64.deb", "cryptobox-0.0.1.i686.rpm", "cryptobox-0.0.1.x86_64.rpm"]
     
     steps:
-      - name: download CLI image
-        uses: actions/download-artifact@v1
-        with:
-          name: release
+      - run: echo "this is my release url ${{ jobs.Create-Release.steps.release_url_task.outputs.release_url }}"
+#       - name: download CLI image
+#         uses: actions/download-artifact@v1
+#         with:
+#           name: release
 
-      - run: ls -larthR
-      - run: echo ::set-env PRODUCT_NAME=$(node -p "require('./package.json').productName")
-      - run: echo ::set-env PRODUCT_VERSION=$(node -p "require('./package.json').productName")
+#       - run: ls -larthR
+#       - run: echo ::set-env PRODUCT_NAME=$(node -p "require('./package.json').productName")
+#       - run: echo ::set-env PRODUCT_VERSION=$(node -p "require('./package.json').productName")
 
 
-      - name: Upload ${{matrix.flavour}}
-        uses: actions/upload-release-asset@v1
-        with:
-            upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: release/${{ matrix.flavour }}
-            asset_name: ${{ matrix.flavour }}
-            asset_content_type: application/zip
+#       - name: Upload ${{matrix.flavour}}
+#         uses: actions/upload-release-asset@v1
+#         with:
+#             upload_url: ${{ steps.create_release.outputs.upload_url }}
+#             asset_path: release/${{ matrix.flavour }}
+#             asset_name: ${{ matrix.flavour }}
+#             asset_content_type: application/zip
 
       # - name: Upload RPM x86
       #   uses: actions/upload-release-asset@v1
