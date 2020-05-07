@@ -94,7 +94,7 @@ jobs:
 
 
   Building-Artifacts:
-    if: false
+    if: true
     runs-on: ${{matrix.os}}
     # needs:  [Linting, Travis-Testing]
     strategy:
@@ -127,7 +127,7 @@ jobs:
     if: true
     runs-on: ubuntu-latest
     # if: ${{ contains(['master', 'dev'], github.ref}}
-#     needs: [Building-Artifacts]
+    needs: [Building-Artifacts]
   
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -170,23 +170,23 @@ jobs:
     
     steps:
       - run: echo "this is my release url ${{ needs.Create-Release.outputs.release_url }}"
-#       - name: download CLI image
-#         uses: actions/download-artifact@v1
-#         with:
-#           name: release
+      - name: download ${{ matrix.flavour }}
+        uses: actions/download-artifact@v1
+        with:
+          name: release
 
-#       - run: ls -larthR
-#       - run: echo ::set-env PRODUCT_NAME=$(node -p "require('./package.json').productName")
-#       - run: echo ::set-env PRODUCT_VERSION=$(node -p "require('./package.json').productName")
+      - run: ls -larthR
+      - run: echo ::set-env PRODUCT_NAME=$(node -p "require('./package.json').productName")
+      - run: echo ::set-env PRODUCT_VERSION=$(node -p "require('./package.json').productName")
 
 
-#       - name: Upload ${{matrix.flavour}}
-#         uses: actions/upload-release-asset@v1
-#         with:
-#             upload_url: ${{ steps.create_release.outputs.upload_url }}
-#             asset_path: release/${{ matrix.flavour }}
-#             asset_name: ${{ matrix.flavour }}
-#             asset_content_type: application/zip
+      - name: Upload ${{ matrix.flavour }}
+        uses: actions/upload-release-asset@v1
+        with:
+            upload_url: ${{ steps.create_release.outputs.upload_url }}
+            asset_path: release/${{ matrix.flavour }}
+            asset_name: ${{ matrix.flavour }}
+            asset_content_type: application/zip
 
       # - name: Upload RPM x86
       #   uses: actions/upload-release-asset@v1
