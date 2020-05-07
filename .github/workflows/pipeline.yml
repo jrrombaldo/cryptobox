@@ -115,7 +115,7 @@ jobs:
         with:
           name: release
           # path: release/**/[Cc]rypto[Bb]ox.*
-          path: release/cryptobox*.@(dmg|app|deb|rpm|tar.gz) 	
+          path: release/cryptobox*.(dmg|app|deb|rpm|tar.gz) 	
 
   # distribute:
     # if: ${{ contains(['master', 'dev'], github.ref}}
