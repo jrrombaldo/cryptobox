@@ -156,9 +156,9 @@ jobs:
     
     steps:
       - name: download CLI image
-      uses: actions/download-artifact@v1
-      with:
-        name: release
+        uses: actions/download-artifact@v1
+        with:
+          name: release
 
       - run: ls -larthR
       - run: echo ::set-env PRODUCT_NAME=$(node -p "require('./package.json').productName")
