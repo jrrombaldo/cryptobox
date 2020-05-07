@@ -7,8 +7,11 @@ on:
   pull_request:
     branches:
       - '*'
+env:
+  BRANCH: ${{ github.ref }}
 
 jobs:
+     
     
   Linting:
     runs-on: ubuntu-latest
@@ -67,7 +70,7 @@ jobs:
       TRAVIS_TOKEN: ${{ secrets.TRAVIS_TOKEN }}
     steps:
       - run: set -xeuo pipefail
-      - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
+      - run: echo ::set-env name=BRANCH::$(basename $BRANCH)
       - uses: actions/checkout@v2
       # - uses: actions/setup-python@v1
       #   with:
