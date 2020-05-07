@@ -133,22 +133,23 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
  
     outputs:
-     release_url: ${{ steps.release_url_task.outputs.release_url }}
+#      release_url: ${{ steps.release_url_task.outputs.release_url }}
+      release_url: ${{ steps.create_release.outputs.upload_url }}
 
     steps:
-#       - name: Create release
-#         id: create_release
-#         uses: actions/create-release@v1
-#         with:
-#             tag_name: ${{ github.run_number }}
-#             release_name: Release ${{ github.run_number }}
-#             draft: true
-#             prerelease: true
-#             body: |
-#               testing releases through the pipelines
-      - id: release_url_task
-        run: echo "::set-output name=release_url::1.2.3"
-      - run: echo "this is my output ${{steps.release_url_task.outputs.release_url}}"
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+            tag_name: ${{ github.run_number }}
+            release_name: Release ${{ github.run_number }}
+            draft: true
+            prerelease: true
+            body: |
+              testing releases through the pipelines
+#       - id: release_url_task
+#         run: echo "::set-output name=release_url::${{  }}"
+#       - run: echo "this is my output ${{steps.release_url_task.outputs.release_url}}"
 
     
     
