@@ -101,7 +101,8 @@ jobs:
       fail-fast: true # do not generate artefacts if any other job failed
       max-parallel: 10
       matrix:
-        os: [macos-latest, ubuntu-latest]
+#         os: [macos-latest, ubuntu-latest]
+        os: [macos]
     steps:
       - uses: actions/checkout@v2
       - run: set -xeuo pipefail
