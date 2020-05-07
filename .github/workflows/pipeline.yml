@@ -184,6 +184,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
             upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: release/cryptobox-${{PRODUCT_VERSION}}_amd64.deb
-            asset_name: cryptobox-${{PRODUCT_VERSION}}_amd64.deb
+            asset_path: release/cryptobox-$PRODUCT_VERSION_amd64.deb
+            asset_name: cryptobox-$PRODUCT_VERSION_amd64.deb
             asset_content_type: application/zip
