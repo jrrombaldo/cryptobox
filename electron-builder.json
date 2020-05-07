@@ -8,8 +8,9 @@
     "mac": {
         "icon": "static/resources/cloud-enc.icns",
         "target": ["dmg"],
-        "type": "distribution",
-        "category":"Utilities"
+        "type": "development",
+        "category":"Utilities",
+        "darkModeSupport": "true"
     },
     "linux":{
         "icon": "static/resources/cloud-enc.icns",

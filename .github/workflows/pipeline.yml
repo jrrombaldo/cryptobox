@@ -105,7 +105,7 @@ jobs:
           echo "building artifacts"
           uname -a
           npm ci
-          npm run make || true
+          npm run make
 
       - name: uploading artefacts
         # if: startsWith(matrix.os, 'ubuntu')
