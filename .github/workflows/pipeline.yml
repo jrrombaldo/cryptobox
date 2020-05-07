@@ -151,3 +151,5 @@ jobs:
         with:
             upload_url: ${{ steps.create_release.outputs.upload_url }}
             asset_path: release/cryptobox-0.0.1.dmg
+            asset_name: cryptobox-0.0.1.dmg
+            asset_content_type: application/zip
