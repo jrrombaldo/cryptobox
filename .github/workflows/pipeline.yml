@@ -14,6 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - run: set -xeuo pipefail
       - name: linting for branch => ${{ github.ref }}
         run: |
           echo "linting the app"
@@ -38,7 +39,6 @@ jobs:
       #     node-version: ${{ matrix.node-version }}
 
       - run: set -xeuo pipefail
-
       - name: Test on ${{ matrix.target }}
         if: startsWith(matrix.os, 'ubuntu')
         run: |
@@ -64,6 +64,7 @@ jobs:
       BRANCH_FULL: ${{ github.ref }}
       TRAVIS_TOKEN: ${{ secrets.TRAVIS_TOKEN }}
     steps:
+      - run: set -xeuo pipefail
       - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
       - uses: actions/checkout@v2
       # - uses: actions/setup-python@v1
@@ -98,6 +99,7 @@ jobs:
         os: [macos-latest, ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
+      - run: set -xeuo pipefail
       - name: BUILDING for branch => ${{ github.ref }}
         run: |
           echo "building artifacts"
@@ -108,6 +110,7 @@ jobs:
       - name: uploading artefacts
         # if: startsWith(matrix.os, 'ubuntu')
         uses: actions/upload-artifact@v2
+        if: ! failure():
         with:
           name: releases-${{matrix.os}}
           # path: release/**/[Cc]rypto[Bb]ox.*
