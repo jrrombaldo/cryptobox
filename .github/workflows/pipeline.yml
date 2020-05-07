@@ -151,7 +151,7 @@ jobs:
 
 
   Upload-Release:
-    if: false
+    if: true
     runs-on: ubuntu-latest
     needs: [Create-Release]
     env:
