@@ -121,6 +121,7 @@ jobs:
 
 
   Distribute:
+    runs-on: ubuntu-latest
     # if: ${{ contains(['master', 'dev'], github.ref}}
     needs: [Building-Artifacts]
     steps:
