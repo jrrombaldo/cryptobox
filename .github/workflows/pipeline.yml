@@ -131,6 +131,10 @@ jobs:
   
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+ 
+    outputs:
+     release_url: ${{ steps.release_url_task.outputs.release_url }}
+
     steps:
 #       - name: Create release
 #         id: create_release
@@ -164,7 +168,7 @@ jobs:
         flavour : ["cryptobox-0.0.1.tar.gz", "cryptobox-0.0.1-ia32.tar.gz", "cryptobox_0.0.1_i386.deb", "cryptobox_0.0.1_amd64.deb", "cryptobox-0.0.1.i686.rpm", "cryptobox-0.0.1.x86_64.rpm"]
     
     steps:
-      - run: echo "this is my release url ${{ steps.release_url_task.outputs.release_url }}"
+      - run: echo "this is my release url ${{ ${{needs.Create-Release.outputs.release_url}} }}"
 #       - name: download CLI image
 #         uses: actions/download-artifact@v1
 #         with:
