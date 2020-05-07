@@ -12,6 +12,7 @@ jobs:
     
   Linting:
     runs-on: ubuntu-latest
+    if: false
     steps:
       - uses: actions/checkout@v2
       - run: set -xeuo pipefail
@@ -29,7 +30,7 @@ jobs:
       fail-fast: false
       max-parallel: 10
       matrix:
-        os: [ubuntu-18.04, ubuntu-latest]
+        os: [ubuntu-18.04, ubuntu-latest, macos, macos-latest]
         node-version: [12.x, 13.x]
     steps:
       - uses: actions/checkout@v1
@@ -47,19 +48,20 @@ jobs:
           npm test
 
       - name: Test on ${{ matrix.target }}
-        if: startsWith(matrix.os, 'macos')
+        # if: startsWith(matrix.os, 'macos')
         run: |
           /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
           brew cask install osxfuse
           brew install encfs
           sudo security unlock-keychain -u
           npm ci
-          # npm run make
+          npm run make
       
 
 
   Travis-Testing:
     runs-on: ubuntu-latest
+    if: false
     env:
       BRANCH_FULL: ${{ github.ref }}
       TRAVIS_TOKEN: ${{ secrets.TRAVIS_TOKEN }}
