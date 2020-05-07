@@ -111,7 +111,7 @@ jobs:
         with:
           name: releases-${{matrix.os}}
           # path: release/**/[Cc]rypto[Bb]ox.*
-          path: ./releases-${{matrix.os}}/cryptobox*
+          path: ./releases/cryptobox*
 
   # distribute:
     # if: ${{ contains(['master', 'dev'], github.ref}}
