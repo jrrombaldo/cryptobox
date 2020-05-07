@@ -76,7 +76,7 @@ jobs:
           echo ${{ matrix.target }}
           cd ./build
           pip install -r requirements.txt
-          python3 travis.py
+          # python3 travis.py
       # - run: |
       #     echo "Installing Travis "
       #     set -eo pipefail
