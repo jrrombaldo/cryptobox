@@ -29,7 +29,7 @@
     "start": "npm run build && electron ./dist/main.js",
     "test": "npm run build && mocha src/**/*.spec.ts -r ./require-sucrase.js",
     "lint": "tslint -c tslint.json -p tsconfig.json",
-    "make": "npm run build && electron-builder --config ./electron-builder.json --x64 --ia32 #--arm64 --armv7l"
+    "make": "npm run build && electron-builder --config ./electron-builder.json --publish never --x64 --ia32 #--arm64 --armv7l"
   },
   "repository": {
     "type": "git",
