@@ -93,7 +93,7 @@ jobs:
 
   Building-Artifacts:
     runs-on: ${{matrix.os}}
-    needs:  [Linting, Travis-Testing]
+    # needs:  [Linting, Travis-Testing]
     strategy:
       fail-fast: true # do not generate artefacts if any other job failed
       max-parallel: 10
