@@ -98,8 +98,8 @@ jobs:
       fail-fast: true # do not generate artefacts if any other job failed
       max-parallel: 10
       matrix:
-        # os: [macos-latest, ubuntu-latest]
-        os: [macos-latest]
+        os: [macos-latest, ubuntu-latest]
+        # os: [macos-latest]
     steps:
       - uses: actions/checkout@v2
       - run: set -xeuo pipefail
@@ -152,6 +152,6 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
             upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: release
+            asset_path: release/*
             asset_name: cryptobox-release.zip
             asset_content_type: application/zip
