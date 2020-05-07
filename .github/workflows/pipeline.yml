@@ -98,8 +98,8 @@ jobs:
       fail-fast: true # do not generate artefacts if any other job failed
       max-parallel: 10
       matrix:
-        os: [macos-latest, ubuntu-latest]
-        # os: [macos-latest]
+        # os: [macos-latest, ubuntu-latest]
+        os: [macos-latest]
     steps:
       - uses: actions/checkout@v2
       - run: set -xeuo pipefail
@@ -125,6 +125,8 @@ jobs:
     runs-on: ubuntu-latest
     # if: ${{ contains(['master', 'dev'], github.ref}}
     needs: [Building-Artifacts]
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: download CLI image
         uses: actions/download-artifact@v1
@@ -134,8 +136,6 @@ jobs:
       - name: Create release
         id: create_release
         uses: actions/create-release@v1
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
             tag_name: ${{ github.run_number }}
             release_name: Release ${{ github.run_number }}
@@ -146,12 +146,10 @@ jobs:
 
       - run: ls -larthR
 
-      - name: upload CLI image
+      - name: release/cryptobox-0.0.1.dmg
         uses: actions/upload-release-asset@v1
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
             upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: release/*
-            asset_name: cryptobox-release.zip
+            asset_path: release/cryptobox-0.0.1.dmg
+            asset_name: cryptobox-0.0.1.dmg
             asset_content_type: application/zip
