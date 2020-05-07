@@ -129,9 +129,8 @@ jobs:
         with:
           name: release
 
-      - name: create release
+      - name: Create release
         uses: actions/create-release@v1
-        id: create_release
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -148,6 +147,6 @@ jobs:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
             upload_url: ${{ steps.create_release.outputs.upload_url }}
-            asset_path: release
+            asset_path: release.zip
             asset_name: cryptobox-release.zip
             asset_content_type: application/zip
