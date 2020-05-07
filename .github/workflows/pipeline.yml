@@ -71,6 +71,7 @@ jobs:
     steps:
       - run: set -xeuo pipefail
       - run: echo ::set-env name=BRANCH::$(basename $BRANCH)
+      - run: echo ::set-env name=action_state::yellow
       - uses: actions/checkout@v2
       # - uses: actions/setup-python@v1
       #   with:
@@ -133,7 +134,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - run: echo $BRANCH
+      - run: echo "branch=$BRANCH state=$action_state"
 #       - name: Create release
 #         id: create_release
 #         uses: actions/create-release@v1
