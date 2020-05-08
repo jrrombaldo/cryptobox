@@ -96,13 +96,11 @@ jobs:
 
   Building-Artefacts:
     runs-on: ${{matrix.os}}
-    # needs:  [Linting, Travis-Testing]
     strategy:
       fail-fast: false # let the other continue if one fails
-      max-parallel: 10
       matrix:
-#         os: [macos-latest, ubuntu-latest]
-        os: [macos]
+        os: [macos-latest, ubuntu-latest]
+        # os: [macos]
     steps:
       - uses: actions/checkout@v2
       - run: set -xeuo pipefail
@@ -130,6 +128,7 @@ jobs:
     needs: [Linting, Travis-Testing, Building-Artefacts]
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      TIMESTAMP: ${{ date "+%Y-%m-%d-%H:%M" }}
  
     outputs:
 #      release_url: ${{ steps.release_url_task.outputs.release_url }}
@@ -145,7 +144,17 @@ jobs:
             draft: true
             prerelease: true
             body: |
-              testing releases through the pipelines
+              Date        = ${{ TIMESTAMP }}
+              Workflow    = ${{ github.workflow }}
+              JobId       = ${{ github.job }}
+              Actor       = ${{ github.actor }}
+              Repo        = ${{ github.repository }}
+              Event       = ${{ github.event_name }}
+              Commit      = ${{ github.sha }}
+              Ref         = ${{ github.ref }}
+              If Pull Request:
+              Head (PR)   = ${{ github.head_ref }}
+              Base (PR)   = ${{ github.base_ref }}
 #       - id: release_url_task
 #         run: echo "::set-output name=release_url::${{  }}"
 #       - run: echo "this is my output ${{steps.release_url_task.outputs.release_url}}"
