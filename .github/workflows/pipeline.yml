@@ -128,7 +128,6 @@ jobs:
     needs: [Linting, Travis-Testing, Building-Artefacts]
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      TIMESTAMP: ${{ date "+%Y-%m-%d-%H:%M" }}
  
     outputs:
 #      release_url: ${{ steps.release_url_task.outputs.release_url }}
@@ -144,7 +143,6 @@ jobs:
             draft: true
             prerelease: true
             body: |
-              Date        = ${{ TIMESTAMP }}
               Workflow    = ${{ github.workflow }}
               JobId       = ${{ github.job }}
               Actor       = ${{ github.actor }}
