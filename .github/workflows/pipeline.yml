@@ -34,10 +34,6 @@ jobs:
         node-version: [12.x, 13.x]
     steps:
       - uses: actions/checkout@v1
-      # - name: Using node version ${{ matrix.node-version }}
-        # uses: actions/setup-node@v1
-      #   with:
-      #     node-version: ${{ matrix.node-version }}
 
       - run: set -xeuo pipefail
       - name: Test on ${{ matrix.target }}
@@ -58,6 +54,7 @@ jobs:
           npm run make
       
 
+
   Travis-Testing:
     runs-on: ubuntu-latest
     if: true
@@ -65,27 +62,19 @@ jobs:
       BRANCH_FULL: ${{ github.ref }}
       TRAVIS_TOKEN: ${{ secrets.TRAVIS_TOKEN }}
     steps:
+      - uses: actions/checkout@v2
+
       - run: set -xeuo pipefail
       - run: echo ::set-env name=BRANCH::$(basename $BRANCH_FULL)
-      - run: echo ::set-env name=action_state::yellow
-      - uses: actions/checkout@v2
-      # - uses: actions/setup-python@v1
-      #   with:
-      #     python-version: '3.x' # Semantic version range syntax or exact version of a Python version
-      #     architecture: 'x64' # Optional - x64 or x86, defaults to x64
+
+      # it requires the travis_token secret
+      # TODO transform this into github action (independent)
       - name: Testing on Travis => ${{ github.ref }}
         run: |
           echo ${{ matrix.target }}
           cd ./build
           pip install -r requirements.txt
           python3 travis.py
-      # - run: |
-      #     echo "Installing Travis "
-      #     set -eo pipefail
-      #     sudo apt install ruby-dev libffi-dev make gcc &&  sudo gem install travis
-      #     travis --version
-      #     travis login --pro --github-token ${{ secrets.TRAVIS_TOKEN }}
-      #     echo ::set-env name=TRAVIS_TOKEN_API::$(travis token --pro)
 
 
   Building-Artefacts:
@@ -94,7 +83,6 @@ jobs:
       fail-fast: false # let the other continue if one fails
       matrix:
         os: [macos-latest, ubuntu-latest]
-        # os: [macos]
     steps:
       - uses: actions/checkout@v2
       - run: set -xeuo pipefail
@@ -109,7 +97,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: release
-          # here https://github.com/actions/upload-artifact it does mention the pattern follows https://facelessuser.github.io/wcmatch/glob/ but the following links does not work
+          # TODO here https://github.com/actions/upload-artifact it does mention the pattern follows https://facelessuser.github.io/wcmatch/glob/ but the following links does not work
           # path: release/**/[Cc]rypto[Bb]ox.*
           # path: release/cryptobox*.*(dmg|app|deb|rpm|tar.gz) 	
           path: release/cryptobox*
@@ -123,7 +111,6 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     outputs:
-#      release_url: ${{ steps.release_url_task.outputs.release_url }}
       release_url: ${{ steps.create_release.outputs.upload_url }}
     steps:
       - name: Create release
@@ -145,9 +132,6 @@ jobs:
               If Pull Request:
               Head (PR)   = ${{ github.head_ref }}
               Base (PR)   = ${{ github.base_ref }}
-#       - id: release_url_task
-#         run: echo "::set-output name=release_url::${{  }}"
-#       - run: echo "this is my output ${{steps.release_url_task.outputs.release_url}}"
 
   
   Upload-Release:
@@ -160,9 +144,7 @@ jobs:
       fail-fast: false # upload files independently
       max-parallel: 10
       matrix:
-        # flavour: [".dmg", ".tar.gz", "-ia32.tar.gz", "_i386.deb", "_amd64.deb", ".i686.rpm", ".x86_64.rpm"]
         flavour : ["cryptobox-0.0.1.dmg", "cryptobox-0.0.1.tar.gz", "cryptobox-0.0.1-ia32.tar.gz", "cryptobox_0.0.1_i386.deb", "cryptobox_0.0.1_amd64.deb", "cryptobox-0.0.1.i686.rpm", "cryptobox-0.0.1.x86_64.rpm"]
-        # flavour : ["cryptobox-0.0.1.dmg"]
     steps:
       - name: download ${{ matrix.flavour }}
         uses: actions/download-artifact@v1
@@ -180,34 +162,3 @@ jobs:
             asset_name: ${{ matrix.flavour }}
             asset_content_type: application/zip
 
-      # - name: Upload RPM x86
-      #   uses: actions/upload-release-asset@v1
-      #   with:
-      #       upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #       asset_path: release/$PRODUCT_NAME-$PRODUCT_VERSION.i686.rpm
-      #       asset_name: cryptobox-$PRODUCT_VERSION.i686.rpm
-      #       asset_content_type: application/zip
-
-      # - name: Upload RPM x64
-      #   uses: actions/upload-release-asset@v1
-      #   with:
-      #       upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #       asset_path: release/cryptobox-$PRODUCT_VERSION.x86_64.rpm
-      #       asset_name: cryptobox-$PRODUCT_VERSION.x86_64.rpm
-      #       asset_content_type: application/zip
-    
-      # - name: Upload DEB x86
-      #   uses: actions/upload-release-asset@v1
-      #   with:
-      #       upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #       asset_path: release/${{PRODUCT_NAME}}-${{PRODUCT_VERSION}}.dmg
-      #       asset_name: ${{PRODUCT_NAME}}-${{PRODUCT_VERSION}}.dmg
-      #       asset_content_type: application/zip
-
-      # - name: Upload DEB x64
-      #   uses: actions/upload-release-asset@v1
-      #   with:
-      #       upload_url: ${{ steps.create_release.outputs.upload_url }}
-      #       asset_path: release/cryptobox-$PRODUCT_VERSION_amd64.deb
-      #       asset_name: cryptobox-$PRODUCT_VERSION_amd64.deb
-      #       asset_content_type: application/zip
