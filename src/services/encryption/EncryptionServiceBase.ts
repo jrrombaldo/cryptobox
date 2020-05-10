@@ -3,13 +3,14 @@ import { Volume } from "../../entities/Volume";
 import { EncryptionService } from "./EncryptionService";
 import { PasswordServiceFactory } from "../password/PasswordServiceFactory";
 
-import { log } from "../../utils/LogUtil";
+import log from "../../utils/LogUtil";
 import * as ShellHelper from "../../utils/ShellUtil";
-import { shell } from "electron";
 
 export abstract class EncryptionServiceBase implements EncryptionService {
   abstract getMountCMD(volume: Volume, passwordCommand: string): string;
+
   abstract getUnmountCMD(volume: Volume): string;
+
   abstract getIsMountedCMD(volume: Volume): string;
 
   unmount(volume: Volume): void {
@@ -47,7 +48,7 @@ export abstract class EncryptionServiceBase implements EncryptionService {
     }
   }
 
-  mount(volume: Volume, password: Password): void {
+  mount(volume: Volume): void {
     log.debug(
       `about to mount directory [${volume.encryptedFolderPath}] into [${volume.decryptedFolderPath}] with volumeName [${volume.name}]`
     );
