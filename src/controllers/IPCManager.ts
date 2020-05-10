@@ -10,10 +10,9 @@ import { Password } from "../entities/Password";
 
 log.info("IPCManager loaded !");
 
-ipcMain.on(constants.IPC_GET_DIRECTORY, (event, arg) => {
+ipcMain.on(constants.IPC_GET_DIRECTORY, (event) => {
   log.info("[IPC_MAIN] native directoy dialog ...");
-  console.log("Abriu o gerenciador de arquivo.");
-  var directory = UIHelper.getDirectoryNatively();
+  let directory = UIHelper.getDirectoryNatively();
   if (directory) {
     event.returnValue = directory[0];
   } else {
@@ -22,20 +21,18 @@ ipcMain.on(constants.IPC_GET_DIRECTORY, (event, arg) => {
 });
 
 ipcMain.on(constants.IPC_MOUNT_UNMOUNT, (event, arg) => {
-  var source = arg["source"];
+  let source = arg["source"];
   log.info(`[IPC_MAIN] mount/umount for  "${source}"`);
 
   let volume = new Volume(source);
 
   log.info("IPC mount/umount");
   let mountApp = new MountVolume(volume);
-  let resp = mountApp.mount();
-
-  event.returnValue = resp;
+  event.returnValue = mountApp.mount();
 });
 
 ipcMain.on(constants.IPC_IS_MOUNTED, (event, arg) => {
-  var source = arg["source"];
+  let source = arg["source"];
   log.info(`[IPC_MAIN] isMounted for  "${source}"`);
   let volume = new Volume(source);
 
@@ -44,8 +41,8 @@ ipcMain.on(constants.IPC_IS_MOUNTED, (event, arg) => {
 });
 
 ipcMain.on(constants.IPC_SAVE_PASSWOD, (event, arg) => {
-  var source = arg["source"];
-  var passwordStr = arg["password"];
+  let source = arg["source"];
+  let passwordStr = arg["password"];
   log.info(`[IPC_MAIN] mount/umount for  "${source}"`);
 
   let volume = new Volume(source);
@@ -58,7 +55,7 @@ ipcMain.on(constants.IPC_SAVE_PASSWOD, (event, arg) => {
 });
 
 ipcMain.on(constants.IPC_PASSWORD_EXIST, (event, arg) => {
-  var source = arg["source"];
+  let source = arg["source"];
   log.info(`[IPC_MAIN] password exists for "${source}"`);
 
   let volume = new Volume(source);
@@ -72,7 +69,7 @@ ipcMain.on(constants.IPC_PASSWORD_EXIST, (event, arg) => {
 });
 
 ipcMain.on(constants.IPC_NOTIFICATION, (event, arg) => {
-  var message = arg["message"];
+  let message = arg["message"];
   log.info(`[IPC_MAIN] notification "${message}"`);
 
   UIHelper.notify(message);

@@ -6,12 +6,12 @@ import { Password } from "../entities/Password";
 import { Volume } from "../entities/Volume";
 import { PasswordApplication } from "./PasswordApp";
 
-let response_example = {
-  status: "operation with success/error",
-  message:
-    "detailed message, not to be displayed to user, it will contain stacktraces...",
-  isMounted: "boolean",
-};
+// let response_example = {
+//   status: "operation with success/error",
+//   message:
+//     "detailed message, not to be displayed to user, it will contain stacktraces...",
+//   isMounted: "boolean",
+// };
 
 export class MountVolume {
   encryptionService: EncryptionService;
@@ -67,6 +67,7 @@ export class MountVolume {
 
     try {
       response.volume = this.volume;
+      response.isMounted = this.encryptionService.isMounted(this.volume);
 
       let isMounted = this.encryptionService.isMounted(this.volume);
       response.isMounted = isMounted;

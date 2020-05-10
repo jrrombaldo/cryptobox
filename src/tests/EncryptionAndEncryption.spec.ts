@@ -14,7 +14,7 @@ log.debug("running password and encryption tests");
 // const rootFolder = "~/cryptobox";
 const rootFolder: string = path.join("/tmp", "cryptobox");
 const sourceFolder: string = `${rootFolder}/encrypted`;
-const destinationFolder = `${rootFolder}/decrypted`;
+// const destinationFolder = `${rootFolder}/decrypted`;
 // const passwordValue = "MyPassword@2020";
 const passwordValue = Math.random().toString(36).substr(2, 16);
 log.debug(`generated password = [${passwordValue}]`);

@@ -34,8 +34,6 @@ if (isDev) {
 let mainWindow: BrowserWindow;
 
 const icoPath = "./static/resources/elec.icns";
-const icoPathPNG = "./static/resources/cloud-enc.png";
-const trayIcon = "../../static/resources/example.png";
 
 function createWindow() {
   mainWindow = new BrowserWindow({
