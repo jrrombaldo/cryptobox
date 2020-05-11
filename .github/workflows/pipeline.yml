@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: set -xeuo pipefail
-      - name: Linting => ${{ github.ref }}
+      - name: Linting => ${{ github.ref##*/ }}
         run: |
           echo "linting the app"
           npm ci
